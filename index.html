@@ -1,16 +1,81 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>SkyeHub</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SkyeHub — Gorilla Tag Mods</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <canvas id="starry-canvas"></canvas>
-  <div class="content">
-    <h1>SKYEHUB</h1>
-    <p>my coded website is live</p>
-    <button onclick="hello()">Click Me</button>
-  </div>
+
+  <nav>
+    <div class="nav-inner">
+      <span class="logo">SkyeHub</span>
+      <div class="nav-links">
+        <a href="#mods">Mods</a>
+        <a href="#about">About</a>
+      </div>
+    </div>
+  </nav>
+
+  <header id="hero">
+    <p class="eyebrow">Gorilla Tag Mods</p>
+    <h1>Download.<br>Install.<br>Swing.</h1>
+    <p class="subtitle">Free mods for Gorilla Tag, made by the community.</p>
+    <a href="#mods" class="btn-primary">Browse Mods</a>
+  </header>
+
+  <section id="mods">
+    <h2>Available Mods</h2>
+    <div class="mod-grid">
+
+      <div class="mod-card">
+        <div class="mod-top">
+          <span class="mod-tag">Cosmetic</span>
+          <span class="mod-version">v1.2.0</span>
+        </div>
+        <h3>ExampleMod</h3>
+        <p>A sample mod to show how the cards look. Replace this with your real mod description.</p>
+        <div class="mod-footer">
+          <span class="mod-downloads">↓ 1.2k downloads</span>
+          <a href="#" class="btn-download">Download</a>
+        </div>
+      </div>
+
+      <div class="mod-card">
+        <div class="mod-top">
+          <span class="mod-tag">Gameplay</span>
+          <span class="mod-version">v0.9.1</span>
+        </div>
+        <h3>AnotherMod</h3>
+        <p>Another placeholder mod card. Drop in your real mod info here when you're ready.</p>
+        <div class="mod-footer">
+          <span class="mod-downloads">↓ 843 downloads</span>
+          <a href="#" class="btn-download">Download</a>
+        </div>
+      </div>
+
+      <div class="mod-card mod-card--empty">
+        <p>More mods coming soon.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="about-inner">
+      <h2>About SkyeHub</h2>
+      <p>SkyeHub is a community-run mod hub for Gorilla Tag. All mods are free to download. Install at your own risk and always back up your game files.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 SkyeHub · Not affiliated with Another Axiom</p>
+  </footer>
+
   <script src="script.js"></script>
 </body>
 </html>
