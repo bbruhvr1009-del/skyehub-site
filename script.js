@@ -1,7 +1,3 @@
-function hello() {
-  alert("SKYEHUB ONLINE");
-}
-
 // ---- Starry Canvas ----
 const STAR_COUNT = 150;
 const PROXIMITY_LINE_MAX_DISTANCE = 80;
@@ -37,11 +33,11 @@ class Star {
   constructor() {
     this.x = randomMinMax(-canvas.width / 2, canvas.width / 2);
     this.y = randomMinMax(-canvas.height / 2, canvas.height / 2);
-    this.x_vel = randomMinMax(-24, 24);
-    this.y_vel = randomMinMax(-24, 24);
-    this.rot_vel = randomMinMax(-90, 90);
-    this.size = randomMinMax(2, 4);
-    this.color = `hsla(${Math.random() * 360}, 15%, 70%, ${randomMinMax(0.7, 1.0)})`;
+    this.x_vel = randomMinMax(-18, 18);
+    this.y_vel = randomMinMax(-18, 18);
+    this.rot_vel = randomMinMax(-60, 60);
+    this.size = randomMinMax(1.5, 3);
+    this.color = `hsla(0, 0%, 100%, ${randomMinMax(0.3, 0.7)})`;
     this.rotation = 0;
     this.real_x = 0;
     this.real_y = 0;
@@ -91,17 +87,16 @@ function draw() {
 
     let connections = 0;
     for (let a = 0; a < all_stars.length; a++) {
+      if (connections >= MAX_MAX_PROXIMITY_CONNECTIONS_PER_POINT) break;
       const other = all_stars[a];
       const dist = Math.sqrt(Math.pow(other.x - star.x, 2) + Math.pow(other.y - star.y, 2));
-
       if (dist <= PROXIMITY_LINE_MAX_DISTANCE) {
-        ctx.strokeStyle = connections >= MAX_PROXIMITY_CONNECTIONS_PER_POINT ? "#ffffff10" : "#ffffff22";
+        ctx.strokeStyle = connections >= MAX_PROXIMITY_CONNECTIONS_PER_POINT ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.08)";
         ctx.beginPath();
         ctx.moveTo(star.real_x, star.real_y);
         ctx.lineTo(other.real_x, other.real_y);
         ctx.stroke();
         connections++;
-        if (connections >= MAX_MAX_PROXIMITY_CONNECTIONS_PER_POINT) break;
       }
     }
   }
