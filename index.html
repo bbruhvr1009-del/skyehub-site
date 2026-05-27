@@ -3,23 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Skye (@skye) | SkyeHub</title>
+<title>! Skye Larsen (@yourlocalrifty) | SkyeHub</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Pacifico&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --pink:    #7dd3d8;
-    --lavender:#4a7fa8;
-    --sky:     #2d5f7a;
-    --peach:   #c4a882;
-    --mint:    #3d7a8a;
-    --cream:   #d4b896;
-    --text:    #c8dde8;
-    --text2:   #7a9fb0;
-    --glass:   rgba(20,45,70,0.55);
-    --glass-border: rgba(100,160,200,0.18);
+    --text:  #e2d4f0;
+    --text2: #9b7fc0;
   }
 
   html, body {
@@ -30,7 +22,7 @@
   }
 
   body {
-    background: linear-gradient(135deg, #0a1628 0%, #0e2240 25%, #0d1f35 50%, #111828 75%, #0a1220 100%);
+    background: linear-gradient(135deg, #0a0010 0%, #110020 25%, #0d0018 50%, #0e0014 75%, #080010 100%);
     background-size: 400% 400%;
     animation: gradShift 16s ease infinite;
   }
@@ -42,341 +34,231 @@
   }
 
   .orb {
-    position: fixed;
-    border-radius: 50%;
-    filter: blur(60px);
-    opacity: 0.45;
-    pointer-events: none;
-    animation: drift 18s ease-in-out infinite;
-    z-index: 0;
+    position: fixed; border-radius: 50%; filter: blur(60px);
+    opacity: 0.45; pointer-events: none;
+    animation: drift 18s ease-in-out infinite; z-index: 0;
   }
-  .orb1 { width: 420px; height: 420px; background: #1a3a5c; top: -100px; left: -80px; animation-delay: 0s; }
-  .orb2 { width: 320px; height: 320px; background: #0d4a6b; top: 40%; right: -60px; animation-delay: -6s; }
-  .orb3 { width: 280px; height: 280px; background: #1a3550; bottom: -60px; left: 30%; animation-delay: -12s; }
-  .orb4 { width: 200px; height: 200px; background: #5c4420; top: 60%; left: 10%; animation-delay: -3s; }
+  .orb1 { width:420px;height:420px;background:#2a0a4a;top:-100px;left:-80px;animation-delay:0s; }
+  .orb2 { width:320px;height:320px;background:#3d0a60;top:40%;right:-60px;animation-delay:-6s; }
+  .orb3 { width:280px;height:280px;background:#1a0030;bottom:-60px;left:30%;animation-delay:-12s; }
+  .orb4 { width:200px;height:200px;background:#4a1a6a;top:60%;left:10%;animation-delay:-3s; }
 
   @keyframes drift {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    33%       { transform: translate(30px, -40px) scale(1.05); }
-    66%       { transform: translate(-20px, 30px) scale(0.97); }
+    0%,100% { transform:translate(0,0) scale(1); }
+    33%      { transform:translate(30px,-40px) scale(1.05); }
+    66%      { transform:translate(-20px,30px) scale(0.97); }
   }
 
-  .sparkle-container { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
-  .star {
-    position: absolute;
-    border-radius: 50%;
-    background: white;
-    animation: twinkle var(--dur, 3s) ease-in-out infinite;
-    animation-delay: var(--delay, 0s);
-    opacity: 0;
+  #starry-canvas { position:fixed;top:0;left:0;pointer-events:none;z-index:0; }
+
+  .floaty {
+    position:fixed; pointer-events:none; font-size:18px; opacity:0; z-index:0;
+    animation: floaty var(--dur,15s) linear infinite;
   }
-  @keyframes twinkle {
-    0%, 100% { opacity: 0; transform: scale(0.5); }
-    50%       { opacity: 0.7; transform: scale(1); }
+  @keyframes floaty {
+    0%   { transform:translateY(100vh) rotate(0deg);opacity:0; }
+    10%  { opacity:0.4; }
+    90%  { opacity:0.2; }
+    100% { transform:translateY(-60px) rotate(360deg);opacity:0; }
   }
 
+  @keyframes floatIn {
+    from { opacity:0;transform:translateY(22px); }
+    to   { opacity:1;transform:translateY(0); }
+  }
+  @keyframes spin { to { transform:rotate(360deg); } }
+
+  /* ── Page shell ── */
   .page {
-    position: relative;
-    z-index: 1;
-    max-width: 520px;
+    position: relative; z-index: 1;
+    max-width: 960px;
     margin: 0 auto;
-    padding: 48px 20px 80px;
+    padding: 48px 24px 80px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    gap: 24px;
   }
 
   .wordmark {
     font-family: 'Pacifico', cursive;
-    font-size: 15px;
-    color: #5bbcd4;
-    letter-spacing: 0.02em;
-    opacity: 0.7;
-    margin-bottom: -8px;
+    font-size: 15px; color: #b07ad4;
+    letter-spacing: 0.02em; opacity: 0.7;
   }
 
-  .section-label {
-    font-family: 'Quicksand', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: #4a8fa8;
-    align-self: flex-start;
-    padding-left: 4px;
-    margin-bottom: -10px;
-  }
-
-  .glass {
+  /* ── Two-column layout ── */
+  .layout {
     width: 100%;
-    background: rgba(10,25,50,0.55);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(80,140,190,0.18);
-    border-radius: 24px;
-    padding: 24px;
-    box-shadow: 0 8px 40px rgba(0,10,30,0.5), inset 0 1px 0 rgba(100,160,210,0.1);
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 20px;
+    align-items: start;
   }
 
-  .profile-card {
+  .right-col {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 14px;
-    padding: 32px 24px 28px;
-    text-align: center;
-    animation: floatIn 0.7s ease both;
-  }
-  @keyframes floatIn {
-    from { opacity: 0; transform: translateY(22px); }
-    to   { opacity: 1; transform: translateY(0); }
+    gap: 20px;
   }
 
-  .avatar-wrap { position: relative; width: 96px; height: 96px; }
-  .avatar-ring {
-    position: absolute;
-    inset: -4px;
-    border-radius: 50%;
-    background: conic-gradient(#3a8fb5, #5bbcd4, #c4a882, #4a7fa8, #3a8fb5);
-    animation: spin 6s linear infinite;
-    z-index: 0;
+  .right-col > :first-child { margin-top: 0; }
+
+  @media (max-width: 680px) {
+    .layout { grid-template-columns: 1fr; }
   }
-  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── Section label ── */
+  .section-label {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: #9b7fc0; margin-bottom: -8px;
+  }
+
+  /* ── Glass card ── */
+  .glass {
+    width: 100%;
+    background: rgba(15,5,30,0.6);
+    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(140,80,200,0.18);
+    border-radius: 24px; padding: 24px;
+    box-shadow: 0 8px 40px rgba(0,0,15,0.6), inset 0 1px 0 rgba(160,100,220,0.1);
+  }
+
+  /* ── Profile card ── */
+  .profile-card {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 14px; padding: 32px 20px 24px; text-align: center;
+    animation: floatIn 0.7s ease both;
+  }
+
+  .avatar-wrap { position:relative;width:96px;height:96px; }
+  .avatar-ring {
+    position:absolute;inset:-4px;border-radius:50%;
+    background:conic-gradient(#6a20a0,#b07ad4,#e2d4f0,#7a30b0,#6a20a0);
+    animation:spin 6s linear infinite;z-index:0;
+  }
   .avatar-inner {
-    position: absolute;
-    inset: 3px;
-    border-radius: 50%;
-    background: #0d1f35;
-    z-index: 1;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    position:absolute;inset:3px;border-radius:50%;background:#0d0018;
+    z-index:1;overflow:hidden;display:flex;align-items:center;justify-content:center;
   }
   .avatar-initials {
-    font-family: 'Pacifico', cursive;
-    font-size: 28px;
-    background: linear-gradient(135deg, #5bbcd4, #c4a882);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    font-family:'Pacifico',cursive;font-size:28px;
+    background:linear-gradient(135deg,#b07ad4,#e2d4f0);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
   }
   .status-dot {
-    position: absolute;
-    bottom: 4px; right: 4px;
-    width: 14px; height: 14px;
-    border-radius: 50%;
-    background: #4ade80;
-    border: 2px solid #0d1f35;
-    z-index: 2;
-    box-shadow: 0 0 8px #4ade80;
+    position:absolute;bottom:4px;right:4px;width:14px;height:14px;
+    border-radius:50%;background:#4ade80;border:2px solid #0d0018;
+    z-index:2;box-shadow:0 0 8px #4ade80;
   }
 
   .display-name {
-    font-family: 'Quicksand', sans-serif;
-    font-weight: 700;
-    font-size: 26px;
-    background: linear-gradient(135deg, #7dd3e8 0%, #a8c8d8 50%, #c4a882 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    line-height: 1.1;
+    font-family:'Quicksand',sans-serif;font-weight:700;font-size:24px;
+    background:linear-gradient(135deg,#d4a8f0 0%,#b07ad4 50%,#e2d4f0 100%);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    line-height:1.1;
   }
-  .username { font-size: 13px; color: var(--text2); font-weight: 400; margin-top: -10px; }
-  .bio {
-    font-size: 14px;
-    color: var(--text);
-    line-height: 1.6;
-    max-width: 300px;
-    font-style: italic;
-    opacity: 0.85;
-  }
+  .username { font-size:13px;color:var(--text2);margin-top:2px; }
+  .bio { font-size:13px;color:var(--text);line-height:1.6;font-style:italic;opacity:0.85; }
 
-  .badges { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+  .badges { display:flex;gap:6px;flex-wrap:wrap;justify-content:center; }
   .badge {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    background: rgba(20,50,80,0.6);
-    border: 1px solid rgba(80,140,190,0.25);
-    border-radius: 20px;
-    padding: 4px 12px;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    color: var(--text);
+    display:flex;align-items:center;gap:5px;
+    background:rgba(40,10,70,0.6);border:1px solid rgba(140,80,200,0.25);
+    border-radius:20px;padding:4px 10px;font-size:10px;font-weight:600;
+    letter-spacing:0.04em;color:var(--text);
   }
-  .badge-dot { width: 7px; height: 7px; border-radius: 50%; }
+  .badge-dot { width:7px;height:7px;border-radius:50%; }
 
   .stats-row {
-    display: flex;
-    gap: 0;
-    width: 100%;
-    border-top: 1px solid rgba(80,140,190,0.2);
-    padding-top: 16px;
-    margin-top: 4px;
+    display:flex;width:100%;
+    border-top:1px solid rgba(140,80,200,0.2);padding-top:14px;margin-top:4px;
   }
-  .stat { flex: 1; text-align: center; border-right: 1px solid rgba(80,140,190,0.2); }
-  .stat:last-child { border-right: none; }
-  .stat-num { font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 20px; color: var(--text); }
-  .stat-label { font-size: 10px; color: var(--text2); letter-spacing: 0.06em; text-transform: uppercase; margin-top: 2px; }
+  .stat { flex:1;text-align:center;border-right:1px solid rgba(140,80,200,0.2); }
+  .stat:last-child { border-right:none; }
+  .stat-num { font-family:'Quicksand',sans-serif;font-weight:700;font-size:18px;color:var(--text); }
+  .stat-label { font-size:10px;color:var(--text2);letter-spacing:0.06em;text-transform:uppercase;margin-top:2px; }
 
-  /* ── Links ── */
+  /* ── Links grid ── */
   .links-card { animation: floatIn 0.7s 0.1s ease both; }
+  .links-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:10px; }
   .link-item {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 13px 16px;
-    background: rgba(15,35,60,0.5);
-    border: 1px solid rgba(80,140,190,0.18);
-    border-radius: 16px;
-    text-decoration: none;
-    color: var(--text);
-    font-size: 14px;
-    font-weight: 500;
-    margin-bottom: 10px;
-    transition: transform 0.2s, background 0.2s;
-    cursor: pointer;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:8px;padding:16px 12px;
+    background:rgba(25,5,45,0.5);border:1px solid rgba(140,80,200,0.18);
+    border-radius:16px;text-decoration:none;color:var(--text);
+    font-size:13px;font-weight:500;text-align:center;
+    transition:transform 0.2s,background 0.2s;cursor:pointer;
   }
-  .link-item:last-child { margin-bottom: 0; }
-  .link-item:hover { transform: translateX(4px); background: rgba(25,55,90,0.65); }
+  .link-item:hover { transform:translateY(-2px);background:rgba(50,10,80,0.65); }
   .link-icon {
-    width: 36px; height: 36px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    flex-shrink: 0;
+    width:40px;height:40px;border-radius:12px;
+    display:flex;align-items:center;justify-content:center;font-size:20px;
   }
-  .link-arrow { margin-left: auto; color: var(--text2); font-size: 16px; }
 
   /* ── Mod Updates ── */
   .updates-card { animation: floatIn 0.7s 0.2s ease both; }
-  .update-list { display: flex; flex-direction: column; gap: 12px; }
+  .update-list { display:grid;grid-template-columns:repeat(3,1fr);gap:10px; }
   .update-item {
-    background: rgba(10,25,50,0.5);
-    border: 1px solid rgba(80,140,190,0.15);
-    border-radius: 16px;
-    padding: 14px 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
+    background:rgba(15,5,30,0.5);border:1px solid rgba(140,80,200,0.15);
+    border-radius:16px;padding:14px;
+    display:flex;flex-direction:column;gap:6px;
   }
-  .update-header { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-  .update-title {
-    font-family: 'Quicksand', sans-serif;
-    font-weight: 700;
-    font-size: 14px;
-    color: var(--text);
-    flex: 1;
-  }
+  .update-header { display:flex;align-items:flex-start;justify-content:space-between;gap:6px; }
+  .update-title { font-family:'Quicksand',sans-serif;font-weight:700;font-size:13px;color:var(--text);flex:1; }
   .update-tag {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-    border-radius: 8px;
-    padding: 3px 9px;
+    font-size:9px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;
+    border-radius:8px;padding:3px 8px;white-space:nowrap;flex-shrink:0;
   }
-  .tag-new { background: rgba(74,173,128,0.18); color: #4aad80; border: 1px solid rgba(74,173,128,0.3); }
-  .tag-update { background: rgba(91,188,212,0.15); color: #5bbcd4; border: 1px solid rgba(91,188,212,0.25); }
-  .tag-fix { background: rgba(196,168,130,0.15); color: #c4a882; border: 1px solid rgba(196,168,130,0.25); }
-  .update-desc { font-size: 13px; color: var(--text2); line-height: 1.5; }
-  .update-meta { font-size: 11px; color: var(--text2); opacity: 0.55; margin-top: 2px; }
+  .tag-new    { background:rgba(74,173,128,0.18);color:#4aad80;border:1px solid rgba(74,173,128,0.3); }
+  .tag-update { background:rgba(176,122,212,0.15);color:#b07ad4;border:1px solid rgba(176,122,212,0.25); }
+  .tag-fix    { background:rgba(196,168,130,0.15);color:#c4a882;border:1px solid rgba(196,168,130,0.25); }
+  .update-desc { font-size:12px;color:var(--text2);line-height:1.5; }
+  .update-meta { font-size:10px;color:var(--text2);opacity:0.55; }
   .update-dl {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    margin-top: 6px;
-    padding: 7px 14px;
-    background: rgba(20,55,85,0.6);
-    border: 1px solid rgba(80,140,190,0.25);
-    border-radius: 10px;
-    font-size: 12px;
-    font-weight: 600;
-    color: #5bbcd4;
-    text-decoration: none;
-    transition: background 0.2s, transform 0.15s;
-    cursor: pointer;
-    align-self: flex-start;
+    display:inline-flex;align-items:center;gap:5px;margin-top:4px;
+    padding:6px 12px;background:rgba(40,10,70,0.6);
+    border:1px solid rgba(140,80,200,0.25);border-radius:10px;
+    font-size:11px;font-weight:600;color:#b07ad4;text-decoration:none;
+    transition:background 0.2s,transform 0.15s;cursor:pointer;align-self:flex-start;
   }
-  .update-dl:hover { background: rgba(30,70,110,0.7); transform: translateY(-1px); }
+  .update-dl:hover { background:rgba(70,15,110,0.7);transform:translateY(-1px); }
 
-  /* ── Leave a message ── */
+  /* ── Message board ── */
   .message-card { animation: floatIn 0.7s 0.3s ease both; }
-  .msg-form { display: flex; flex-direction: column; gap: 10px; }
+  .msg-form { display:flex;flex-direction:column;gap:10px; }
   .msg-input {
-    width: 100%;
-    padding: 12px 16px;
-    border: 1px solid rgba(80,140,190,0.2);
-    border-radius: 14px;
-    background: rgba(10,25,50,0.55);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 14px;
-    color: var(--text);
-    outline: none;
-    resize: none;
-    transition: border-color 0.2s, background 0.2s;
+    width:100%;padding:11px 14px;
+    border:1px solid rgba(140,80,200,0.2);border-radius:14px;
+    background:rgba(15,5,30,0.55);font-family:'DM Sans',sans-serif;
+    font-size:13px;color:var(--text);outline:none;resize:none;
+    transition:border-color 0.2s,background 0.2s;
   }
-  .msg-input::placeholder { color: var(--text2); opacity: 0.6; }
-  .msg-input:focus { border-color: rgba(91,188,212,0.45); background: rgba(15,35,65,0.7); }
-  .msg-row { display: flex; gap: 10px; }
-  .msg-row .msg-input { flex: 1; }
+  .msg-input::placeholder { color:var(--text2);opacity:0.6; }
+  .msg-input:focus { border-color:rgba(176,122,212,0.45);background:rgba(25,5,45,0.7); }
+  .msg-row { display:flex;gap:10px; }
+  .msg-row .msg-input { flex:1; }
   .send-btn {
-    padding: 11px 22px;
-    border: none;
-    border-radius: 14px;
-    background: linear-gradient(135deg, #1a5a7a, #2a8ab0);
-    color: #c8e8f4;
-    font-family: 'Quicksand', sans-serif;
-    font-weight: 700;
-    font-size: 13px;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: transform 0.15s, opacity 0.15s;
+    padding:10px 20px;border:none;border-radius:14px;
+    background:linear-gradient(135deg,#3a0a6a,#7a30b0);color:#e2d4f0;
+    font-family:'Quicksand',sans-serif;font-weight:700;font-size:13px;
+    cursor:pointer;white-space:nowrap;transition:transform 0.15s,opacity 0.15s;
   }
-  .send-btn:hover { transform: scale(1.03); opacity: 0.92; }
-  .send-btn:active { transform: scale(0.97); }
-
-  /* sent messages list */
-  .sent-list { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+  .send-btn:hover { transform:scale(1.03);opacity:0.92; }
+  .send-btn:active { transform:scale(0.97); }
+  .sent-list { display:flex;flex-direction:column;gap:8px;margin-top:12px; }
   .sent-msg {
-    background: rgba(10,25,50,0.5);
-    border: 1px solid rgba(80,140,190,0.15);
-    border-radius: 12px;
-    padding: 10px 14px;
-    animation: floatIn 0.4s ease both;
+    background:rgba(15,5,30,0.5);border:1px solid rgba(140,80,200,0.15);
+    border-radius:12px;padding:10px 14px;animation:floatIn 0.4s ease both;
   }
-  .sent-author { font-size: 12px; font-weight: 600; color: var(--text); }
-  .sent-body { font-size: 13px; color: var(--text2); margin-top: 2px; line-height: 1.4; }
-  .sent-time { font-size: 10px; color: var(--text2); opacity: 0.5; margin-top: 3px; }
+  .sent-author { font-size:12px;font-weight:600;color:var(--text); }
+  .sent-body   { font-size:13px;color:var(--text2);margin-top:2px;line-height:1.4; }
+  .sent-time   { font-size:10px;color:var(--text2);opacity:0.5;margin-top:3px; }
 
   .footer {
-    text-align: center;
-    font-family: 'Pacifico', cursive;
-    font-size: 16px;
-    color: var(--text2);
-    opacity: 0.5;
-    margin-top: 10px;
-    letter-spacing: 0.03em;
-  }
-
-  .floaty {
-    position: fixed;
-    pointer-events: none;
-    font-size: 18px;
-    animation: floaty var(--dur, 15s) linear infinite;
-    opacity: 0;
-    z-index: 0;
-  }
-  @keyframes floaty {
-    0%   { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-    10%  { opacity: 0.4; }
-    90%  { opacity: 0.2; }
-    100% { transform: translateY(-60px) rotate(360deg); opacity: 0; }
+    text-align:center;font-family:'Pacifico',cursive;
+    font-size:16px;color:var(--text2);opacity:0.5;letter-spacing:0.03em;
   }
 </style>
 </head>
@@ -386,141 +268,215 @@
 <div class="orb orb2"></div>
 <div class="orb orb3"></div>
 <div class="orb orb4"></div>
-
-<div class="sparkle-container" id="sparkles"></div>
+<canvas id="starry-canvas"></canvas>
 <div id="floaties"></div>
 
 <div class="page">
 
   <div class="wordmark">SkyeHub ✦</div>
 
-  <!-- Profile card -->
-  <div class="glass profile-card">
-    <div class="avatar-wrap">
-      <div class="avatar-ring"></div>
-      <div class="avatar-inner">
-        <span class="avatar-initials">S</span>
-      </div>
-      <div class="status-dot"></div>
-    </div>
-    <div>
-      <div class="display-name">Skye</div>
-      <div class="username">@skye</div>
-    </div>
-    <div class="bio">"always live life to its fullest ✨"</div>
-    <div class="badges">
-      <div class="badge"><div class="badge-dot" style="background:#5bbcd4"></div> Early Member</div>
-      <div class="badge"><div class="badge-dot" style="background:#4a7fa8"></div> Creator</div>
-      <div class="badge"><div class="badge-dot" style="background:#4aad80"></div> Booster</div>
-    </div>
-    <div class="stats-row">
-      <div class="stat">
-        <div class="stat-num">233</div>
-        <div class="stat-label">Views</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">8</div>
-        <div class="stat-label">Rep</div>
-      </div>
-      <div class="stat">
-        <div class="stat-num">#21</div>
-        <div class="stat-label">Joined</div>
-      </div>
-    </div>
-  </div>
+  <div class="layout">
 
-  <!-- Links -->
-  <div class="section-label">Links</div>
-  <div class="glass links-card" style="width:100%">
-    <a class="link-item" href="https://youtube.com/@skyegtag" target="_blank">
-      <div class="link-icon" style="background:linear-gradient(135deg,#7a2a2a,#b04040)">▶</div>
-      YouTube
-      <span class="link-arrow">›</span>
-    </a>
-    <a class="link-item" href="#" target="_blank">
-      <div class="link-icon" style="background:linear-gradient(135deg,#1a3a6a,#2a5a9a)">✦</div>
-      Discord
-      <span class="link-arrow">›</span>
-    </a>
-    <a class="link-item" href="#" target="_blank">
-      <div class="link-icon" style="background:linear-gradient(135deg,#0d3a2a,#1a6a4a)">✿</div>
-      Spotify
-      <span class="link-arrow">›</span>
-    </a>
-    <a class="link-item" href="#" target="_blank">
-      <div class="link-icon" style="background:linear-gradient(135deg,#3a3a1a,#6a6a2a)">☀</div>
-      Twitter / X
-      <span class="link-arrow">›</span>
-    </a>
-  </div>
+    <!-- LEFT: Profile -->
+    <div class="glass profile-card">
+      <div class="avatar-wrap">
+        <div class="avatar-ring"></div>
+        <div class="avatar-inner"><span class="avatar-initials">S</span></div>
+        <div class="status-dot"></div>
+      </div>
+      <div>
+        <div class="display-name">! Skye Larsen</div>
+        <div class="username">@yourlocalrifty</div>
+      </div>
+      <div class="bio">I'm Skye | skyehub.org ⋆⁺₊✧ ୨ ≧◡≦ ୧ ✧₊⁺⋆ 𓎟𓎟     ◞</div>
+      <div class="badges">
+        <div class="badge"><div class="badge-dot" style="background:#5bbcd4"></div> Early Member</div>
+        <div class="badge"><div class="badge-dot" style="background:#4a7fa8"></div> Creator</div>
+        <div class="badge"><div class="badge-dot" style="background:#4aad80"></div> Booster</div>
+      </div>
+      <div class="stats-row">
+        <div class="stat"><div class="stat-num">233</div><div class="stat-label">Views</div></div>
+        <div class="stat"><div class="stat-num">8</div><div class="stat-label">Rep</div></div>
+        <div class="stat"><div class="stat-num">#21</div><div class="stat-label">Joined</div></div>
+      </div>
+    </div>
 
-  <!-- Mod Updates -->
-  <div class="section-label">Mods &amp; Updates</div>
-  <div class="glass updates-card" style="width:100%">
-    <div class="update-list" id="updateList">
+    <!-- RIGHT: Links + Mods + Messages -->
+    <div class="right-col">
 
-      <div class="update-item">
-        <div class="update-header">
-          <div class="update-title">SkyeMod v2.1</div>
-          <span class="update-tag tag-update">Update</span>
+      <div class="glass links-card">
+        <div class="links-grid">
+          <a class="link-item" href="https://discord.gg/pFwB4thuD8" target="_blank">
+            <div class="link-icon" style="background:linear-gradient(135deg,#2a0a4a,#4a1a7a)">✦</div>
+            Discord
+          </a>
+          <a class="link-item" href="https://open.spotify.com/user/314cjpdqy4v5trhhehlrzs3ngc5m" target="_blank">
+            <div class="link-icon" style="background:linear-gradient(135deg,#0d3a2a,#1a6a4a)">✿</div>
+            Spotify
+          </a>
+          <a class="link-item" href="https://tiktok.com/@skyedotnet" target="_blank">
+            <div class="link-icon" style="background:linear-gradient(135deg,#3a0a4a,#6a1a7a)">♪</div>
+            TikTok
+          </a>
         </div>
-        <div class="update-desc">Fixed item duplication bug, improved performance on older hardware, new config options added.</div>
-        <div class="update-meta">May 24, 2025</div>
-        <a class="update-dl" href="#">⬇ Download</a>
       </div>
 
-      <div class="update-item">
-        <div class="update-header">
-          <div class="update-title">NightSky Texture Pack</div>
-          <span class="update-tag tag-new">New</span>
+      <div class="section-label">Mods &amp; Updates</div>
+      <div class="glass updates-card">
+        <div class="update-list" id="updateList">
+
+          <div class="update-item" style="grid-column:1/-1">
+            <div class="update-header">
+              <div class="update-title">ZlothY Dances <span style="font-size:11px;font-weight:400;color:var(--text2)">v1.2.0</span></div>
+              <span class="update-tag tag-new">New</span>
+            </div>
+            <div class="update-desc">A fork/revamp of <a href="https://github.com/ColossusYTTV/Colossal-Emotes/" target="_blank" style="color:#b07ad4">Colossal Emotes</a>. Contains lots of dances and uses gorilla track networking to rotate the whole body just like body tracking.</div>
+
+            <div class="update-desc" style="margin-top:6px">
+              <strong style="color:var(--text)">How to use:</strong> Hold right trigger (B on PC) + left joystick to select. Release to play or change page. Left trigger to stop. Avoid spamming or switching emotes rapidly.
+            </div>
+            <div style="margin-top:8px;padding:10px 12px;background:rgba(140,80,200,0.07);border:1px solid rgba(140,80,200,0.2);border-radius:10px">
+              <div style="font-family:'Quicksand',sans-serif;font-weight:700;font-size:12px;color:#b07ad4;margin-bottom:6px">🆕 V1.2.0 — What's new</div>
+              <ul style="list-style:none;display:flex;flex-direction:column;gap:4px">
+                <li style="font-size:12px;color:var(--text2)">✦ Added more emotes</li>
+                <li style="font-size:12px;color:var(--text2)">✦ Full body rotation is now fully networked for everyone (server sided)</li>
+                <li style="font-size:12px;color:var(--text2)">✦ Stump promo redesigned — smaller and moves up to stay out of the way</li>
+              </ul>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+              <a class="update-dl" href="https://github.com/ZlothY29IQ/zlothydances/releases/latest/download/ZlothYDances.dll" target="_blank">⬇ Download</a>
+              <a class="update-dl" href="https://github.com/ZlothY29IQ/zlothydances" target="_blank" style="color:var(--text2)">⌥ Source Code</a>
+            </div>
+          </div>
+
         </div>
-        <div class="update-desc">Custom dark-themed textures for all biomes. Pairs well with SkyeMod.</div>
-        <div class="update-meta">May 18, 2025</div>
-        <a class="update-dl" href="#">⬇ Download</a>
       </div>
 
-      <div class="update-item">
-        <div class="update-header">
-          <div class="update-title">SkyeMod v2.0 crash fix</div>
-          <span class="update-tag tag-fix">Fix</span>
+      <div class="section-label">Leave a message</div>
+      <div class="glass message-card">
+        <div class="msg-form">
+          <div class="msg-row">
+            <input class="msg-input" type="text" id="msgName" placeholder="Your name" style="height:42px">
+            <input class="msg-input" type="text" id="msgText" placeholder="Your message" style="height:42px;flex:2">
+          </div>
+          <button class="send-btn" onclick="sendMsg()">Send ✦</button>
         </div>
-        <div class="update-desc">Patched crash on world load introduced in v2.0. Update immediately if you're on v2.0.</div>
-        <div class="update-meta">May 10, 2025</div>
-        <a class="update-dl" href="#">⬇ Download</a>
+        <div class="sent-list" id="sentList"></div>
       </div>
 
     </div>
   </div>
 
-  <!-- Leave a message -->
-  <div class="section-label">Leave a message</div>
-  <div class="glass message-card" style="width:100%">
-    <div class="msg-form">
-      <div class="msg-row">
-        <input class="msg-input" type="text" id="msgName" placeholder="Your name" style="height:44px">
-        <input class="msg-input" type="text" id="msgText" placeholder="Your message" style="height:44px; flex:2">
-      </div>
-      <button class="send-btn" onclick="sendMsg()">Send ✦</button>
-    </div>
-    <div class="sent-list" id="sentList"></div>
-  </div>
 
-  <div class="footer">SkyeHub</div>
 
 </div>
 
 <script>
-const sparkleContainer = document.getElementById('sparkles');
-for (let i = 0; i < 60; i++) {
-  const s = document.createElement('div');
-  s.className = 'star';
-  const size = Math.random() * 3 + 1;
-  s.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--dur:${2+Math.random()*4}s;--delay:${-Math.random()*6}s;`;
-  sparkleContainer.appendChild(s);
+// ── Canvas star animation (converted from React component) ──
+const starry_canvas = document.getElementById('starry-canvas');
+starry_canvas.width = window.innerWidth;
+starry_canvas.height = window.innerHeight;
+const ctx = starry_canvas.getContext('2d');
+
+const STAR_COUNT = 150;
+const PROXIMITY_LINE_MAX_DISTANCE = 80;
+const MAX_PROXIMITY_CONNECTIONS_PER_POINT = 2;
+const MAX_MAX_PROXIMITY_CONNECTIONS_PER_POINT = 5;
+
+let pause_simulation = false;
+let is_ready_for_drawing = false;
+let last_timestamp = 0;
+let delta_time = 0;
+const time_on_page_load = Date.now();
+
+function random_min_max(min, max) { return Math.random() * (max - min) + min; }
+
+class Star {
+  constructor() {
+    this.x = 0; this.y = 0; this.size = 8; this.color = "rgba(255,255,255,1.0)";
+    this.x_vel = 0; this.y_vel = 0; this.rotation = 0; this.rot_vel = 0;
+    this.real_x = 0; this.real_y = 0;
+  }
+  draw() {
+    ctx.fillStyle = this.color;
+    ctx.save();
+    ctx.translate(this.real_x + this.size / 2, this.real_y + this.size / 2);
+    ctx.rotate(this.rotation * Math.PI / 180);
+    ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
+    ctx.restore();
+  }
+  physics_step() {
+    const future_x = this.x + this.x_vel * delta_time;
+    const future_y = this.y + this.y_vel * delta_time;
+    const future_real_x = future_x + starry_canvas.width / 2;
+    const future_real_y = future_y + starry_canvas.height / 2;
+    if (future_real_x > starry_canvas.width) this.x_vel = -Math.abs(this.x_vel);
+    if (future_real_x < 0)                   this.x_vel =  Math.abs(this.x_vel);
+    if (future_real_y < 0)                   this.y_vel =  Math.abs(this.y_vel);
+    if (future_real_y > starry_canvas.height) this.y_vel = -Math.abs(this.y_vel);
+    this.x += this.x_vel * delta_time;
+    this.y += this.y_vel * delta_time;
+    this.rotation += this.rot_vel * delta_time;
+    this.real_x = future_real_x;
+    this.real_y = future_real_y;
+  }
 }
 
+const all_stars = [];
+for (let i = 0; i < STAR_COUNT; i++) {
+  const s = new Star();
+  s.x = random_min_max(-starry_canvas.width / 2, starry_canvas.width / 2);
+  s.y = random_min_max(-starry_canvas.height / 2, starry_canvas.height / 2);
+  s.x_vel = random_min_max(-24, 24);
+  s.y_vel = random_min_max(-24, 24);
+  s.rot_vel = random_min_max(-90, 90);
+  s.size = random_min_max(2, 4);
+  s.color = `hsla(${Math.random()*360},15%,50%,${random_min_max(0.9,1.0)})`;
+  all_stars.push(s);
+}
+
+function draw() {
+  if (pause_simulation) return;
+  ctx.clearRect(0, 0, starry_canvas.width, starry_canvas.height);
+  for (let i = 0; i < all_stars.length; i++) {
+    const ts = all_stars[i];
+    ts.physics_step();
+    ts.draw();
+    let connections = 0;
+    for (let a = 0; a < all_stars.length; a++) {
+      const ta = all_stars[a];
+      const dist = Math.sqrt(Math.pow(ta.x - ts.x, 2) + Math.pow(ta.y - ts.y, 2));
+      if (dist <= PROXIMITY_LINE_MAX_DISTANCE) {
+        ctx.strokeStyle = connections >= MAX_PROXIMITY_CONNECTIONS_PER_POINT && connections < MAX_MAX_PROXIMITY_CONNECTIONS_PER_POINT ? "#ffffff10" : "#ffffff22";
+        ctx.beginPath();
+        ctx.moveTo(ts.real_x, ts.real_y);
+        ctx.lineTo(ta.real_x, ta.real_y);
+        ctx.stroke();
+        connections++;
+      }
+    }
+  }
+}
+
+document.addEventListener("visibilitychange", () => {
+  pause_simulation = document.hidden;
+  if (!pause_simulation) last_timestamp = Date.now() - time_on_page_load;
+});
+window.addEventListener("resize", () => {
+  starry_canvas.width = window.innerWidth;
+  starry_canvas.height = window.innerHeight;
+});
+
+function animationFrame(timestamp) {
+  delta_time = (timestamp - last_timestamp) / 1000;
+  if (!is_ready_for_drawing) is_ready_for_drawing = true;
+  else draw();
+  last_timestamp = timestamp;
+  requestAnimationFrame(animationFrame);
+}
+requestAnimationFrame(animationFrame);
 const floatContainer = document.getElementById('floaties');
-const floatEmojis = ['✿', '✦', '♡', '˚', '✧', '⋆', '₊'];
+const floatEmojis = ['✿','✦','♡','˚','✧','⋆','₊'];
 for (let i = 0; i < 12; i++) {
   const f = document.createElement('div');
   f.className = 'floaty';
@@ -528,26 +484,17 @@ for (let i = 0; i < 12; i++) {
   f.style.cssText = `left:${Math.random()*100}%;--dur:${12+Math.random()*15}s;animation-delay:${-Math.random()*20}s;`;
   floatContainer.appendChild(f);
 }
-
 function sendMsg() {
   const nameEl = document.getElementById('msgName');
   const textEl = document.getElementById('msgText');
   const name = nameEl.value.trim() || 'anon';
   const msg = textEl.value.trim();
   if (!msg) return;
-
   const item = document.createElement('div');
   item.className = 'sent-msg';
-  const now = new Date();
-  item.innerHTML = `
-    <div class="sent-author">${name}</div>
-    <div class="sent-body">${msg}</div>
-    <div class="sent-time">just now</div>
-  `;
-  const list = document.getElementById('sentList');
-  list.prepend(item);
-  nameEl.value = '';
-  textEl.value = '';
+  item.innerHTML = `<div class="sent-author">${name}</div><div class="sent-body">${msg}</div><div class="sent-time">just now</div>`;
+  document.getElementById('sentList').prepend(item);
+  nameEl.value = ''; textEl.value = '';
 }
 </script>
 </body>
