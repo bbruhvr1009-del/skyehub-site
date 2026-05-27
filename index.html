@@ -1,34 +1,554 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SkyeHub</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skye (@skye) | SkyeHub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Pacifico&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --pink:    #7dd3d8;
+    --lavender:#4a7fa8;
+    --sky:     #2d5f7a;
+    --peach:   #c4a882;
+    --mint:    #3d7a8a;
+    --cream:   #d4b896;
+    --text:    #c8dde8;
+    --text2:   #7a9fb0;
+    --glass:   rgba(20,45,70,0.55);
+    --glass-border: rgba(100,160,200,0.18);
+  }
+
+  html, body {
+    min-height: 100vh;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  body {
+    background: linear-gradient(135deg, #0a1628 0%, #0e2240 25%, #0d1f35 50%, #111828 75%, #0a1220 100%);
+    background-size: 400% 400%;
+    animation: gradShift 16s ease infinite;
+  }
+
+  @keyframes gradShift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.45;
+    pointer-events: none;
+    animation: drift 18s ease-in-out infinite;
+    z-index: 0;
+  }
+  .orb1 { width: 420px; height: 420px; background: #1a3a5c; top: -100px; left: -80px; animation-delay: 0s; }
+  .orb2 { width: 320px; height: 320px; background: #0d4a6b; top: 40%; right: -60px; animation-delay: -6s; }
+  .orb3 { width: 280px; height: 280px; background: #1a3550; bottom: -60px; left: 30%; animation-delay: -12s; }
+  .orb4 { width: 200px; height: 200px; background: #5c4420; top: 60%; left: 10%; animation-delay: -3s; }
+
+  @keyframes drift {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33%       { transform: translate(30px, -40px) scale(1.05); }
+    66%       { transform: translate(-20px, 30px) scale(0.97); }
+  }
+
+  .sparkle-container { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+  .star {
+    position: absolute;
+    border-radius: 50%;
+    background: white;
+    animation: twinkle var(--dur, 3s) ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
+    opacity: 0;
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0; transform: scale(0.5); }
+    50%       { opacity: 0.7; transform: scale(1); }
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 48px 20px 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .wordmark {
+    font-family: 'Pacifico', cursive;
+    font-size: 15px;
+    color: #5bbcd4;
+    letter-spacing: 0.02em;
+    opacity: 0.7;
+    margin-bottom: -8px;
+  }
+
+  .section-label {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #4a8fa8;
+    align-self: flex-start;
+    padding-left: 4px;
+    margin-bottom: -10px;
+  }
+
+  .glass {
+    width: 100%;
+    background: rgba(10,25,50,0.55);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(80,140,190,0.18);
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: 0 8px 40px rgba(0,10,30,0.5), inset 0 1px 0 rgba(100,160,210,0.1);
+  }
+
+  .profile-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    padding: 32px 24px 28px;
+    text-align: center;
+    animation: floatIn 0.7s ease both;
+  }
+  @keyframes floatIn {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .avatar-wrap { position: relative; width: 96px; height: 96px; }
+  .avatar-ring {
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: conic-gradient(#3a8fb5, #5bbcd4, #c4a882, #4a7fa8, #3a8fb5);
+    animation: spin 6s linear infinite;
+    z-index: 0;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .avatar-inner {
+    position: absolute;
+    inset: 3px;
+    border-radius: 50%;
+    background: #0d1f35;
+    z-index: 1;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .avatar-initials {
+    font-family: 'Pacifico', cursive;
+    font-size: 28px;
+    background: linear-gradient(135deg, #5bbcd4, #c4a882);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .status-dot {
+    position: absolute;
+    bottom: 4px; right: 4px;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: #4ade80;
+    border: 2px solid #0d1f35;
+    z-index: 2;
+    box-shadow: 0 0 8px #4ade80;
+  }
+
+  .display-name {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
+    font-size: 26px;
+    background: linear-gradient(135deg, #7dd3e8 0%, #a8c8d8 50%, #c4a882 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+  }
+  .username { font-size: 13px; color: var(--text2); font-weight: 400; margin-top: -10px; }
+  .bio {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.6;
+    max-width: 300px;
+    font-style: italic;
+    opacity: 0.85;
+  }
+
+  .badges { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+  .badge {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(20,50,80,0.6);
+    border: 1px solid rgba(80,140,190,0.25);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--text);
+  }
+  .badge-dot { width: 7px; height: 7px; border-radius: 50%; }
+
+  .stats-row {
+    display: flex;
+    gap: 0;
+    width: 100%;
+    border-top: 1px solid rgba(80,140,190,0.2);
+    padding-top: 16px;
+    margin-top: 4px;
+  }
+  .stat { flex: 1; text-align: center; border-right: 1px solid rgba(80,140,190,0.2); }
+  .stat:last-child { border-right: none; }
+  .stat-num { font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 20px; color: var(--text); }
+  .stat-label { font-size: 10px; color: var(--text2); letter-spacing: 0.06em; text-transform: uppercase; margin-top: 2px; }
+
+  /* ── Links ── */
+  .links-card { animation: floatIn 0.7s 0.1s ease both; }
+  .link-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 13px 16px;
+    background: rgba(15,35,60,0.5);
+    border: 1px solid rgba(80,140,190,0.18);
+    border-radius: 16px;
+    text-decoration: none;
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    transition: transform 0.2s, background 0.2s;
+    cursor: pointer;
+  }
+  .link-item:last-child { margin-bottom: 0; }
+  .link-item:hover { transform: translateX(4px); background: rgba(25,55,90,0.65); }
+  .link-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .link-arrow { margin-left: auto; color: var(--text2); font-size: 16px; }
+
+  /* ── Mod Updates ── */
+  .updates-card { animation: floatIn 0.7s 0.2s ease both; }
+  .update-list { display: flex; flex-direction: column; gap: 12px; }
+  .update-item {
+    background: rgba(10,25,50,0.5);
+    border: 1px solid rgba(80,140,190,0.15);
+    border-radius: 16px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .update-header { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .update-title {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--text);
+    flex: 1;
+  }
+  .update-tag {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    border-radius: 8px;
+    padding: 3px 9px;
+  }
+  .tag-new { background: rgba(74,173,128,0.18); color: #4aad80; border: 1px solid rgba(74,173,128,0.3); }
+  .tag-update { background: rgba(91,188,212,0.15); color: #5bbcd4; border: 1px solid rgba(91,188,212,0.25); }
+  .tag-fix { background: rgba(196,168,130,0.15); color: #c4a882; border: 1px solid rgba(196,168,130,0.25); }
+  .update-desc { font-size: 13px; color: var(--text2); line-height: 1.5; }
+  .update-meta { font-size: 11px; color: var(--text2); opacity: 0.55; margin-top: 2px; }
+  .update-dl {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+    padding: 7px 14px;
+    background: rgba(20,55,85,0.6);
+    border: 1px solid rgba(80,140,190,0.25);
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #5bbcd4;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    cursor: pointer;
+    align-self: flex-start;
+  }
+  .update-dl:hover { background: rgba(30,70,110,0.7); transform: translateY(-1px); }
+
+  /* ── Leave a message ── */
+  .message-card { animation: floatIn 0.7s 0.3s ease both; }
+  .msg-form { display: flex; flex-direction: column; gap: 10px; }
+  .msg-input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid rgba(80,140,190,0.2);
+    border-radius: 14px;
+    background: rgba(10,25,50,0.55);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    outline: none;
+    resize: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .msg-input::placeholder { color: var(--text2); opacity: 0.6; }
+  .msg-input:focus { border-color: rgba(91,188,212,0.45); background: rgba(15,35,65,0.7); }
+  .msg-row { display: flex; gap: 10px; }
+  .msg-row .msg-input { flex: 1; }
+  .send-btn {
+    padding: 11px 22px;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #1a5a7a, #2a8ab0);
+    color: #c8e8f4;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: transform 0.15s, opacity 0.15s;
+  }
+  .send-btn:hover { transform: scale(1.03); opacity: 0.92; }
+  .send-btn:active { transform: scale(0.97); }
+
+  /* sent messages list */
+  .sent-list { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+  .sent-msg {
+    background: rgba(10,25,50,0.5);
+    border: 1px solid rgba(80,140,190,0.15);
+    border-radius: 12px;
+    padding: 10px 14px;
+    animation: floatIn 0.4s ease both;
+  }
+  .sent-author { font-size: 12px; font-weight: 600; color: var(--text); }
+  .sent-body { font-size: 13px; color: var(--text2); margin-top: 2px; line-height: 1.4; }
+  .sent-time { font-size: 10px; color: var(--text2); opacity: 0.5; margin-top: 3px; }
+
+  .footer {
+    text-align: center;
+    font-family: 'Pacifico', cursive;
+    font-size: 16px;
+    color: var(--text2);
+    opacity: 0.5;
+    margin-top: 10px;
+    letter-spacing: 0.03em;
+  }
+
+  .floaty {
+    position: fixed;
+    pointer-events: none;
+    font-size: 18px;
+    animation: floaty var(--dur, 15s) linear infinite;
+    opacity: 0;
+    z-index: 0;
+  }
+  @keyframes floaty {
+    0%   { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+    10%  { opacity: 0.4; }
+    90%  { opacity: 0.2; }
+    100% { transform: translateY(-60px) rotate(360deg); opacity: 0; }
+  }
+</style>
 </head>
 <body>
-  <canvas id="starry-canvas"></canvas>
 
-  <nav>
-    <div class="nav-inner">
-      <span class="logo">SkyeHub</span>
-      <div class="nav-links">
-        <a href="https://n3xdadumb.alepro5005elpre.workers.dev" target="_blank" class="btn-nav">Nexus</a>
-        <a href="#" class="btn-nav">About</a>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+<div class="orb orb4"></div>
+
+<div class="sparkle-container" id="sparkles"></div>
+<div id="floaties"></div>
+
+<div class="page">
+
+  <div class="wordmark">SkyeHub ✦</div>
+
+  <!-- Profile card -->
+  <div class="glass profile-card">
+    <div class="avatar-wrap">
+      <div class="avatar-ring"></div>
+      <div class="avatar-inner">
+        <span class="avatar-initials">S</span>
+      </div>
+      <div class="status-dot"></div>
+    </div>
+    <div>
+      <div class="display-name">Skye</div>
+      <div class="username">@skye</div>
+    </div>
+    <div class="bio">"always live life to its fullest ✨"</div>
+    <div class="badges">
+      <div class="badge"><div class="badge-dot" style="background:#5bbcd4"></div> Early Member</div>
+      <div class="badge"><div class="badge-dot" style="background:#4a7fa8"></div> Creator</div>
+      <div class="badge"><div class="badge-dot" style="background:#4aad80"></div> Booster</div>
+    </div>
+    <div class="stats-row">
+      <div class="stat">
+        <div class="stat-num">233</div>
+        <div class="stat-label">Views</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">8</div>
+        <div class="stat-label">Rep</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">#21</div>
+        <div class="stat-label">Joined</div>
       </div>
     </div>
-  </nav>
+  </div>
 
-  <header id="hero">
-    <h1>SkyeHub</h1>
-  </header>
+  <!-- Links -->
+  <div class="section-label">Links</div>
+  <div class="glass links-card" style="width:100%">
+    <a class="link-item" href="https://youtube.com/@skyegtag" target="_blank">
+      <div class="link-icon" style="background:linear-gradient(135deg,#7a2a2a,#b04040)">▶</div>
+      YouTube
+      <span class="link-arrow">›</span>
+    </a>
+    <a class="link-item" href="#" target="_blank">
+      <div class="link-icon" style="background:linear-gradient(135deg,#1a3a6a,#2a5a9a)">✦</div>
+      Discord
+      <span class="link-arrow">›</span>
+    </a>
+    <a class="link-item" href="#" target="_blank">
+      <div class="link-icon" style="background:linear-gradient(135deg,#0d3a2a,#1a6a4a)">✿</div>
+      Spotify
+      <span class="link-arrow">›</span>
+    </a>
+    <a class="link-item" href="#" target="_blank">
+      <div class="link-icon" style="background:linear-gradient(135deg,#3a3a1a,#6a6a2a)">☀</div>
+      Twitter / X
+      <span class="link-arrow">›</span>
+    </a>
+  </div>
 
-  <footer>
-    <p>© 2026 SkyeHub</p>
-  </footer>
+  <!-- Mod Updates -->
+  <div class="section-label">Mods &amp; Updates</div>
+  <div class="glass updates-card" style="width:100%">
+    <div class="update-list" id="updateList">
 
-  <script src="script.js"></script>
+      <div class="update-item">
+        <div class="update-header">
+          <div class="update-title">SkyeMod v2.1</div>
+          <span class="update-tag tag-update">Update</span>
+        </div>
+        <div class="update-desc">Fixed item duplication bug, improved performance on older hardware, new config options added.</div>
+        <div class="update-meta">May 24, 2025</div>
+        <a class="update-dl" href="#">⬇ Download</a>
+      </div>
+
+      <div class="update-item">
+        <div class="update-header">
+          <div class="update-title">NightSky Texture Pack</div>
+          <span class="update-tag tag-new">New</span>
+        </div>
+        <div class="update-desc">Custom dark-themed textures for all biomes. Pairs well with SkyeMod.</div>
+        <div class="update-meta">May 18, 2025</div>
+        <a class="update-dl" href="#">⬇ Download</a>
+      </div>
+
+      <div class="update-item">
+        <div class="update-header">
+          <div class="update-title">SkyeMod v2.0 crash fix</div>
+          <span class="update-tag tag-fix">Fix</span>
+        </div>
+        <div class="update-desc">Patched crash on world load introduced in v2.0. Update immediately if you're on v2.0.</div>
+        <div class="update-meta">May 10, 2025</div>
+        <a class="update-dl" href="#">⬇ Download</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Leave a message -->
+  <div class="section-label">Leave a message</div>
+  <div class="glass message-card" style="width:100%">
+    <div class="msg-form">
+      <div class="msg-row">
+        <input class="msg-input" type="text" id="msgName" placeholder="Your name" style="height:44px">
+        <input class="msg-input" type="text" id="msgText" placeholder="Your message" style="height:44px; flex:2">
+      </div>
+      <button class="send-btn" onclick="sendMsg()">Send ✦</button>
+    </div>
+    <div class="sent-list" id="sentList"></div>
+  </div>
+
+  <div class="footer">SkyeHub</div>
+
+</div>
+
+<script>
+const sparkleContainer = document.getElementById('sparkles');
+for (let i = 0; i < 60; i++) {
+  const s = document.createElement('div');
+  s.className = 'star';
+  const size = Math.random() * 3 + 1;
+  s.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--dur:${2+Math.random()*4}s;--delay:${-Math.random()*6}s;`;
+  sparkleContainer.appendChild(s);
+}
+
+const floatContainer = document.getElementById('floaties');
+const floatEmojis = ['✿', '✦', '♡', '˚', '✧', '⋆', '₊'];
+for (let i = 0; i < 12; i++) {
+  const f = document.createElement('div');
+  f.className = 'floaty';
+  f.textContent = floatEmojis[Math.floor(Math.random()*floatEmojis.length)];
+  f.style.cssText = `left:${Math.random()*100}%;--dur:${12+Math.random()*15}s;animation-delay:${-Math.random()*20}s;`;
+  floatContainer.appendChild(f);
+}
+
+function sendMsg() {
+  const nameEl = document.getElementById('msgName');
+  const textEl = document.getElementById('msgText');
+  const name = nameEl.value.trim() || 'anon';
+  const msg = textEl.value.trim();
+  if (!msg) return;
+
+  const item = document.createElement('div');
+  item.className = 'sent-msg';
+  const now = new Date();
+  item.innerHTML = `
+    <div class="sent-author">${name}</div>
+    <div class="sent-body">${msg}</div>
+    <div class="sent-time">just now</div>
+  `;
+  const list = document.getElementById('sentList');
+  list.prepend(item);
+  nameEl.value = '';
+  textEl.value = '';
+}
+</script>
 </body>
 </html>
