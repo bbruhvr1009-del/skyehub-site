@@ -68,7 +68,6 @@
   }
   @keyframes spin { to { transform:rotate(360deg); } }
 
-  /* ── Page shell ── */
   .page {
     position: relative; z-index: 1;
     max-width: 960px;
@@ -86,13 +85,13 @@
     letter-spacing: 0.02em; opacity: 0.7;
   }
 
-  /* ── Two-column layout ── */
   .layout {
     width: 100%;
     display: grid;
-    grid-template-columns: 280px 1fr;
+    grid-template-columns: 280px 380px;
     gap: 20px;
     align-items: start;
+    justify-content: center;
   }
 
   .right-col {
@@ -101,13 +100,10 @@
     gap: 20px;
   }
 
-  .right-col > :first-child { margin-top: 0; }
-
   @media (max-width: 680px) {
     .layout { grid-template-columns: 1fr; }
   }
 
-  /* ── Section label ── */
   .section-label {
     font-family: 'Quicksand', sans-serif;
     font-size: 11px; font-weight: 700;
@@ -115,7 +111,6 @@
     color: #9b7fc0; margin-bottom: -8px;
   }
 
-  /* ── Glass card ── */
   .glass {
     width: 100%;
     background: rgba(15,5,30,0.6);
@@ -125,7 +120,7 @@
     box-shadow: 0 8px 40px rgba(0,0,15,0.6), inset 0 1px 0 rgba(160,100,220,0.1);
   }
 
-  /* ── Profile card ── */
+  /* Profile */
   .profile-card {
     display: flex; flex-direction: column; align-items: center;
     gap: 14px; padding: 32px 20px 24px; text-align: center;
@@ -180,7 +175,7 @@
   .stat-num { font-family:'Quicksand',sans-serif;font-weight:700;font-size:18px;color:var(--text); }
   .stat-label { font-size:10px;color:var(--text2);letter-spacing:0.06em;text-transform:uppercase;margin-top:2px; }
 
-  /* ── Links grid ── */
+  /* Links */
   .links-card { animation: floatIn 0.7s 0.1s ease both; }
   .links-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:10px; }
   .link-item {
@@ -197,69 +192,105 @@
     display:flex;align-items:center;justify-content:center;font-size:20px;
   }
 
-  /* ── Mod Updates ── */
-  .updates-card { animation: floatIn 0.7s 0.2s ease both; }
-  .update-list { display:grid;grid-template-columns:repeat(3,1fr);gap:10px; }
-  .update-item {
-    background:rgba(15,5,30,0.5);border:1px solid rgba(140,80,200,0.15);
-    border-radius:16px;padding:14px;
-    display:flex;flex-direction:column;gap:6px;
+  /* Music Widget — fixed bottom right */
+  .music-widget {
+    position: fixed; bottom: 20px; right: 20px; z-index: 100;
+    width: 240px;
+    background: rgba(10,3,22,0.88);
+    backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(140,80,200,0.25);
+    border-radius: 18px;
+    box-shadow: 0 8px 40px rgba(0,0,20,0.7), inset 0 1px 0 rgba(160,100,220,0.1);
+    overflow: hidden;
+    animation: floatIn 0.7s 0.2s ease both;
   }
-  .update-header { display:flex;align-items:flex-start;justify-content:space-between;gap:6px; }
-  .update-title { font-family:'Quicksand',sans-serif;font-weight:700;font-size:13px;color:var(--text);flex:1; }
-  .update-tag {
-    font-size:9px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;
-    border-radius:8px;padding:3px 8px;white-space:nowrap;flex-shrink:0;
-  }
-  .tag-new    { background:rgba(74,173,128,0.18);color:#4aad80;border:1px solid rgba(74,173,128,0.3); }
-  .tag-update { background:rgba(176,122,212,0.15);color:#b07ad4;border:1px solid rgba(176,122,212,0.25); }
-  .tag-fix    { background:rgba(196,168,130,0.15);color:#c4a882;border:1px solid rgba(196,168,130,0.25); }
-  .update-desc { font-size:12px;color:var(--text2);line-height:1.5; }
-  .update-meta { font-size:10px;color:var(--text2);opacity:0.55; }
-  .update-dl {
-    display:inline-flex;align-items:center;gap:5px;margin-top:4px;
-    padding:6px 12px;background:rgba(40,10,70,0.6);
-    border:1px solid rgba(140,80,200,0.25);border-radius:10px;
-    font-size:11px;font-weight:600;color:#b07ad4;text-decoration:none;
-    transition:background 0.2s,transform 0.15s;cursor:pointer;align-self:flex-start;
-  }
-  .update-dl:hover { background:rgba(70,15,110,0.7);transform:translateY(-1px); }
 
-  /* ── Message board ── */
-  .message-card { animation: floatIn 0.7s 0.3s ease both; }
-  .msg-form { display:flex;flex-direction:column;gap:10px; }
-  .msg-input {
-    width:100%;padding:11px 14px;
-    border:1px solid rgba(140,80,200,0.2);border-radius:14px;
-    background:rgba(15,5,30,0.55);font-family:'DM Sans',sans-serif;
-    font-size:13px;color:var(--text);outline:none;resize:none;
-    transition:border-color 0.2s,background 0.2s;
+  .music-widget-header {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 14px; cursor: pointer;
+    background: rgba(30,8,55,0.5);
+    border-bottom: 1px solid rgba(140,80,200,0.15);
+    user-select: none; transition: background 0.2s;
   }
-  .msg-input::placeholder { color:var(--text2);opacity:0.6; }
-  .msg-input:focus { border-color:rgba(176,122,212,0.45);background:rgba(25,5,45,0.7); }
-  .msg-row { display:flex;gap:10px; }
-  .msg-row .msg-input { flex:1; }
-  .send-btn {
-    padding:10px 20px;border:none;border-radius:14px;
-    background:linear-gradient(135deg,#3a0a6a,#7a30b0);color:#e2d4f0;
-    font-family:'Quicksand',sans-serif;font-weight:700;font-size:13px;
-    cursor:pointer;white-space:nowrap;transition:transform 0.15s,opacity 0.15s;
+  .music-widget-header:hover { background: rgba(50,12,80,0.6); }
+  .music-widget-icon { font-size: 14px; color: #b07ad4; }
+  .music-widget-label {
+    flex: 1; font-family: 'Quicksand', sans-serif; font-weight: 700;
+    font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text2);
   }
-  .send-btn:hover { transform:scale(1.03);opacity:0.92; }
-  .send-btn:active { transform:scale(0.97); }
-  .sent-list { display:flex;flex-direction:column;gap:8px;margin-top:12px; }
-  .sent-msg {
-    background:rgba(15,5,30,0.5);border:1px solid rgba(140,80,200,0.15);
-    border-radius:12px;padding:10px 14px;animation:floatIn 0.4s ease both;
-  }
-  .sent-author { font-size:12px;font-weight:600;color:var(--text); }
-  .sent-body   { font-size:13px;color:var(--text2);margin-top:2px;line-height:1.4; }
-  .sent-time   { font-size:10px;color:var(--text2);opacity:0.5;margin-top:3px; }
+  .music-widget-chevron { font-size: 11px; color: var(--text2); opacity: 0.6; transition: transform 0.25s; }
+  .music-widget-chevron.collapsed { transform: rotate(180deg); }
 
-  .footer {
-    text-align:center;font-family:'Pacifico',cursive;
-    font-size:16px;color:var(--text2);opacity:0.5;letter-spacing:0.03em;
+  .music-widget-body {
+    padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 6px;
+    transition: max-height 0.3s ease, opacity 0.25s ease, padding 0.3s ease;
+    max-height: 400px; overflow: hidden;
   }
+  .music-widget-body.collapsed {
+    max-height: 0; opacity: 0; padding-top: 0; padding-bottom: 0;
+  }
+
+  .music-controls {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .ctrl-btn {
+    background: rgba(40,10,70,0.6); border: 1px solid rgba(140,80,200,0.25);
+    border-radius: 50%; width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 14px; color: var(--text);
+    transition: background 0.2s, transform 0.15s; flex-shrink: 0;
+    user-select: none;
+  }
+  .ctrl-btn:hover { background: rgba(70,15,110,0.7); transform: scale(1.08); }
+  .ctrl-btn.play-btn {
+    width: 44px; height: 44px; font-size: 16px;
+    background: linear-gradient(135deg, #3a0a6a, #7a30b0);
+    border-color: rgba(176,122,212,0.4);
+  }
+  .ctrl-btn.loop-btn.on { color: #b07ad4 !important; border-color: rgba(176,122,212,0.5) !important; }
+
+  .progress-wrap { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+  .progress-bar-track {
+    width: 100%; height: 4px; background: rgba(140,80,200,0.2);
+    border-radius: 4px; cursor: pointer; position: relative;
+  }
+  .progress-bar-fill {
+    height: 100%; background: linear-gradient(90deg, #6a20a0, #b07ad4);
+    border-radius: 4px; width: 0%; pointer-events: none;
+  }
+  .progress-times {
+    display: flex; justify-content: space-between;
+    font-size: 10px; color: var(--text2); opacity: 0.6;
+  }
+
+  .volume-row {
+    display: flex; align-items: center; gap: 8px;
+  }
+  .vol-icon { font-size: 13px; color: var(--text2); opacity: 0.7; }
+  .vol-slider {
+    flex: 1; -webkit-appearance: none; appearance: none;
+    height: 3px; border-radius: 3px;
+    background: rgba(140,80,200,0.25); outline: none; cursor: pointer;
+  }
+  .vol-slider::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 12px; height: 12px;
+    border-radius: 50%; background: #b07ad4; cursor: pointer;
+  }
+
+  .playlist { display: flex; flex-direction: column; gap: 4px; max-height: 160px; overflow-y: auto; }
+  .playlist::-webkit-scrollbar { width: 4px; }
+  .playlist::-webkit-scrollbar-thumb { background: rgba(140,80,200,0.3); border-radius: 4px; }
+
+  .playlist-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 7px 10px; border-radius: 10px; cursor: pointer;
+    transition: background 0.15s; font-size: 12px; color: var(--text2);
+  }
+  .playlist-item:hover { background: rgba(40,10,70,0.5); }
+  .playlist-item.active { background: rgba(50,10,80,0.6); color: var(--text); }
+  .playlist-item-num { width: 14px; text-align: center; font-size: 10px; opacity: 0.5; flex-shrink: 0; }
+  .playlist-item-name { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 </style>
 </head>
 <body>
@@ -301,7 +332,7 @@
       </div>
     </div>
 
-    <!-- RIGHT: Links + Mods + Messages -->
+    <!-- RIGHT -->
     <div class="right-col">
 
       <div class="glass links-card">
@@ -321,181 +352,168 @@
         </div>
       </div>
 
-      <div class="section-label">Mods &amp; Updates</div>
-      <div class="glass updates-card">
-        <div class="update-list" id="updateList">
-
-          <div class="update-item" style="grid-column:1/-1">
-            <div class="update-header">
-              <div class="update-title">ZlothY Dances <span style="font-size:11px;font-weight:400;color:var(--text2)">v1.2.0</span></div>
-              <span class="update-tag tag-new">New</span>
-            </div>
-            <div class="update-desc">A fork/revamp of <a href="https://github.com/ColossusYTTV/Colossal-Emotes/" target="_blank" style="color:#b07ad4">Colossal Emotes</a>. Contains lots of dances and uses gorilla track networking to rotate the whole body just like body tracking.</div>
-
-            <div class="update-desc" style="margin-top:6px">
-              <strong style="color:var(--text)">How to use:</strong> Hold right trigger (B on PC) + left joystick to select. Release to play or change page. Left trigger to stop. Avoid spamming or switching emotes rapidly.
-            </div>
-            <div style="margin-top:8px;padding:10px 12px;background:rgba(140,80,200,0.07);border:1px solid rgba(140,80,200,0.2);border-radius:10px">
-              <div style="font-family:'Quicksand',sans-serif;font-weight:700;font-size:12px;color:#b07ad4;margin-bottom:6px">🆕 V1.2.0 — What's new</div>
-              <ul style="list-style:none;display:flex;flex-direction:column;gap:4px">
-                <li style="font-size:12px;color:var(--text2)">✦ Added more emotes</li>
-                <li style="font-size:12px;color:var(--text2)">✦ Full body rotation is now fully networked for everyone (server sided)</li>
-                <li style="font-size:12px;color:var(--text2)">✦ Stump promo redesigned — smaller and moves up to stay out of the way</li>
-              </ul>
-            </div>
-            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
-              <a class="update-dl" href="https://github.com/ZlothY29IQ/zlothydances/releases/latest/download/ZlothYDances.dll" target="_blank">⬇ Download</a>
-              <a class="update-dl" href="https://github.com/ZlothY29IQ/zlothydances" target="_blank" style="color:var(--text2)">⌥ Source Code</a>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="section-label">Leave a message</div>
-      <div class="glass message-card">
-        <div class="msg-form">
-          <div class="msg-row">
-            <input class="msg-input" type="text" id="msgName" placeholder="Your name" style="height:42px">
-            <input class="msg-input" type="text" id="msgText" placeholder="Your message" style="height:42px;flex:2">
-          </div>
-          <button class="send-btn" onclick="sendMsg()">Send ✦</button>
-        </div>
-        <div class="sent-list" id="sentList"></div>
-      </div>
-
     </div>
   </div>
 
+</div>
 
-
+<!-- Fixed music widget bottom-right -->
+<div class="music-widget" id="musicWidget">
+  <div class="music-widget-header" onclick="toggleWidget()">
+    <span class="music-widget-icon">♪</span>
+    <span class="music-widget-label">Music</span>
+    <span class="music-widget-chevron" id="widgetChevron">▾</span>
+  </div>
+  <div class="music-widget-body" id="widgetBody">
+    <div class="music-controls">
+      <div class="ctrl-btn" onclick="prevTrack()">⏮</div>
+      <div class="ctrl-btn play-btn" id="playBtn" onclick="togglePlay()">▶</div>
+      <div class="ctrl-btn" onclick="nextTrack()">⏭</div>
+      <div class="ctrl-btn loop-btn" id="loopBtn" onclick="toggleLoop()" title="Loop">⟳</div>
+    </div>
+    <div class="progress-wrap" style="margin:8px 0">
+      <div class="progress-bar-track" id="progressTrack" onclick="seekTo(event)">
+        <div class="progress-bar-fill" id="progressFill"></div>
+      </div>
+      <div class="progress-times">
+        <span id="timeEl">0:00</span>
+        <span id="durationEl">0:00</span>
+      </div>
+    </div>
+    <div class="volume-row">
+      <span class="vol-icon">🔈</span>
+      <input class="vol-slider" type="range" min="0" max="1" step="0.01" value="0.7" oninput="audio.volume=this.value">
+      <span class="vol-icon">🔊</span>
+    </div>
+    <div class="playlist" id="playlist"></div>
+  </div>
 </div>
 
 <script>
-// ── Canvas star animation (converted from React component) ──
+// ─────────────────────────────────────────────
+//  🎵 MUSIC PLAYLIST — edit this list to add/remove songs
+//  Use raw GitHub URLs:
+//  https://raw.githubusercontent.com/USERNAME/REPO/main/FILENAME.mp3
+// ─────────────────────────────────────────────
+const TRACKS = [
+  // { name: "Song Name", url: "https://raw.githubusercontent.com/you/repo/main/song.mp3" },
+  // { name: "Another Song", url: "https://raw.githubusercontent.com/you/repo/main/other.mp3" },
+];
+// ─────────────────────────────────────────────
+
+const audio = new Audio();
+audio.volume = 0.7;
+let currentIdx = -1;
+let isLooping = false;
+
+const playBtn     = document.getElementById('playBtn');
+const progressFill = document.getElementById('progressFill');
+const timeEl      = document.getElementById('timeEl');
+const durationEl  = document.getElementById('durationEl');
+const playlist    = document.getElementById('playlist');
+const loopBtn     = document.getElementById('loopBtn');
+
+function renderPlaylist() {
+  playlist.innerHTML = '';
+  if (TRACKS.length === 0) {
+    playlist.innerHTML = '<div style="font-size:12px;color:var(--text2);opacity:0.5;padding:8px 10px">No tracks yet — add some in the HTML!</div>';
+    return;
+  }
+  TRACKS.forEach((t, i) => {
+    const item = document.createElement('div');
+    item.className = 'playlist-item' + (i === currentIdx ? ' active' : '');
+    item.innerHTML = `<span class="playlist-item-num">${i === currentIdx ? '♪' : i + 1}</span><span class="playlist-item-name">${t.name}</span>`;
+    item.onclick = () => { loadTrack(i); audio.play(); };
+    playlist.appendChild(item);
+  });
+}
+
+function loadTrack(idx) {
+  if (!TRACKS.length) return;
+  currentIdx = idx;
+  audio.src = TRACKS[idx].url;
+  playBtn.textContent = '▶';
+  progressFill.style.width = '0%';
+  timeEl.textContent = '0:00';
+  durationEl.textContent = '0:00';
+  renderPlaylist();
+}
+
+function togglePlay() {
+  if (!TRACKS.length) return;
+  if (currentIdx === -1) { loadTrack(0); audio.play(); return; }
+  audio.paused ? audio.play() : audio.pause();
+}
+
+function prevTrack() {
+  if (!TRACKS.length) return;
+  loadTrack(currentIdx <= 0 ? TRACKS.length - 1 : currentIdx - 1);
+  audio.play();
+}
+
+function nextTrack() {
+  if (!TRACKS.length) return;
+  loadTrack((currentIdx + 1) % TRACKS.length);
+  audio.play();
+}
+
+function toggleLoop() {
+  isLooping = !isLooping;
+  audio.loop = isLooping;
+  loopBtn.classList.toggle('on', isLooping);
+}
+
+function seekTo(e) {
+  if (!audio.duration) return;
+  const rect = e.currentTarget.getBoundingClientRect();
+  audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
+}
+
+function fmtTime(s) {
+  if (!s || isNaN(s)) return '0:00';
+  return `${Math.floor(s/60)}:${Math.floor(s%60).toString().padStart(2,'0')}`;
+}
+
+audio.addEventListener('play', () => {
+  playBtn.textContent = '⏸';
+});
+audio.addEventListener('pause', () => {
+  playBtn.textContent = '▶';
+});
+audio.addEventListener('timeupdate', () => {
+  if (!audio.duration) return;
+  progressFill.style.width = (audio.currentTime / audio.duration * 100) + '%';
+  timeEl.textContent = fmtTime(audio.currentTime);
+});
+audio.addEventListener('loadedmetadata', () => { durationEl.textContent = fmtTime(audio.duration); });
+audio.addEventListener('ended', () => { if (!isLooping) nextTrack(); });
+
+function toggleWidget() {
+  const body = document.getElementById('widgetBody');
+  const chev = document.getElementById('widgetChevron');
+  body.classList.toggle('collapsed');
+  chev.classList.toggle('collapsed');
+}
+
+renderPlaylist();
+
+// ── Stars ──
 const starry_canvas = document.getElementById('starry-canvas');
-starry_canvas.width = window.innerWidth;
-starry_canvas.height = window.innerHeight;
+starry_canvas.width = window.innerWidth; starry_canvas.height = window.innerHeight;
 const ctx = starry_canvas.getContext('2d');
+let pause_simulation=false,is_ready=false,last_ts=0,dt=0;
+function rnd(a,b){return Math.random()*(b-a)+a;}
+class Star{constructor(){this.x=this.y=this.real_x=this.real_y=this.rotation=0;this.size=8;this.color="rgba(255,255,255,1)";this.x_vel=this.y_vel=this.rot_vel=0;}draw(){ctx.fillStyle=this.color;ctx.save();ctx.translate(this.real_x+this.size/2,this.real_y+this.size/2);ctx.rotate(this.rotation*Math.PI/180);ctx.fillRect(-this.size/2,-this.size/2,this.size,this.size);ctx.restore();}step(){const fx=this.x+this.x_vel*dt,fy=this.y+this.y_vel*dt,rx=fx+starry_canvas.width/2,ry=fy+starry_canvas.height/2;if(rx>starry_canvas.width)this.x_vel=-Math.abs(this.x_vel);if(rx<0)this.x_vel=Math.abs(this.x_vel);if(ry<0)this.y_vel=Math.abs(this.y_vel);if(ry>starry_canvas.height)this.y_vel=-Math.abs(this.y_vel);this.x+=this.x_vel*dt;this.y+=this.y_vel*dt;this.rotation+=this.rot_vel*dt;this.real_x=this.x+starry_canvas.width/2;this.real_y=this.y+starry_canvas.height/2;}}
+const stars=[];for(let i=0;i<150;i++){const s=new Star();s.x=rnd(-starry_canvas.width/2,starry_canvas.width/2);s.y=rnd(-starry_canvas.height/2,starry_canvas.height/2);s.x_vel=rnd(-24,24);s.y_vel=rnd(-24,24);s.rot_vel=rnd(-90,90);s.size=rnd(2,4);s.color=`hsla(${Math.random()*360},15%,50%,${rnd(0.9,1)})`;stars.push(s);}
+function drawStars(){if(pause_simulation)return;ctx.clearRect(0,0,starry_canvas.width,starry_canvas.height);for(let i=0;i<stars.length;i++){const s=stars[i];s.step();s.draw();let c=0;for(let a=0;a<stars.length;a++){const t=stars[a],d=Math.hypot(t.x-s.x,t.y-s.y);if(d<=80){ctx.strokeStyle=c>=2&&c<5?"#ffffff10":"#ffffff22";ctx.beginPath();ctx.moveTo(s.real_x,s.real_y);ctx.lineTo(t.real_x,t.real_y);ctx.stroke();c++;}}}}
+document.addEventListener("visibilitychange",()=>{pause_simulation=document.hidden;});
+window.addEventListener("resize",()=>{starry_canvas.width=window.innerWidth;starry_canvas.height=window.innerHeight;});
+function frame(ts){dt=(ts-last_ts)/1000;if(!is_ready)is_ready=true;else drawStars();last_ts=ts;requestAnimationFrame(frame);}
+requestAnimationFrame(frame);
 
-const STAR_COUNT = 150;
-const PROXIMITY_LINE_MAX_DISTANCE = 80;
-const MAX_PROXIMITY_CONNECTIONS_PER_POINT = 2;
-const MAX_MAX_PROXIMITY_CONNECTIONS_PER_POINT = 5;
-
-let pause_simulation = false;
-let is_ready_for_drawing = false;
-let last_timestamp = 0;
-let delta_time = 0;
-const time_on_page_load = Date.now();
-
-function random_min_max(min, max) { return Math.random() * (max - min) + min; }
-
-class Star {
-  constructor() {
-    this.x = 0; this.y = 0; this.size = 8; this.color = "rgba(255,255,255,1.0)";
-    this.x_vel = 0; this.y_vel = 0; this.rotation = 0; this.rot_vel = 0;
-    this.real_x = 0; this.real_y = 0;
-  }
-  draw() {
-    ctx.fillStyle = this.color;
-    ctx.save();
-    ctx.translate(this.real_x + this.size / 2, this.real_y + this.size / 2);
-    ctx.rotate(this.rotation * Math.PI / 180);
-    ctx.fillRect(-this.size / 2, -this.size / 2, this.size, this.size);
-    ctx.restore();
-  }
-  physics_step() {
-    const future_x = this.x + this.x_vel * delta_time;
-    const future_y = this.y + this.y_vel * delta_time;
-    const future_real_x = future_x + starry_canvas.width / 2;
-    const future_real_y = future_y + starry_canvas.height / 2;
-    if (future_real_x > starry_canvas.width) this.x_vel = -Math.abs(this.x_vel);
-    if (future_real_x < 0)                   this.x_vel =  Math.abs(this.x_vel);
-    if (future_real_y < 0)                   this.y_vel =  Math.abs(this.y_vel);
-    if (future_real_y > starry_canvas.height) this.y_vel = -Math.abs(this.y_vel);
-    this.x += this.x_vel * delta_time;
-    this.y += this.y_vel * delta_time;
-    this.rotation += this.rot_vel * delta_time;
-    this.real_x = future_real_x;
-    this.real_y = future_real_y;
-  }
-}
-
-const all_stars = [];
-for (let i = 0; i < STAR_COUNT; i++) {
-  const s = new Star();
-  s.x = random_min_max(-starry_canvas.width / 2, starry_canvas.width / 2);
-  s.y = random_min_max(-starry_canvas.height / 2, starry_canvas.height / 2);
-  s.x_vel = random_min_max(-24, 24);
-  s.y_vel = random_min_max(-24, 24);
-  s.rot_vel = random_min_max(-90, 90);
-  s.size = random_min_max(2, 4);
-  s.color = `hsla(${Math.random()*360},15%,50%,${random_min_max(0.9,1.0)})`;
-  all_stars.push(s);
-}
-
-function draw() {
-  if (pause_simulation) return;
-  ctx.clearRect(0, 0, starry_canvas.width, starry_canvas.height);
-  for (let i = 0; i < all_stars.length; i++) {
-    const ts = all_stars[i];
-    ts.physics_step();
-    ts.draw();
-    let connections = 0;
-    for (let a = 0; a < all_stars.length; a++) {
-      const ta = all_stars[a];
-      const dist = Math.sqrt(Math.pow(ta.x - ts.x, 2) + Math.pow(ta.y - ts.y, 2));
-      if (dist <= PROXIMITY_LINE_MAX_DISTANCE) {
-        ctx.strokeStyle = connections >= MAX_PROXIMITY_CONNECTIONS_PER_POINT && connections < MAX_MAX_PROXIMITY_CONNECTIONS_PER_POINT ? "#ffffff10" : "#ffffff22";
-        ctx.beginPath();
-        ctx.moveTo(ts.real_x, ts.real_y);
-        ctx.lineTo(ta.real_x, ta.real_y);
-        ctx.stroke();
-        connections++;
-      }
-    }
-  }
-}
-
-document.addEventListener("visibilitychange", () => {
-  pause_simulation = document.hidden;
-  if (!pause_simulation) last_timestamp = Date.now() - time_on_page_load;
-});
-window.addEventListener("resize", () => {
-  starry_canvas.width = window.innerWidth;
-  starry_canvas.height = window.innerHeight;
-});
-
-function animationFrame(timestamp) {
-  delta_time = (timestamp - last_timestamp) / 1000;
-  if (!is_ready_for_drawing) is_ready_for_drawing = true;
-  else draw();
-  last_timestamp = timestamp;
-  requestAnimationFrame(animationFrame);
-}
-requestAnimationFrame(animationFrame);
-const floatContainer = document.getElementById('floaties');
-const floatEmojis = ['✿','✦','♡','˚','✧','⋆','₊'];
-for (let i = 0; i < 12; i++) {
-  const f = document.createElement('div');
-  f.className = 'floaty';
-  f.textContent = floatEmojis[Math.floor(Math.random()*floatEmojis.length)];
-  f.style.cssText = `left:${Math.random()*100}%;--dur:${12+Math.random()*15}s;animation-delay:${-Math.random()*20}s;`;
-  floatContainer.appendChild(f);
-}
-function sendMsg() {
-  const nameEl = document.getElementById('msgName');
-  const textEl = document.getElementById('msgText');
-  const name = nameEl.value.trim() || 'anon';
-  const msg = textEl.value.trim();
-  if (!msg) return;
-  const item = document.createElement('div');
-  item.className = 'sent-msg';
-  item.innerHTML = `<div class="sent-author">${name}</div><div class="sent-body">${msg}</div><div class="sent-time">just now</div>`;
-  document.getElementById('sentList').prepend(item);
-  nameEl.value = ''; textEl.value = '';
-}
+// ── Floaties ──
+const fe=['✿','✦','♡','˚','✧','⋆','₊'];
+for(let i=0;i<12;i++){const f=document.createElement('div');f.className='floaty';f.textContent=fe[Math.floor(Math.random()*fe.length)];f.style.cssText=`left:${Math.random()*100}%;--dur:${12+Math.random()*15}s;animation-delay:${-Math.random()*20}s;`;document.getElementById('floaties').appendChild(f);}
 </script>
 </body>
 </html>
