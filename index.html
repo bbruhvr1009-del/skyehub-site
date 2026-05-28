@@ -173,6 +173,9 @@ hr {
 
 .visualClear { clear: both; }
 
+.page-section { display: none; }
+.page-section.active { display: block; }
+
 @media screen and (min-width: 551px) {
   #column-content { float: right; margin: 0 0 0.6em -12.2em; }
   .mw-body { margin: 2.8em 0 0 12.2em; border-right: 0; }
@@ -192,22 +195,46 @@ hr {
   <div id="column-content">
     <div class="mw-body" role="main">
 
-      <h1 id="firstHeading">! Skye Larsen</h1>
-      <div id="siteSub">I'm Skye | skyehub.org</div>
+      <!-- Home -->
+      <div id="section-home" class="page-section active">
+        <h1 id="firstHeading">! Skye Larsen</h1>
+        <div id="siteSub">I'm Skye | skyehub.org</div>
+        <p><b>@yourlocalrifty</b> &nbsp;·&nbsp; ⋆⁺₊✧ ୨ ≧◡≦ ୧ ✧₊⁺⋆ 𓎟𓎟 ◞</p>
+        <hr style="border-top: 2px dashed #a2a9b1; background: none; color: #a2a9b1;">
+        <h2>Links</h2>
+        <ul>
+          <li><a href="https://discord.gg/pFwB4thuD8" target="_blank">Discord</a> — Join the server</li>
+          <li><a href="https://open.spotify.com/user/314cjpdqy4v5trhhehlrzs3ngc5m" target="_blank">Spotify</a> — Music profile</li>
+          <li><a href="https://tiktok.com/@skyedotnet" target="_blank">TikTok</a> — @skyedotnet</li>
+          <li><a href="https://www.fort1nd.com/" target="_blank">Fort1nd</a> — https://www.fort1nd.com/</li>
+          <li><a href="https://www.skyehub.org/hiddenwiki.html" target="_blank">The Hidden Wiki</a> — Hosted on SkyeHub | No I will not be fixing, every single link.</li>
+          <li><a href="https://learn.englishbridalcouture.com/resources/semag/ddlcplus/index.html" target="_blank">DDLC</a> — Doki Doki Literature Club!</li>
+        </ul>
+      </div>
 
-      <p><b>@yourlocalrifty</b> &nbsp;·&nbsp; ⋆⁺₊✧ ୨ ≧◡≦ ୧ ✧₊⁺⋆ 𓎟𓎟 ◞</p>
+      <!-- Hall of Fame -->
+      <div id="section-hof" class="page-section">
+        <h1 id="firstHeading">🏆 Hall of Fame</h1>
+        <div id="siteSub">The legends | skyehub.org</div>
+        <hr style="border-top: 2px dashed #a2a9b1; background: none; color: #a2a9b1;">
+        <p>Add your hall of fame entries here.</p>
+      </div>
 
-      <hr style="border-top: 2px dashed #a2a9b1; background: none; color: #a2a9b1;">
+      <!-- Wall of Shame -->
+      <div id="section-wos" class="page-section">
+        <h1 id="firstHeading">😬 Wall of Shame</h1>
+        <div id="siteSub">You know what you did | skyehub.org</div>
+        <hr style="border-top: 2px dashed #a2a9b1; background: none; color: #a2a9b1;">
+        <p>Add your wall of shame entries here.</p>
+      </div>
 
-      <h2>Links</h2>
-      <ul>
-        <li><a href="https://discord.gg/pFwB4thuD8" target="_blank">Discord</a> — Join the server</li>
-        <li><a href="https://open.spotify.com/user/314cjpdqy4v5trhhehlrzs3ngc5m" target="_blank">Spotify</a> — Music profile</li>
-        <li><a href="https://tiktok.com/@skyedotnet" target="_blank">TikTok</a> — @skyedotnet</li>
-        <li><a href="https://www.fort1nd.com/" target="_blank">Fort1nd</a> — https://www.fort1nd.com/</li>
-        <li><a href="https://www.skyehub.org/hiddenwiki.html" target="_blank">The Hidden Wiki</a> — Hosted on SkyeHub | No I will not be fixing, every single link.</li>
-        <li><a href="https://learn.englishbridalcouture.com/resources/semag/ddlcplus/index.html" target="_blank">DDLC</a> — Doki Doki Literature Club!</li>
-      </ul>
+      <!-- Hidden Wiki -->
+      <div id="section-wiki" class="page-section">
+        <h1 id="firstHeading">The Hidden Wiki</h1>
+        <div id="siteSub">Hosted on SkyeHub | skyehub.org</div>
+        <hr style="border-top: 2px dashed #a2a9b1; background: none; color: #a2a9b1;">
+        <p>Add your hidden wiki content here, or <a href="https://www.skyehub.org/hiddenwiki.html" target="_blank">click here</a> to view the full wiki.</p>
+      </div>
 
     </div>
   </div>
@@ -221,10 +248,18 @@ hr {
       <h3>Navigation</h3>
       <div class="pBody">
         <ul>
-          <li><a href="https://www.skyehub.org">Main page</a></li>
-          <li><a href="https://www.skyehub.org/hiddenwiki.html">The Hidden Wiki</a></li>
-          <li><a href="https://www.skyehub.org/halloffame.html">Hall of Fame</a></li>
-          <li><a href="https://www.skyehub.org/wallofshame.html">Wall of Shame</a></li>
+          <li><a href="#" onclick="showSection('home')">Main page</a></li>
+          <li><a href="#" onclick="showSection('wiki')">The Hidden Wiki</a></li>
+          <li><a href="#" onclick="showSection('hof')">Hall of Fame</a></li>
+          <li><a href="#" onclick="showSection('wos')">Wall of Shame</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="portlet">
+      <h3>Links</h3>
+      <div class="pBody">
+        <ul>
           <li><a href="https://discord.gg/pFwB4thuD8" target="_blank">Discord</a></li>
           <li><a href="https://open.spotify.com/user/314cjpdqy4v5trhhehlrzs3ngc5m" target="_blank">Spotify</a></li>
           <li><a href="https://tiktok.com/@skyedotnet" target="_blank">TikTok</a></li>
@@ -239,6 +274,15 @@ hr {
     SkyeHub &nbsp;·&nbsp; <a href="https://www.skyehub.org">skyehub.org</a>
   </div>
 </div>
+
+<script>
+function showSection(name) {
+  document.querySelectorAll('.page-section').forEach(function(el) {
+    el.classList.remove('active');
+  });
+  document.getElementById('section-' + name).classList.add('active');
+}
+</script>
 
 </body>
 </html>
