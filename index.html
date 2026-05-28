@@ -285,41 +285,43 @@ const titles = [
 ];
 
 let titleIndex = 0;
-let charIndex = titles[0].length;
-let deleting = true;
-let pauseTimer = null;
+let charIndex = 0;
+let deleting = false;
+let blinkOn = true;
 
-function tick() {
-  const current = titles[titleIndex];
-
-  if (!deleting && charIndex === current.length) {
-    pauseTimer = setTimeout(() => {
-      deleting = true;
-      tick();
-    }, 5000);
-    return;
+function blink() {
+  if (!deleting && charIndex === titles[titleIndex].length) {
+    const base = titles[titleIndex];
+    document.title = base + (blinkOn ? " |" : "  ");
+    blinkOn = !blinkOn;
   }
-
-  if (deleting) {
-    charIndex--;
-    document.title = charIndex <= 0 ? " " : current.slice(0, charIndex);
-    if (charIndex <= 0) {
-      deleting = false;
-      titleIndex = (titleIndex + 1) % titles.length;
-      charIndex = 0;
-      setTimeout(tick, 300);
-      return;
-    }
-  } else {
-    charIndex++;
-    document.title = current.slice(0, charIndex);
-  }
-
-  setTimeout(tick, deleting ? 60 : 75);
 }
 
-document.title = titles[0];
-setTimeout(tick, 5000);
+function type() {
+  const current = titles[titleIndex];
+
+  if (!deleting && charIndex < current.length) {
+    charIndex++;
+    document.title = current.slice(0, charIndex) + " |";
+    setTimeout(type, 80);
+  } else if (!deleting && charIndex === current.length) {
+    setTimeout(() => {
+      deleting = true;
+      type();
+    }, 5000);
+  } else if (deleting && charIndex > 0) {
+    charIndex--;
+    document.title = current.slice(0, charIndex) + " |";
+    setTimeout(type, 50);
+  } else {
+    deleting = false;
+    titleIndex = (titleIndex + 1) % titles.length;
+    setTimeout(type, 300);
+  }
+}
+
+setInterval(blink, 500);
+type();
 </script>
 
 </body>
