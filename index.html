@@ -283,11 +283,48 @@ const titles = [
   "≧◡≦ Skye Here!",
   "I'm Skye Larsen btw"
 ];
-let i = 0;
-setInterval(function() {
-  i = (i + 1) % titles.length;
-  document.title = titles[i];
-}, 1500);
+
+let titleIndex = 0;
+let current = titles[0];
+let deleting = false;
+
+function animateTitle() {
+  if (!deleting) {
+    // Wait 5 seconds on full title then start deleting
+    deleting = true;
+    setTimeout(function() {
+      deleteStep();
+    }, 5000);
+  }
+}
+
+function deleteStep() {
+  if (current.length > 0) {
+    current = current.slice(0, -1);
+    document.title = current || " ";
+    setTimeout(deleteStep, 80);
+  } else {
+    // Move to next title and start typing it in
+    titleIndex = (titleIndex + 1) % titles.length;
+    current = "";
+    typeStep();
+  }
+}
+
+function typeStep() {
+  const target = titles[titleIndex];
+  if (current.length < target.length) {
+    current += target[current.length];
+    document.title = current;
+    setTimeout(typeStep, 80);
+  } else {
+    deleting = false;
+    animateTitle();
+  }
+}
+
+document.title = titles[0];
+animateTitle();
 </script>
 
 </body>
