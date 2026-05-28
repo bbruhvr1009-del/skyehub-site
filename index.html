@@ -1,522 +1,278 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="client-js" lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:title" content="! Skye Larsen | SkyeHub" />
+<meta property="og:description" content="I'm Skye | skyehub.org" />
+<meta property="og:url" content="https://www.skyehub.org" />
+<meta name="theme-color" content="#6a20a0" />
 <title>! Skye Larsen (@yourlocalrifty) | SkyeHub</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Pacifico&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background-color: #f9f9f9;
+  background-image: url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 xmlns:xlink=%22http://www.w3.org/1999/xlink%22 width=%225%22 height=%22220%22 viewBox=%220 0 1.323 58.208%22%3E%3Cdefs%3E%3ClinearGradient id=%22b%22 x1=%22262.803%22 x2=%22263.049%22 y1=%2229.234%22 y2=%22.97%22 gradientTransform=%22translate%28-492.003 238.792%29 scale%281.875%29%22 gradientUnits=%22userSpaceOnUse%22 xlink:href=%22%23a%22/%3E%3ClinearGradient id=%22a%22%3E%3Cstop offset=%220%22 stop-color=%22%23f9f9f9%22/%3E%3Cstop offset=%221%22 stop-color=%22%23f3f3f3%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill=%22url%28%23b%29%22 d=%22M0 238.792h1.323V297H0z%22 transform=%22translate%280 -238.792%29%22/%3E%3C/svg%3E');
+  background-position: 0 0;
+  background-repeat: repeat-x;
+  color: #000;
+  font: x-small sans-serif;
+  margin: 0;
+  padding: 0;
+  direction: ltr;
+}
 
-  :root {
-    --text:  #e2d4f0;
-    --text2: #9b7fc0;
-  }
+#globalWrapper {
+  font-size: 127%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
 
-  html, body {
-    min-height: 100vh;
-    font-family: 'DM Sans', sans-serif;
-    color: var(--text);
-    overflow-x: hidden;
-  }
+#column-content {
+  float: right;
+  margin: 0 0 0.6em -12.2em;
+  width: 100%;
+}
 
-  body {
-    background: linear-gradient(135deg, #0a0010 0%, #110020 25%, #0d0018 50%, #0e0014 75%, #080010 100%);
-    background-size: 400% 400%;
-    animation: gradShift 16s ease infinite;
-  }
+.mw-body {
+  margin: 2.8em 0 0 12.2em;
+  border: 1px solid #aaaaaa;
+  background: #ffffff;
+  color: #000000;
+  padding: 1em;
+  line-height: 1.5em;
+}
 
-  @keyframes gradShift {
-    0%   { background-position: 0% 50%; }
-    50%  { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-  }
+#firstHeading {
+  font-size: 188%;
+  font-weight: normal;
+  border-bottom: 1px solid #a2a9b1;
+  padding-bottom: 0.17em;
+  margin: 0 0 0.6em 0;
+  overflow: hidden;
+  line-height: 1.2em;
+}
 
-  .orb {
-    position: fixed; border-radius: 50%; filter: blur(60px);
-    opacity: 0.45; pointer-events: none;
-    animation: drift 18s ease-in-out infinite; z-index: 0;
-  }
-  .orb1 { width:420px;height:420px;background:#2a0a4a;top:-100px;left:-80px;animation-delay:0s; }
-  .orb2 { width:320px;height:320px;background:#3d0a60;top:40%;right:-60px;animation-delay:-6s; }
-  .orb3 { width:280px;height:280px;background:#1a0030;bottom:-60px;left:30%;animation-delay:-12s; }
-  .orb4 { width:200px;height:200px;background:#4a1a6a;top:60%;left:10%;animation-delay:-3s; }
+#siteSub {
+  font-size: 84%;
+  line-height: 1.2em;
+  margin: 0 0 1.4em 1em;
+  color: #54595d;
+}
 
-  @keyframes drift {
-    0%,100% { transform:translate(0,0) scale(1); }
-    33%      { transform:translate(30px,-40px) scale(1.05); }
-    66%      { transform:translate(-20px,30px) scale(0.97); }
-  }
+h2 {
+  font-size: 150%;
+  font-weight: normal;
+  border-bottom: 1px solid #a2a9b1;
+  margin: 1em 0 0.6em 0;
+  padding-bottom: 0.17em;
+  overflow: hidden;
+}
 
-  #starry-canvas { position:fixed;top:0;left:0;pointer-events:none;z-index:0; }
+h3 {
+  font-size: 128%;
+  font-weight: bold;
+  border-bottom: none;
+  margin-bottom: 0.3em;
+}
 
-  .floaty {
-    position:fixed; pointer-events:none; font-size:18px; opacity:0; z-index:0;
-    animation: floaty var(--dur,15s) linear infinite;
-  }
-  @keyframes floaty {
-    0%   { transform:translateY(100vh) rotate(0deg);opacity:0; }
-    10%  { opacity:0.4; }
-    90%  { opacity:0.2; }
-    100% { transform:translateY(-60px) rotate(360deg);opacity:0; }
-  }
+p { margin: 0.4em 0 0.5em 0; }
 
-  @keyframes floatIn {
-    from { opacity:0;transform:translateY(22px); }
-    to   { opacity:1;transform:translateY(0); }
-  }
-  @keyframes spin { to { transform:rotate(360deg); } }
+a { color: #0645ad; text-decoration: none; background: none; }
+a:visited { color: #0b0080; }
+a:hover, a:focus { text-decoration: underline; }
 
-  .page {
-    position: relative; z-index: 1;
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 48px 24px 80px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 24px;
-  }
+ul {
+  list-style-type: square;
+  margin: 0.3em 0 0 1.6em;
+  padding: 0;
+}
 
-  .wordmark {
-    font-family: 'Pacifico', cursive;
-    font-size: 15px; color: #b07ad4;
-    letter-spacing: 0.02em; opacity: 0.7;
-  }
+li { margin-bottom: 0.1em; }
 
-  .layout {
-    width: 100%;
-    display: grid;
-    grid-template-columns: 280px 380px;
-    gap: 20px;
-    align-items: start;
-    justify-content: center;
-  }
+hr {
+  height: 1px;
+  color: #a2a9b1;
+  background-color: #a2a9b1;
+  border: 0;
+  margin: 0.2em 0;
+}
 
-  .right-col {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
+.badge {
+  display: inline-block;
+  border-radius: 20px;
+  padding: 3px 10px;
+  font-size: 11px;
+  font-weight: bold;
+  margin-right: 4px;
+  border: 1px solid;
+}
 
-  @media (max-width: 680px) {
-    .layout { grid-template-columns: 1fr; }
-  }
+/* Sidebar */
+#column-one {
+  padding-top: 160px;
+  float: none;
+  width: 11.6em;
+}
 
-  .section-label {
-    font-family: 'Quicksand', sans-serif;
-    font-size: 11px; font-weight: 700;
-    letter-spacing: 0.1em; text-transform: uppercase;
-    color: #9b7fc0; margin-bottom: -8px;
-  }
+#p-logo {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  left: 0;
+  height: 155px;
+  width: 12.2em;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f9f9f9;
+}
 
-  .glass {
-    width: 100%;
-    background: rgba(15,5,30,0.6);
-    backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(140,80,200,0.18);
-    border-radius: 24px; padding: 24px;
-    box-shadow: 0 8px 40px rgba(0,0,15,0.6), inset 0 1px 0 rgba(160,100,220,0.1);
-  }
+#p-logo-text {
+  font-family: serif;
+  font-size: 28px;
+  font-style: italic;
+  color: #6a20a0;
+  text-align: center;
+  line-height: 1.2;
+  font-weight: bold;
+}
 
-  /* Profile */
-  .profile-card {
-    display: flex; flex-direction: column; align-items: center;
-    gap: 14px; padding: 32px 20px 24px; text-align: center;
-    animation: floatIn 0.7s ease both;
-  }
+.portlet {
+  border: 0;
+  margin: 0 0 0.5em;
+  padding: 0;
+  float: none;
+  width: 11.6em;
+  overflow: hidden;
+}
 
-  .avatar-wrap { position:relative;width:96px;height:96px; }
-  .avatar-ring {
-    position:absolute;inset:-4px;border-radius:50%;
-    background:conic-gradient(#6a20a0,#b07ad4,#e2d4f0,#7a30b0,#6a20a0);
-    animation:spin 6s linear infinite;z-index:0;
-  }
-  .avatar-inner {
-    position:absolute;inset:3px;border-radius:50%;background:#0d0018;
-    z-index:1;overflow:hidden;display:flex;align-items:center;justify-content:center;
-  }
-  .avatar-initials {
-    font-family:'Pacifico',cursive;font-size:28px;
-    background:linear-gradient(135deg,#b07ad4,#e2d4f0);
-    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  }
-  .status-dot {
-    position:absolute;bottom:4px;right:4px;width:14px;height:14px;
-    border-radius:50%;background:#4ade80;border:2px solid #0d0018;
-    z-index:2;box-shadow:0 0 8px #4ade80;
-  }
+.portlet h3 {
+  font-size: 91%;
+  font-weight: normal;
+  text-transform: lowercase;
+  padding: 0 1em 0 0.5em;
+  background: transparent;
+  display: inline;
+  height: 1em;
+  white-space: nowrap;
+  border: none;
+  margin: 0;
+}
 
-  .display-name {
-    font-family:'Quicksand',sans-serif;font-weight:700;font-size:24px;
-    background:linear-gradient(135deg,#d4a8f0 0%,#b07ad4 50%,#e2d4f0 100%);
-    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-    line-height:1.1;
-  }
-  .username { font-size:13px;color:var(--text2);margin-top:2px; }
-  .bio { font-size:13px;color:var(--text);line-height:1.6;font-style:italic;opacity:0.85; }
+.pBody {
+  background-color: #fff;
+  border: 1px solid #aaa;
+  padding: 0 0.8em 0.3em 0.5em;
+  font-size: 95%;
+  color: #000000;
+  border-collapse: collapse;
+}
 
-  .badges { display:flex;gap:6px;flex-wrap:wrap;justify-content:center; }
-  .badge {
-    display:flex;align-items:center;gap:5px;
-    background:rgba(40,10,70,0.6);border:1px solid rgba(140,80,200,0.25);
-    border-radius:20px;padding:4px 10px;font-size:10px;font-weight:600;
-    letter-spacing:0.04em;color:var(--text);
-  }
-  .badge-dot { width:7px;height:7px;border-radius:50%; }
+.pBody ul {
+  list-style-type: square;
+  line-height: 1.5em;
+  font-size: 95%;
+  margin: 0.3em 0 0 1.2em;
+  padding: 0;
+}
 
-  .stats-row {
-    display:flex;width:100%;
-    border-top:1px solid rgba(140,80,200,0.2);padding-top:14px;margin-top:4px;
-  }
-  .stat { flex:1;text-align:center;border-right:1px solid rgba(140,80,200,0.2); }
-  .stat:last-child { border-right:none; }
-  .stat-num { font-family:'Quicksand',sans-serif;font-weight:700;font-size:18px;color:var(--text); }
-  .stat-label { font-size:10px;color:var(--text2);letter-spacing:0.06em;text-transform:uppercase;margin-top:2px; }
+.pBody li {
+  padding: 0;
+  margin: 0;
+}
 
-  /* Links */
-  .links-card { animation: floatIn 0.7s 0.1s ease both; }
-  .links-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:10px; }
-  .link-item {
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
-    gap:8px;padding:16px 12px;
-    background:rgba(25,5,45,0.5);border:1px solid rgba(140,80,200,0.18);
-    border-radius:16px;text-decoration:none;color:var(--text);
-    font-size:13px;font-weight:500;text-align:center;
-    transition:transform 0.2s,background 0.2s;cursor:pointer;
-  }
-  .link-item:hover { transform:translateY(-2px);background:rgba(50,10,80,0.65); }
-  .link-icon {
-    width:40px;height:40px;border-radius:12px;
-    display:flex;align-items:center;justify-content:center;font-size:20px;
-  }
+#footer {
+  background-color: #ffffff;
+  border-top: 1px solid #fabd23;
+  border-bottom: 1px solid #fabd23;
+  margin: 0.6em 0 1em 0;
+  overflow: hidden;
+  padding: 0.4em 0 0.3em 0;
+  text-align: center;
+  font-size: 90%;
+  clear: both;
+}
 
-  /* Music Widget — fixed bottom right */
-  .music-widget {
-    position: fixed; bottom: 20px; right: 20px; z-index: 100;
-    width: 240px;
-    background: rgba(10,3,22,0.88);
-    backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
-    border: 1px solid rgba(140,80,200,0.25);
-    border-radius: 18px;
-    box-shadow: 0 8px 40px rgba(0,0,20,0.7), inset 0 1px 0 rgba(160,100,220,0.1);
-    overflow: hidden;
-    animation: floatIn 0.7s 0.2s ease both;
-  }
+.visualClear { clear: both; }
 
-  .music-widget-header {
-    display: flex; align-items: center; gap: 8px;
-    padding: 10px 14px; cursor: pointer;
-    background: rgba(30,8,55,0.5);
-    border-bottom: 1px solid rgba(140,80,200,0.15);
-    user-select: none; transition: background 0.2s;
-  }
-  .music-widget-header:hover { background: rgba(50,12,80,0.6); }
-  .music-widget-icon { font-size: 14px; color: #b07ad4; }
-  .music-widget-label {
-    flex: 1; font-family: 'Quicksand', sans-serif; font-weight: 700;
-    font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text2);
-  }
-  .music-widget-chevron { font-size: 11px; color: var(--text2); opacity: 0.6; transition: transform 0.25s; }
-  .music-widget-chevron.collapsed { transform: rotate(180deg); }
+@media screen and (min-width: 551px) {
+  #column-content { float: right; margin: 0 0 0.6em -12.2em; }
+  .mw-body { margin: 2.8em 0 0 12.2em; border-right: 0; }
+  #column-one { padding-top: 160px; }
+}
 
-  .music-widget-body {
-    padding: 12px 14px;
-    display: flex; flex-direction: column; gap: 6px;
-    transition: max-height 0.3s ease, opacity 0.25s ease, padding 0.3s ease;
-    max-height: 400px; overflow: hidden;
-  }
-  .music-widget-body.collapsed {
-    max-height: 0; opacity: 0; padding-top: 0; padding-bottom: 0;
-  }
-
-  .music-controls {
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-  }
-  .ctrl-btn {
-    background: rgba(40,10,70,0.6); border: 1px solid rgba(140,80,200,0.25);
-    border-radius: 50%; width: 36px; height: 36px;
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; font-size: 14px; color: var(--text);
-    transition: background 0.2s, transform 0.15s; flex-shrink: 0;
-    user-select: none;
-  }
-  .ctrl-btn:hover { background: rgba(70,15,110,0.7); transform: scale(1.08); }
-  .ctrl-btn.play-btn {
-    width: 44px; height: 44px; font-size: 16px;
-    background: linear-gradient(135deg, #3a0a6a, #7a30b0);
-    border-color: rgba(176,122,212,0.4);
-  }
-  .ctrl-btn.loop-btn.on { color: #b07ad4 !important; border-color: rgba(176,122,212,0.5) !important; }
-
-  .progress-wrap { flex: 1; display: flex; flex-direction: column; gap: 4px; }
-  .progress-bar-track {
-    width: 100%; height: 4px; background: rgba(140,80,200,0.2);
-    border-radius: 4px; cursor: pointer; position: relative;
-  }
-  .progress-bar-fill {
-    height: 100%; background: linear-gradient(90deg, #6a20a0, #b07ad4);
-    border-radius: 4px; width: 0%; pointer-events: none;
-  }
-  .progress-times {
-    display: flex; justify-content: space-between;
-    font-size: 10px; color: var(--text2); opacity: 0.6;
-  }
-
-  .volume-row {
-    display: flex; align-items: center; gap: 8px;
-  }
-  .vol-icon { font-size: 13px; color: var(--text2); opacity: 0.7; }
-  .vol-slider {
-    flex: 1; -webkit-appearance: none; appearance: none;
-    height: 3px; border-radius: 3px;
-    background: rgba(140,80,200,0.25); outline: none; cursor: pointer;
-  }
-  .vol-slider::-webkit-slider-thumb {
-    -webkit-appearance: none; width: 12px; height: 12px;
-    border-radius: 50%; background: #b07ad4; cursor: pointer;
-  }
-
-  .playlist { display: flex; flex-direction: column; gap: 4px; max-height: 160px; overflow-y: auto; }
-  .playlist::-webkit-scrollbar { width: 4px; }
-  .playlist::-webkit-scrollbar-thumb { background: rgba(140,80,200,0.3); border-radius: 4px; }
-
-  .playlist-item {
-    display: flex; align-items: center; gap: 10px;
-    padding: 7px 10px; border-radius: 10px; cursor: pointer;
-    transition: background 0.15s; font-size: 12px; color: var(--text2);
-  }
-  .playlist-item:hover { background: rgba(40,10,70,0.5); }
-  .playlist-item.active { background: rgba(50,10,80,0.6); color: var(--text); }
-  .playlist-item-num { width: 14px; text-align: center; font-size: 10px; opacity: 0.5; flex-shrink: 0; }
-  .playlist-item-name { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+@media screen and (max-width: 550px) {
+  #column-content { float: none; margin: 0; }
+  .mw-body { margin: 0; border-left: 0; border-right: 0; }
+  #column-one { display: none; }
+}
 </style>
 </head>
 <body>
 
-<div class="orb orb1"></div>
-<div class="orb orb2"></div>
-<div class="orb orb3"></div>
-<div class="orb orb4"></div>
-<canvas id="starry-canvas"></canvas>
-<div id="floaties"></div>
+<div id="globalWrapper">
+  <div id="column-content">
+    <div class="mw-body" role="main">
 
-<div class="page">
+      <h1 id="firstHeading">! Skye Larsen</h1>
+      <div id="siteSub">I'm Skye | skyehub.org</div>
 
-  <div class="wordmark">SkyeHub ✦</div>
+      <p>
+        <span class="badge" style="background:#ddeeff;border-color:#5bbcd4;color:#1a5a7a">● Early Member</span>
+        <span class="badge" style="background:#ddeeff;border-color:#4a7fa8;color:#1a5a7a">● Creator</span>
+        <span class="badge" style="background:#ddfff0;border-color:#4aad80;color:#1a6040">● Booster</span>
+      </p>
 
-  <div class="layout">
+      <p><b>@yourlocalrifty</b> &nbsp;·&nbsp; ⋆⁺₊✧ ୨ ≧◡≦ ୧ ✧₊⁺⋆ 𓎟𓎟 ◞</p>
 
-    <!-- LEFT: Profile -->
-    <div class="glass profile-card">
-      <div class="avatar-wrap">
-        <div class="avatar-ring"></div>
-        <div class="avatar-inner"><span class="avatar-initials">S</span></div>
-        <div class="status-dot"></div>
-      </div>
-      <div>
-        <div class="display-name">! Skye Larsen</div>
-        <div class="username">@yourlocalrifty</div>
-      </div>
-      <div class="bio">I'm Skye | ⋆⁺₊✧ ୨ ≧◡≦ ୧ ✧₊⁺⋆ 𓎟𓎟     ◞</div>
-      <div class="badges">
-        <div class="badge"><div class="badge-dot" style="background:#5bbcd4"></div> Early Member</div>
-        <div class="badge"><div class="badge-dot" style="background:#4a7fa8"></div> Creator</div>
-        <div class="badge"><div class="badge-dot" style="background:#4aad80"></div> Booster</div>
-      </div>
-      <div class="stats-row">
-        <div class="stat"><div class="stat-num">233</div><div class="stat-label">Views</div></div>
-        <div class="stat"><div class="stat-num">8</div><div class="stat-label">Rep</div></div>
-        <div class="stat"><div class="stat-num">#21</div><div class="stat-label">Joined</div></div>
-      </div>
-    </div>
+      <hr style="border-top: 2px dashed #a2a9b1; background: none; color: #a2a9b1;">
 
-    <!-- RIGHT -->
-    <div class="right-col">
-
-      <div class="glass links-card">
-        <div class="links-grid">
-          <a class="link-item" href="https://discord.gg/pFwB4thuD8" target="_blank">
-            <div class="link-icon" style="background:linear-gradient(135deg,#2a0a4a,#4a1a7a)">✦</div>
-            Discord
-          </a>
-          <a class="link-item" href="https://open.spotify.com/user/314cjpdqy4v5trhhehlrzs3ngc5m" target="_blank">
-            <div class="link-icon" style="background:linear-gradient(135deg,#0d3a2a,#1a6a4a)">✿</div>
-            Spotify
-          </a>
-          <a class="link-item" href="https://tiktok.com/@skyedotnet" target="_blank">
-            <div class="link-icon" style="background:linear-gradient(135deg,#3a0a4a,#6a1a7a)">♪</div>
-            TikTok
-          </a>
-          <a class="link-item" href="https://www.skyehub.org/hiddenwiki.html" target="_blank">
-            <div class="link-icon" style="background:linear-gradient(135deg,#1a0a3a,#3a1a5a)">🌑</div>
-            Hidden Wiki
-          </a>
-        </div>
-      </div>
+      <h2>Links</h2>
+      <ul>
+        <li><a href="https://discord.gg/pFwB4thuD8" target="_blank">Discord</a> — Join the server</li>
+        <li><a href="https://open.spotify.com/user/314cjpdqy4v5trhhehlrzs3ngc5m" target="_blank">Spotify</a> — Music profile</li>
+        <li><a href="https://tiktok.com/@skyedotnet" target="_blank">TikTok</a> — @skyedotnet</li>
+        <li><a href="https://www.skyehub.org/hiddenwiki.html" target="_blank">The Hidden Wiki</a> — Hosted on SkyeHub</li>
+      </ul>
 
     </div>
   </div>
 
-</div>
+  <div id="column-one">
+    <div id="p-logo">
+      
+    </div>
 
-<!-- Fixed music widget bottom-right -->
-<div class="music-widget" id="musicWidget">
-  <div class="music-widget-header" onclick="toggleWidget()">
-    <span class="music-widget-icon">♪</span>
-    <span class="music-widget-label">Music</span>
-    <span class="music-widget-chevron" id="widgetChevron">▾</span>
+    <div class="portlet">
+      <h3>Navigation</h3>
+      <div class="pBody">
+        <ul>
+          <li><a href="https://www.skyehub.org">Main page</a></li>
+          <li><a href="https://www.skyehub.org/hiddenwiki.html">The Hidden Wiki</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="portlet">
+      <h3>Links</h3>
+      <div class="pBody">
+        <ul>
+          <li><a href="https://discord.gg/pFwB4thuD8" target="_blank">Discord</a></li>
+          <li><a href="https://open.spotify.com/user/314cjpdqy4v5trhhehlrzs3ngc5m" target="_blank">Spotify</a></li>
+          <li><a href="https://tiktok.com/@skyedotnet" target="_blank">TikTok</a></li>
+        </ul>
+      </div>
+    </div>
   </div>
-  <div class="music-widget-body" id="widgetBody">
-    <div class="music-controls">
-      <div class="ctrl-btn" onclick="prevTrack()">⏮</div>
-      <div class="ctrl-btn play-btn" id="playBtn" onclick="togglePlay()">▶</div>
-      <div class="ctrl-btn" onclick="nextTrack()">⏭</div>
-      <div class="ctrl-btn loop-btn" id="loopBtn" onclick="toggleLoop()" title="Loop">⟳</div>
-    </div>
-    <div class="progress-wrap" style="margin:8px 0">
-      <div class="progress-bar-track" id="progressTrack" onclick="seekTo(event)">
-        <div class="progress-bar-fill" id="progressFill"></div>
-      </div>
-      <div class="progress-times">
-        <span id="timeEl">0:00</span>
-        <span id="durationEl">0:00</span>
-      </div>
-    </div>
-    <div class="volume-row">
-      <span class="vol-icon">🔈</span>
-      <input class="vol-slider" type="range" min="0" max="1" step="0.01" value="0.7" oninput="audio.volume=this.value">
-      <span class="vol-icon">🔊</span>
-    </div>
-    <div class="playlist" id="playlist"></div>
+
+  <div class="visualClear"></div>
+
+  <div id="footer">
+    SkyeHub &nbsp;·&nbsp; <a href="https://www.skyehub.org">skyehub.org</a>
   </div>
 </div>
 
-<script>
-// ─────────────────────────────────────────────
-//  🎵 MUSIC PLAYLIST — edit this list to add/remove songs
-//  Use raw GitHub URLs:
-//  https://raw.githubusercontent.com/USERNAME/REPO/main/FILENAME.mp3
-// ─────────────────────────────────────────────
-const TRACKS = [
-  { name: "A Dream", url: "https://raw.githubusercontent.com/skyedotnet/skyehub-site/main/music.mp3" },
-];
-// ─────────────────────────────────────────────
-
-const audio = new Audio();
-audio.volume = 0.7;
-let currentIdx = -1;
-let isLooping = false;
-
-const playBtn     = document.getElementById('playBtn');
-const progressFill = document.getElementById('progressFill');
-const timeEl      = document.getElementById('timeEl');
-const durationEl  = document.getElementById('durationEl');
-const playlist    = document.getElementById('playlist');
-const loopBtn     = document.getElementById('loopBtn');
-
-function renderPlaylist() {
-  playlist.innerHTML = '';
-  if (TRACKS.length === 0) {
-    playlist.innerHTML = '<div style="font-size:12px;color:var(--text2);opacity:0.5;padding:8px 10px">No tracks yet — add some in the HTML!</div>';
-    return;
-  }
-  TRACKS.forEach((t, i) => {
-    const item = document.createElement('div');
-    item.className = 'playlist-item' + (i === currentIdx ? ' active' : '');
-    item.innerHTML = `<span class="playlist-item-num">${i === currentIdx ? '♪' : i + 1}</span><span class="playlist-item-name">${t.name}</span>`;
-    item.onclick = () => { loadTrack(i); audio.play(); };
-    playlist.appendChild(item);
-  });
-}
-
-function loadTrack(idx) {
-  if (!TRACKS.length) return;
-  currentIdx = idx;
-  audio.src = TRACKS[idx].url;
-  playBtn.textContent = '▶';
-  progressFill.style.width = '0%';
-  timeEl.textContent = '0:00';
-  durationEl.textContent = '0:00';
-  renderPlaylist();
-}
-
-function togglePlay() {
-  if (!TRACKS.length) return;
-  if (currentIdx === -1) { loadTrack(0); audio.play(); return; }
-  audio.paused ? audio.play() : audio.pause();
-}
-
-function prevTrack() {
-  if (!TRACKS.length) return;
-  loadTrack(currentIdx <= 0 ? TRACKS.length - 1 : currentIdx - 1);
-  audio.play();
-}
-
-function nextTrack() {
-  if (!TRACKS.length) return;
-  loadTrack((currentIdx + 1) % TRACKS.length);
-  audio.play();
-}
-
-function toggleLoop() {
-  isLooping = !isLooping;
-  audio.loop = isLooping;
-  loopBtn.classList.toggle('on', isLooping);
-}
-
-function seekTo(e) {
-  if (!audio.duration) return;
-  const rect = e.currentTarget.getBoundingClientRect();
-  audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
-}
-
-function fmtTime(s) {
-  if (!s || isNaN(s)) return '0:00';
-  return `${Math.floor(s/60)}:${Math.floor(s%60).toString().padStart(2,'0')}`;
-}
-
-audio.addEventListener('play', () => {
-  playBtn.textContent = '⏸';
-});
-audio.addEventListener('pause', () => {
-  playBtn.textContent = '▶';
-});
-audio.addEventListener('timeupdate', () => {
-  if (!audio.duration) return;
-  progressFill.style.width = (audio.currentTime / audio.duration * 100) + '%';
-  timeEl.textContent = fmtTime(audio.currentTime);
-});
-audio.addEventListener('loadedmetadata', () => { durationEl.textContent = fmtTime(audio.duration); });
-audio.addEventListener('ended', () => { if (!isLooping) nextTrack(); });
-
-function toggleWidget() {
-  const body = document.getElementById('widgetBody');
-  const chev = document.getElementById('widgetChevron');
-  body.classList.toggle('collapsed');
-  chev.classList.toggle('collapsed');
-}
-
-renderPlaylist();
-
-// ── Stars ──
-const starry_canvas = document.getElementById('starry-canvas');
-starry_canvas.width = window.innerWidth; starry_canvas.height = window.innerHeight;
-const ctx = starry_canvas.getContext('2d');
-let pause_simulation=false,is_ready=false,last_ts=0,dt=0;
-function rnd(a,b){return Math.random()*(b-a)+a;}
-class Star{constructor(){this.x=this.y=this.real_x=this.real_y=this.rotation=0;this.size=8;this.color="rgba(255,255,255,1)";this.x_vel=this.y_vel=this.rot_vel=0;}draw(){ctx.fillStyle=this.color;ctx.save();ctx.translate(this.real_x+this.size/2,this.real_y+this.size/2);ctx.rotate(this.rotation*Math.PI/180);ctx.fillRect(-this.size/2,-this.size/2,this.size,this.size);ctx.restore();}step(){const fx=this.x+this.x_vel*dt,fy=this.y+this.y_vel*dt,rx=fx+starry_canvas.width/2,ry=fy+starry_canvas.height/2;if(rx>starry_canvas.width)this.x_vel=-Math.abs(this.x_vel);if(rx<0)this.x_vel=Math.abs(this.x_vel);if(ry<0)this.y_vel=Math.abs(this.y_vel);if(ry>starry_canvas.height)this.y_vel=-Math.abs(this.y_vel);this.x+=this.x_vel*dt;this.y+=this.y_vel*dt;this.rotation+=this.rot_vel*dt;this.real_x=this.x+starry_canvas.width/2;this.real_y=this.y+starry_canvas.height/2;}}
-const stars=[];for(let i=0;i<150;i++){const s=new Star();s.x=rnd(-starry_canvas.width/2,starry_canvas.width/2);s.y=rnd(-starry_canvas.height/2,starry_canvas.height/2);s.x_vel=rnd(-24,24);s.y_vel=rnd(-24,24);s.rot_vel=rnd(-90,90);s.size=rnd(2,4);s.color=`hsla(${Math.random()*360},15%,50%,${rnd(0.9,1)})`;stars.push(s);}
-function drawStars(){if(pause_simulation)return;ctx.clearRect(0,0,starry_canvas.width,starry_canvas.height);for(let i=0;i<stars.length;i++){const s=stars[i];s.step();s.draw();let c=0;for(let a=0;a<stars.length;a++){const t=stars[a],d=Math.hypot(t.x-s.x,t.y-s.y);if(d<=80){ctx.strokeStyle=c>=2&&c<5?"#ffffff10":"#ffffff22";ctx.beginPath();ctx.moveTo(s.real_x,s.real_y);ctx.lineTo(t.real_x,t.real_y);ctx.stroke();c++;}}}}
-document.addEventListener("visibilitychange",()=>{pause_simulation=document.hidden;});
-window.addEventListener("resize",()=>{starry_canvas.width=window.innerWidth;starry_canvas.height=window.innerHeight;});
-function frame(ts){dt=(ts-last_ts)/1000;if(!is_ready)is_ready=true;else drawStars();last_ts=ts;requestAnimationFrame(frame);}
-requestAnimationFrame(frame);
-
-// ── Floaties ──
-const fe=['✿','✦','♡','˚','✧','⋆','₊'];
-for(let i=0;i<12;i++){const f=document.createElement('div');f.className='floaty';f.textContent=fe[Math.floor(Math.random()*fe.length)];f.style.cssText=`left:${Math.random()*100}%;--dur:${12+Math.random()*15}s;animation-delay:${-Math.random()*20}s;`;document.getElementById('floaties').appendChild(f);}
-</script>
 </body>
 </html>
