@@ -285,46 +285,41 @@ const titles = [
 ];
 
 let titleIndex = 0;
-let current = titles[0];
-let deleting = false;
+let charIndex = titles[0].length;
+let deleting = true;
+let pauseTimer = null;
 
-function animateTitle() {
-  if (!deleting) {
-    // Wait 5 seconds on full title then start deleting
-    deleting = true;
-    setTimeout(function() {
-      deleteStep();
+function tick() {
+  const current = titles[titleIndex];
+
+  if (!deleting && charIndex === current.length) {
+    pauseTimer = setTimeout(() => {
+      deleting = true;
+      tick();
     }, 5000);
+    return;
   }
-}
 
-function deleteStep() {
-  if (current.length > 0) {
-    current = current.slice(0, -1);
-    document.title = current || " ";
-    setTimeout(deleteStep, 80);
+  if (deleting) {
+    charIndex--;
+    document.title = charIndex <= 0 ? " " : current.slice(0, charIndex);
+    if (charIndex <= 0) {
+      deleting = false;
+      titleIndex = (titleIndex + 1) % titles.length;
+      charIndex = 0;
+      setTimeout(tick, 300);
+      return;
+    }
   } else {
-    // Move to next title and start typing it in
-    titleIndex = (titleIndex + 1) % titles.length;
-    current = "";
-    typeStep();
+    charIndex++;
+    document.title = current.slice(0, charIndex);
   }
-}
 
-function typeStep() {
-  const target = titles[titleIndex];
-  if (current.length < target.length) {
-    current += target[current.length];
-    document.title = current;
-    setTimeout(typeStep, 80);
-  } else {
-    deleting = false;
-    animateTitle();
-  }
+  setTimeout(tick, deleting ? 60 : 75);
 }
 
 document.title = titles[0];
-animateTitle();
+setTimeout(tick, 5000);
 </script>
 
 </body>
