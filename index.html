@@ -176,6 +176,10 @@ hr {
 .page-section { display: none; }
 .page-section.active { display: block; }
 
+.spotify-embed {
+  margin: 0.8em 0 0.4em 0;
+}
+
 @media screen and (min-width: 551px) {
   #column-content { float: right; margin: 0 0 0.6em -12.2em; }
   .mw-body { margin: 2.8em 0 0 12.2em; border-right: 0; }
@@ -201,6 +205,22 @@ hr {
         <div id="siteSub">I'm Skye | skyehub.org</div>
         <p><b>@yourlocalrifty</b> &nbsp;·&nbsp; ⋆⁺₊✧ ୨ ≧◡≦ ୧ ✧₊⁺⋆ 𓎟𓎟 ◞</p>
         <hr style="border-top: 2px dashed #a2a9b1; background: none; color: #a2a9b1;">
+
+        <h2>Now Playing</h2>
+        <div class="spotify-embed">
+          <!-- Spotify profile embed — shows your public playlists/recently played -->
+          <iframe
+            style="border-radius:12px"
+            src="https://open.spotify.com/embed/user/314cjpdqy4v5trhhehlrzs3ngc5m?utm_source=generator"
+            width="100%"
+            height="152"
+            frameBorder="0"
+            allowfullscreen=""
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            loading="lazy">
+          </iframe>
+        </div>
+
         <h2>Links</h2>
         <ul>
           <li><a href="https://discord.gg/pFwB4thuD8" target="_blank">Discord</a> — Join the server</li>
