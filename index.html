@@ -66,7 +66,6 @@ hr { height: 1px; color: #a2a9b1; background-color: #a2a9b1; border: 0; margin: 
   display: flex;
   align-items: center;
   justify-content: space-between;
-  cursor: pointer;
   user-select: none;
 }
 #wiki-player-header span { font-size: 11px; color: #000; font-weight: bold; }
@@ -90,25 +89,16 @@ hr { height: 1px; color: #a2a9b1; background-color: #a2a9b1; border: 0; margin: 
   padding: 7px 8px 5px 8px;
   border-bottom: 1px solid #e8e8e8;
 }
-#player-art-placeholder {
-  width: 44px; height: 44px;
-  background: #e8e8e8;
-  border: 1px solid #ccc;
-  flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 18px; color: #999;
-}
-#player-art {
+#player-thumb {
   width: 44px; height: 44px;
   object-fit: cover;
   border: 1px solid #ccc;
   flex-shrink: 0;
-  display: none;
+  background: #e8e8e8;
 }
 #player-track-info { flex: 1; min-width: 0; }
 #player-title { font-size: 11px; font-weight: bold; color: #000; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-#player-artist { font-size: 10px; color: #54595d; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
-#player-source { font-size: 9px; color: #999; margin-top: 2px; }
+#player-sub { font-size: 10px; color: #54595d; margin-top: 2px; }
 
 #player-progress-row { padding: 5px 8px 3px 8px; border-bottom: 1px solid #e8e8e8; }
 #player-progress-bar-bg {
@@ -129,10 +119,10 @@ hr { height: 1px; color: #a2a9b1; background-color: #a2a9b1; border: 0; margin: 
   background: #f0f0f0;
   border: 1px solid #aaaaaa;
   font-size: 11px;
-  padding: 2px 8px;
+  padding: 2px 10px;
   cursor: pointer; color: #000;
   font-family: sans-serif;
-  min-width: 28px; text-align: center;
+  text-align: center;
 }
 .player-btn:hover { background: #ddd; }
 .player-btn:active { background: #ccc; }
@@ -145,22 +135,7 @@ hr { height: 1px; color: #a2a9b1; background-color: #a2a9b1; border: 0; margin: 
 }
 #player-volume { width: 100%; cursor: pointer; }
 
-#player-tracklist { max-height: 130px; overflow-y: auto; }
-.player-track-row {
-  display: flex; align-items: center;
-  padding: 3px 8px; cursor: pointer;
-  border-bottom: 1px solid #f0f0f0; gap: 5px;
-}
-.player-track-row:hover { background: #f5f5f5; }
-.player-track-row.active { background: #ddeeff; }
-.player-track-num { font-size: 10px; color: #999; min-width: 14px; text-align: right; }
-.player-track-name { font-size: 10px; color: #000; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.player-track-artist { font-size: 9px; color: #54595d; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 75px; }
-
-#player-status-bar {
-  padding: 3px 8px; font-size: 9px; color: #54595d;
-  border-top: 1px solid #e8e8e8; min-height: 14px;
-}
+#player-status-bar { padding: 3px 8px; font-size: 9px; color: #54595d; min-height: 14px; border-top: 1px solid #e8e8e8; }
 #player-yt-link {
   display: block; text-align: center; padding: 3px;
   font-size: 10px; color: #0645ad;
@@ -169,8 +144,7 @@ hr { height: 1px; color: #a2a9b1; background-color: #a2a9b1; border: 0; margin: 
 }
 #player-yt-link:hover { text-decoration: underline; background: #f0f0f0; }
 
-/* hidden YT iframe */
-#yt-iframe-container { position: fixed; bottom: -9999px; left: -9999px; width: 1px; height: 1px; }
+#yt-iframe-container { position: fixed; bottom: -9999px; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
 @media screen and (min-width: 551px) {
   #column-content { float: right; margin: 0 0 0.6em -12.2em; }
@@ -256,20 +230,18 @@ hr { height: 1px; color: #a2a9b1; background-color: #a2a9b1; border: 0; margin: 
 
   <!-- Wiki Media Player -->
   <div id="wiki-player">
-    <div id="wiki-player-header" onclick="togglePlayer()">
-      <span>&#9835; skye's playlist</span>
+    <div id="wiki-player-header">
+      <span>&#9835; now playing</span>
       <div class="wiki-tab-controls">
-        <button id="player-toggle-btn">&#8722;</button>
+        <button id="player-toggle-btn" onclick="togglePlayer()">&#8722;</button>
       </div>
     </div>
     <div id="wiki-player-body">
       <div id="player-art-row">
-        <div id="player-art-placeholder">&#9834;</div>
-        <img id="player-art" alt="art">
+        <img id="player-thumb" src="https://i.ytimg.com/vi/Cz2YCRmDOFk/default.jpg" alt="thumbnail">
         <div id="player-track-info">
-          <div id="player-title">skye's playlist</div>
-          <div id="player-artist">click a track to play</div>
-          <div id="player-source"></div>
+          <div id="player-title">skye's mix</div>
+          <div id="player-sub">1 hour • via youtube</div>
         </div>
       </div>
       <div id="player-progress-row">
@@ -282,17 +254,15 @@ hr { height: 1px; color: #a2a9b1; background-color: #a2a9b1; border: 0; margin: 
         </div>
       </div>
       <div id="player-controls-row">
-        <button class="player-btn" onclick="prevTrack()">&#9664;&#9664;</button>
+        <button class="player-btn" onclick="skipBack()">&#8722;30s</button>
         <button class="player-btn" id="player-btn-play" onclick="togglePlay()">&#9654;</button>
-        <button class="player-btn" onclick="nextTrack()">&#9654;&#9654;</button>
-        <button class="player-btn" id="player-btn-shuffle" onclick="toggleShuffle()">&#8652;</button>
+        <button class="player-btn" onclick="skipForward()">+30s</button>
       </div>
       <div id="player-volume-row">
         vol <input type="range" id="player-volume" min="0" max="100" value="80" oninput="setVolume(this.value)">
       </div>
-      <div id="player-tracklist"><div style="padding:6px 8px;font-size:10px;color:#54595d;">Loading tracks...</div></div>
-      <div id="player-status-bar"></div>
-      <a id="player-yt-link" href="#" target="_blank">open on youtube &#8599;</a>
+      <div id="player-status-bar">click play to start</div>
+      <a id="player-yt-link" href="https://youtu.be/Cz2YCRmDOFk" target="_blank">open on youtube &#8599;</a>
     </div>
   </div>
 
@@ -328,257 +298,106 @@ function togglePlayer(){
   btn.innerHTML=body.classList.contains('collapsed')?'+':'&#8722;';
 }
 
-/* ── Config ── */
-const YT_API_KEY = 'AIzaSyAgzXA_i0YvI6TXD5OAiHp3iipm6Bx5_n8';
-const SPOTIFY_CLIENT_ID = '39a925a0869b4a208eea0cf313aaf398';
-const PLAYLIST_ID = '5tHLi307wjZY2ePmVQSgkG';
-
-/* ── State ── */
-let tracks = [];
-let ytPlayer = null;
-let ytReady = false;
-let currentIndex = 0;
-let shuffleOn = false;
-let shuffleOrder = [];
-let ytVideoIds = {};   // index -> videoId cache
-let progressTimer = null;
-
 /* ── YouTube IFrame API ── */
+const VIDEO_ID = 'Cz2YCRmDOFk';
+let ytPlayer = null;
+let progressTimer = null;
+let playerReady = false;
+
 window.onYouTubeIframeAPIReady = function() {
-  ytReady = true;
   ytPlayer = new YT.Player('yt-player', {
     height: '1', width: '1',
-    playerVars: { autoplay: 0, controls: 0 },
+    videoId: VIDEO_ID,
+    playerVars: { autoplay: 0, controls: 0, rel: 0 },
     events: {
-      onStateChange: onYTStateChange,
-      onReady: () => { setVolume(80); }
+      onReady: () => { playerReady = true; setVolume(80); setStatus('ready'); },
+      onStateChange: onStateChange
     }
   });
 };
 
-function onYTStateChange(e) {
+function onStateChange(e) {
   if (e.data === YT.PlayerState.PLAYING) {
     document.getElementById('player-btn-play').innerHTML = '&#9646;&#9646;';
-    startProgressTimer();
+    setStatus('playing');
+    startTimer();
   } else if (e.data === YT.PlayerState.PAUSED) {
     document.getElementById('player-btn-play').innerHTML = '&#9654;';
-    stopProgressTimer();
+    setStatus('paused');
+    stopTimer();
+  } else if (e.data === YT.PlayerState.BUFFERING) {
+    setStatus('buffering...');
   } else if (e.data === YT.PlayerState.ENDED) {
-    stopProgressTimer();
-    nextTrack();
+    document.getElementById('player-btn-play').innerHTML = '&#9654;';
+    setStatus('ended');
+    stopTimer();
   }
 }
 
-function startProgressTimer() {
-  stopProgressTimer();
-  progressTimer = setInterval(updateProgress, 500);
+function startTimer() {
+  stopTimer();
+  progressTimer = setInterval(() => {
+    if (!ytPlayer || !ytPlayer.getDuration) return;
+    const dur = ytPlayer.getDuration();
+    const cur = ytPlayer.getCurrentTime();
+    if (!dur) return;
+    document.getElementById('player-progress-bar-fill').style.width = ((cur/dur)*100) + '%';
+    document.getElementById('player-time-cur').textContent = sToTime(cur);
+    document.getElementById('player-time-dur').textContent = sToTime(dur);
+  }, 500);
 }
 
-function stopProgressTimer() {
+function stopTimer() {
   if (progressTimer) { clearInterval(progressTimer); progressTimer = null; }
 }
 
-function updateProgress() {
-  if (!ytPlayer || !ytPlayer.getDuration) return;
-  const dur = ytPlayer.getDuration();
-  const cur = ytPlayer.getCurrentTime();
-  if (!dur) return;
-  document.getElementById('player-progress-bar-fill').style.width = ((cur/dur)*100) + '%';
-  document.getElementById('player-time-cur').textContent = sToTime(cur);
-  document.getElementById('player-time-dur').textContent = sToTime(dur);
-}
-
-/* ── Spotify PKCE to load playlist ── */
-function generateCodeVerifier(len) {
-  const chars='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~';
-  const arr=new Uint8Array(len); crypto.getRandomValues(arr);
-  return Array.from(arr,v=>chars[v%chars.length]).join('');
-}
-async function generateCodeChallenge(v) {
-  const d=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(v));
-  return btoa(String.fromCharCode(...new Uint8Array(d))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
-}
-
-async function startSpotifyAuth() {
-  const v=generateCodeVerifier(64);
-  const c=await generateCodeChallenge(v);
-  sessionStorage.setItem('pkce_verifier',v);
-  const p=new URLSearchParams({client_id:SPOTIFY_CLIENT_ID,response_type:'code',redirect_uri:window.location.origin+window.location.pathname,code_challenge_method:'S256',code_challenge:c,scope:''});
-  window.location='https://accounts.spotify.com/authorize?'+p;
-}
-
-async function exchangeSpotifyCode(code) {
-  const v=sessionStorage.getItem('pkce_verifier');
-  const res=await fetch('https://accounts.spotify.com/api/token',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams({client_id:SPOTIFY_CLIENT_ID,grant_type:'authorization_code',code,redirect_uri:window.location.origin+window.location.pathname,code_verifier:v})});
-  const data=await res.json();
-  if(data.access_token){sessionStorage.setItem('spotify_token',data.access_token);sessionStorage.removeItem('pkce_verifier');window.history.replaceState({},'',window.location.pathname);await fetchSpotifyTracks(data.access_token);}
-  else setStatus('Spotify auth failed');
-}
-
-async function fetchSpotifyTracks(token) {
-  setStatus('Loading playlist...');
-  let url=`https://api.spotify.com/v1/playlists/${PLAYLIST_ID}/tracks?limit=100&fields=items(track(name,artists,album(images))),next`;
-  tracks=[];
-  while(url){
-    const res=await fetch(url,{headers:{Authorization:'Bearer '+token}});
-    if(res.status===401){sessionStorage.removeItem('spotify_token');setStatus('Session expired');showLoadButton();return;}
-    const data=await res.json();
-    if(data.items) data.items.forEach(item=>{if(item.track)tracks.push(item.track);});
-    url=data.next||null;
-  }
-  buildTracklist();
-  setStatus('');
-}
-
-/* ── Tracklist UI ── */
-function buildTracklist() {
-  const list=document.getElementById('player-tracklist');
-  list.innerHTML='';
-  tracks.forEach((t,i)=>{
-    const row=document.createElement('div');
-    row.className='player-track-row';
-    row.id='track-row-'+i;
-    row.onclick=()=>selectAndPlay(i);
-    const artist=t.artists.map(a=>a.name).join(', ');
-    row.innerHTML=`<span class="player-track-num">${i+1}</span><span class="player-track-name">${escHtml(t.name)}</span><span class="player-track-artist">${escHtml(artist)}</span>`;
-    list.appendChild(row);
-  });
-}
-
-/* ── Playback ── */
-async function selectAndPlay(index) {
-  currentIndex=index;
-  updateTrackInfo(index);
-  highlightTrack(index);
-  const videoId=await getYouTubeId(index);
-  if(!videoId){setStatus('No YouTube result found');return;}
-  document.getElementById('player-yt-link').href='https://www.youtube.com/watch?v='+videoId;
-  if(ytReady&&ytPlayer&&ytPlayer.loadVideoById){
-    ytPlayer.loadVideoById(videoId);
-  }else{
-    setTimeout(()=>selectAndPlay(index),500);
-  }
-}
-
-async function getYouTubeId(index) {
-  if(ytVideoIds[index]) return ytVideoIds[index];
-  const t=tracks[index];
-  if(!t) return null;
-  const q=encodeURIComponent(t.name+' '+t.artists[0].name+' audio');
-  setStatus('Searching YouTube...');
-  const res=await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${q}&type=video&videoCategoryId=10&maxResults=1&key=${YT_API_KEY}`);
-  const data=await res.json();
-  if(data.items&&data.items.length>0){
-    const id=data.items[0].id.videoId;
-    ytVideoIds[index]=id;
-    setStatus('');
-    return id;
-  }
-  setStatus('');
-  return null;
-}
-
-function updateTrackInfo(index) {
-  const t=tracks[index];
-  if(!t) return;
-  document.getElementById('player-title').textContent=t.name;
-  document.getElementById('player-artist').textContent=t.artists.map(a=>a.name).join(', ');
-  document.getElementById('player-source').textContent='via youtube';
-  document.getElementById('player-progress-bar-fill').style.width='0%';
-  document.getElementById('player-time-cur').textContent='0:00';
-  document.getElementById('player-time-dur').textContent='0:00';
-  const art=document.getElementById('player-art');
-  const ph=document.getElementById('player-art-placeholder');
-  if(t.album&&t.album.images&&t.album.images.length>0){
-    art.src=t.album.images[t.album.images.length-1].url;
-    art.style.display='block'; ph.style.display='none';
-  }else{
-    art.style.display='none'; ph.style.display='flex';
-  }
-}
-
-function highlightTrack(index) {
-  document.querySelectorAll('.player-track-row').forEach(r=>r.classList.remove('active'));
-  const row=document.getElementById('track-row-'+index);
-  if(row){row.classList.add('active');row.scrollIntoView({block:'nearest'});}
-}
-
 function togglePlay() {
-  if(!ytPlayer||!ytPlayer.getPlayerState) return;
-  const state=ytPlayer.getPlayerState();
-  if(state===YT.PlayerState.PLAYING) ytPlayer.pauseVideo();
-  else if(state===YT.PlayerState.PAUSED||state===YT.PlayerState.CUED) ytPlayer.playVideo();
-  else if(tracks.length>0) selectAndPlay(currentIndex);
+  if (!ytPlayer || !playerReady) return;
+  const state = ytPlayer.getPlayerState();
+  if (state === YT.PlayerState.PLAYING) ytPlayer.pauseVideo();
+  else ytPlayer.playVideo();
 }
 
-function prevTrack() {
-  let idx=currentIndex-1;
-  if(idx<0) idx=tracks.length-1;
-  selectAndPlay(idx);
+function skipBack() {
+  if (!ytPlayer || !playerReady) return;
+  ytPlayer.seekTo(Math.max(0, ytPlayer.getCurrentTime() - 30), true);
 }
 
-function nextTrack() {
-  let idx;
-  if(shuffleOn){
-    if(shuffleOrder.length===0) buildShuffleOrder();
-    idx=shuffleOrder.shift();
-  }else{
-    idx=(currentIndex+1)%tracks.length;
-  }
-  selectAndPlay(idx);
+function skipForward() {
+  if (!ytPlayer || !playerReady) return;
+  ytPlayer.seekTo(ytPlayer.getCurrentTime() + 30, true);
 }
 
-function toggleShuffle(){
-  shuffleOn=!shuffleOn;
-  document.getElementById('player-btn-shuffle').style.background=shuffleOn?'#c8dff5':'';
-  if(shuffleOn) buildShuffleOrder();
-  setStatus(shuffleOn?'Shuffle on':'Shuffle off');
-  setTimeout(()=>setStatus(''),1500);
+function setVolume(v) {
+  if (ytPlayer && ytPlayer.setVolume) ytPlayer.setVolume(parseInt(v));
 }
 
-function buildShuffleOrder(){
-  shuffleOrder=tracks.map((_,i)=>i).filter(i=>i!==currentIndex).sort(()=>Math.random()-0.5);
+function seekTo(e) {
+  if (!ytPlayer || !playerReady || !ytPlayer.getDuration) return;
+  const dur = ytPlayer.getDuration();
+  if (!dur) return;
+  const rect = e.currentTarget.getBoundingClientRect();
+  ytPlayer.seekTo(((e.clientX - rect.left) / rect.width) * dur, true);
 }
 
-function setVolume(v){
-  if(ytPlayer&&ytPlayer.setVolume) ytPlayer.setVolume(parseInt(v));
+function sToTime(s) {
+  s = Math.floor(s);
+  const h = Math.floor(s/3600);
+  const m = Math.floor((s%3600)/60);
+  const sec = s%60;
+  if (h > 0) return h+':'+m.toString().padStart(2,'0')+':'+sec.toString().padStart(2,'0');
+  return m+':'+sec.toString().padStart(2,'0');
 }
 
-function seekTo(e){
-  if(!ytPlayer||!ytPlayer.getDuration) return;
-  const dur=ytPlayer.getDuration();
-  if(!dur) return;
-  const rect=e.currentTarget.getBoundingClientRect();
-  const pct=(e.clientX-rect.left)/rect.width;
-  ytPlayer.seekTo(pct*dur,true);
+function setStatus(msg) {
+  document.getElementById('player-status-bar').textContent = msg;
 }
 
-/* ── Helpers ── */
-function sToTime(s){s=Math.floor(s);return Math.floor(s/60)+':'+(s%60).toString().padStart(2,'0');}
-function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
-function setStatus(msg){document.getElementById('player-status-bar').textContent=msg;}
-
-function showLoadButton(){
-  document.getElementById('player-tracklist').innerHTML=
-    '<div style="padding:6px 8px;font-size:10px;"><a href="#" onclick="startSpotifyAuth();return false;" style="color:#0645ad;">connect spotify to load tracks</a></div>';
-}
-
-/* ── Init ── */
-(async function init(){
-  // Load YouTube IFrame API
-  const tag=document.createElement('script');
-  tag.src='https://www.youtube.com/iframe_api';
+/* ── Load YT API ── */
+(function(){
+  const tag = document.createElement('script');
+  tag.src = 'https://www.youtube.com/iframe_api';
   document.head.appendChild(tag);
-
-  // Check for Spotify auth callback
-  const params=new URLSearchParams(window.location.search);
-  const code=params.get('code');
-  if(code){await exchangeSpotifyCode(code);return;}
-
-  // Try existing token
-  const token=sessionStorage.getItem('spotify_token');
-  if(token){await fetchSpotifyTracks(token);}
-  else{showLoadButton();}
 })();
 </script>
 
