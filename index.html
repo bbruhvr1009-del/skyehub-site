@@ -349,10 +349,10 @@ hr {
     </div>
     <div id="spotify-widget-body">
       <div id="spotify-widget-label">
-        <a href="https://open.spotify.com/user/314cjpdqy4v5trhhehlrzs3ngc5m" target="_blank">skye's spotify profile</a>
+        <a href="https://open.spotify.com/playlist/5tHLi307wjZY2ePmVQSgkG" target="_blank">skye's playlist</a>
       </div>
       <iframe
-        src="https://open.spotify.com/embed/user/314cjpdqy4v5trhhehlrzs3ngc5m?utm_source=generator"
+        src="https://open.spotify.com/embed/playlist/5tHLi307wjZY2ePmVQSgkG?utm_source=generator"
         width="260"
         height="152"
         frameBorder="0"
@@ -423,6 +423,18 @@ function type() {
 
 setInterval(blink, 500);
 type();
+
+function toggleSpotify() {
+  var body = document.getElementById('spotify-widget-body');
+  var btn = document.getElementById('spotify-toggle-btn');
+  if (body.classList.contains('collapsed')) {
+    body.classList.remove('collapsed');
+    btn.innerHTML = '&#8722;';
+  } else {
+    body.classList.add('collapsed');
+    btn.innerHTML = '+';
+  }
+}
 </script>
 
 </body>
