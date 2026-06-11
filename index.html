@@ -46,66 +46,6 @@ hr { height: 1px; color: #a2a9b1; background-color: #a2a9b1; border: 0; margin: 
 .page-section { display: none; }
 .page-section.active { display: block; }
 
-/* === downloader === */
-.dl-box {
-  border: 1px solid #aaaaaa;
-  background: #f9f9f9;
-  padding: 0.7em 0.9em;
-  margin-bottom: 1em;
-}
-.dl-box h3 { font-size: 110%; margin: 0 0 0.5em 0; }
-.dl-input-row { display: flex; gap: 6px; align-items: stretch; }
-.dl-input-row input[type="text"] {
-  flex: 1;
-  font: inherit;
-  font-size: 95%;
-  border: 1px solid #aaaaaa;
-  padding: 3px 6px;
-  background: #fff;
-  color: #000;
-  min-width: 0;
-}
-.dl-input-row input[type="text"]:focus { outline: 1px solid #5b8fcc; }
-.dl-btn {
-  font: inherit;
-  font-size: 95%;
-  border: 1px solid #aaaaaa;
-  background: #f0f0f0;
-  padding: 3px 12px;
-  cursor: pointer;
-  color: #000;
-  white-space: nowrap;
-}
-.dl-btn:hover { background: #ddd; }
-.dl-btn:active { background: #ccc; }
-.dl-btn:disabled { opacity: 0.5; cursor: default; }
-.dl-status {
-  margin-top: 0.5em;
-  font-size: 90%;
-  color: #54595d;
-  min-height: 1.2em;
-}
-.dl-status.error { color: #b00; }
-.dl-status.success { color: #080; }
-.dl-result {
-  margin-top: 0.5em;
-  display: none;
-}
-.dl-result.visible { display: block; }
-.dl-result a {
-  display: inline-block;
-  border: 1px solid #aaaaaa;
-  background: #f0f0f0;
-  padding: 3px 10px;
-  font-size: 92%;
-  color: #0645ad;
-  margin-right: 4px;
-  margin-bottom: 4px;
-  text-decoration: none;
-}
-.dl-result a:hover { background: #ddd; text-decoration: underline; }
-.dl-note { font-size: 82%; color: #54595d; margin-top: 0.6em; }
-
 #wiki-player {
   position: fixed;
   bottom: 1.2em;
@@ -257,39 +197,7 @@ hr { height: 1px; color: #a2a9b1; background-color: #a2a9b1; border: 0; margin: 
         <p>1443005905678503937 — GamerzNate | Homophobic twink, racist, deadass even said it was true lol.</p>
         <p>beast.ovt — @beastistuff | Uses a chromebook.</p>
         <p>mâsøñ.ßât — @mason.pcv4 | Cracked his phone, in the other way.</p>
-      </div>
 
-      <div id="section-downloader" class="page-section">
-        <h1 id="firstHeading">Video Downloader</h1>
-        <div id="siteSub">powered by cobalt.tools</div>
-        <hr style="border-top: 2px dashed #a2a9b1; background: none; color: #a2a9b1;">
-
-        <p>Paste a YouTube or TikTok link below to grab a download link. Works with most public videos.</p>
-
-        <div class="dl-box">
-          <h3>&#9654; YouTube</h3>
-          <div class="dl-input-row">
-            <input type="text" id="yt-url" placeholder="https://youtu.be/... or https://youtube.com/watch?v=...">
-            <button class="dl-btn" id="yt-btn" onclick="doDownload('yt')">Download</button>
-          </div>
-          <div class="dl-status" id="yt-status"></div>
-          <div class="dl-result" id="yt-result"></div>
-        </div>
-
-        <div class="dl-box">
-          <h3>&#9654; TikTok</h3>
-          <div class="dl-input-row">
-            <input type="text" id="tt-url" placeholder="https://www.tiktok.com/@user/video/...">
-            <button class="dl-btn" id="tt-btn" onclick="doDownload('tt')">Download</button>
-          </div>
-          <div class="dl-status" id="tt-status"></div>
-          <div class="dl-result" id="tt-result"></div>
-        </div>
-
-        <p class="dl-note">
-          Uses <a href="https://cobalt.tools" target="_blank">cobalt.tools</a> API — a free, open-source video downloader with no ads or tracking.
-          Download links may expire after a few minutes. Videos are not stored anywhere on SkyeHub.
-        </p>
       </div>
 
     </div>
@@ -306,7 +214,6 @@ hr { height: 1px; color: #a2a9b1; background-color: #a2a9b1; border: 0; margin: 
           <li><a href="#" onclick="showSection('home')">Main page</a></li>
           <li><a href="#" onclick="showSection('hof')">Hall of Fame</a></li>
           <li><a href="#" onclick="showSection('wos')">Wall of Shame</a></li>
-          <li><a href="#" onclick="showSection('downloader')">Video Downloader</a></li>
         </ul>
       </div>
     </div>
@@ -377,98 +284,12 @@ function showSection(name) {
   document.getElementById('section-' + name).classList.add('active');
 }
 
-// === Video Downloader ===
-const COBALT_API = 'https://api.cobalt.tools/';
-
-async function doDownload(type) {
-  const isYT = type === 'yt';
-  const inputEl = document.getElementById(isYT ? 'yt-url' : 'tt-url');
-  const statusEl = document.getElementById(isYT ? 'yt-status' : 'tt-status');
-  const resultEl = document.getElementById(isYT ? 'yt-result' : 'tt-result');
-  const btnEl = document.getElementById(isYT ? 'yt-btn' : 'tt-btn');
-
-  const url = inputEl.value.trim();
-  if (!url) { setDlStatus(statusEl, 'paste a link first', 'error'); return; }
-
-  // basic url sanity check
-  if (isYT && !/youtu/.test(url)) { setDlStatus(statusEl, 'that doesn\'t look like a YouTube link', 'error'); return; }
-  if (!isYT && !/tiktok/.test(url)) { setDlStatus(statusEl, 'that doesn\'t look like a TikTok link', 'error'); return; }
-
-  btnEl.disabled = true;
-  resultEl.classList.remove('visible');
-  resultEl.innerHTML = '';
-  setDlStatus(statusEl, 'fetching...', '');
-
-  try {
-    const resp = await fetch(COBALT_API, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify({ url })
-    });
-
-    if (!resp.ok) {
-      const err = await resp.json().catch(() => ({}));
-      throw new Error(err?.error?.code || `HTTP ${resp.status}`);
-    }
-
-    const data = await resp.json();
-
-    if (data.status === 'error') {
-      throw new Error(data.error?.code || 'unknown error');
-    }
-
-    if (data.status === 'redirect' || data.status === 'tunnel') {
-      // single file
-      showDlResult(resultEl, [{ url: data.url, label: 'Download video' }]);
-      setDlStatus(statusEl, 'done! link expires in a few minutes', 'success');
-    } else if (data.status === 'picker') {
-      // multiple options (e.g. separate video/audio)
-      const links = data.picker.map((item, i) => ({
-        url: item.url,
-        label: item.type === 'photo' ? `Image ${i+1}` : (item.type === 'video' ? `Video ${i+1}` : `File ${i+1}`)
-      }));
-      if (data.audio) links.push({ url: data.audio, label: 'Audio only' });
-      showDlResult(resultEl, links);
-      setDlStatus(statusEl, `${links.length} file(s) available — links expire in a few minutes`, 'success');
-    } else {
-      throw new Error('unexpected response from cobalt');
-    }
-
-  } catch (e) {
-    let msg = e.message || 'something went wrong';
-    // friendlify common cobalt error codes
-    if (msg.includes('content.unavailable')) msg = 'video unavailable or private';
-    else if (msg.includes('link.unsupported')) msg = 'unsupported link';
-    else if (msg.includes('fetch.fail')) msg = 'couldn\'t reach cobalt — try again';
-    setDlStatus(statusEl, 'error: ' + msg, 'error');
-  } finally {
-    btnEl.disabled = false;
-  }
-}
-
-function showDlResult(el, links) {
-  el.innerHTML = links.map(l =>
-    `<a href="${l.url}" target="_blank" rel="noopener">${l.label} &#8599;</a>`
-  ).join('');
-  el.classList.add('visible');
-}
-
-function setDlStatus(el, msg, cls) {
-  el.textContent = msg;
-  el.className = 'dl-status' + (cls ? ' ' + cls : '');
-}
-
-// === page title animation ===
 const titles = ["SkyeHub :3","Welcome to Skye's Wiki","Made by Skye ofc!","≧◡≦ Skye Here!","I'm Skye Larsen btw"];
 let titleIndex=0,charIndex=0,deleting=false,blinkOn=true;
 function blink(){if(!deleting&&charIndex===titles[titleIndex].length){const b=titles[titleIndex];document.title=b+(blinkOn?" |":"  ");blinkOn=!blinkOn;}}
 function type(){const c=titles[titleIndex];if(!deleting&&charIndex<c.length){charIndex++;document.title=c.slice(0,charIndex)+" |";setTimeout(type,80);}else if(!deleting&&charIndex===c.length){setTimeout(()=>{deleting=true;type();},5000);}else if(deleting&&charIndex>0){charIndex--;document.title=c.slice(0,charIndex)+" |";setTimeout(type,50);}else{deleting=false;titleIndex=(titleIndex+1)%titles.length;setTimeout(type,300);}}
 setInterval(blink,500);type();
 
-// === player ===
 function togglePlayer(){
   const body=document.getElementById('wiki-player-body');
   const btn=document.getElementById('player-toggle-btn');
