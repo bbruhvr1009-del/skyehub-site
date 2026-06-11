@@ -46,7 +46,6 @@ hr { height: 1px; color: #a2a9b1; background-color: #a2a9b1; border: 0; margin: 
 .page-section { display: none; }
 .page-section.active { display: block; }
 
-/* ── Wiki Media Player ── */
 #wiki-player {
   position: fixed;
   bottom: 1.2em;
@@ -196,7 +195,9 @@ hr { height: 1px; color: #a2a9b1; background-color: #a2a9b1; border: 0; margin: 
         <div id="siteSub">damn lmao</div>
         <hr style="border-top: 2px dashed #a2a9b1; background: none; color: #a2a9b1;">
         <p>1443005905678503937 — GamerzNate | Homophobic twink, racist, deadass even said it was true lol.</p>
-        <p>†Devildom1509† — @devildom15091 | Asked to be on the wall of shame, for some reason.</p>
+        <p>beast.ovt — @beastistuff | Uses a chromebook.</p>
+        <p>mâsøñ.ßât — @mason.pcv4 | Cracked his phone, in the other way.</p>
+
       </div>
 
     </div>
@@ -231,7 +232,6 @@ hr { height: 1px; color: #a2a9b1; background-color: #a2a9b1; border: 0; margin: 
 
   <div class="visualClear"></div>
 
-  <!-- Wiki Media Player -->
   <div id="wiki-player">
     <div id="wiki-player-header">
       <span>&#9835; now playing</span>
@@ -269,7 +269,6 @@ hr { height: 1px; color: #a2a9b1; background-color: #a2a9b1; border: 0; margin: 
     </div>
   </div>
 
-  <!-- Hidden YouTube IFrame Player -->
   <div id="yt-iframe-container">
     <div id="yt-player"></div>
   </div>
@@ -280,20 +279,17 @@ hr { height: 1px; color: #a2a9b1; background-color: #a2a9b1; border: 0; margin: 
 </div>
 
 <script>
-/* ── Page nav ── */
 function showSection(name) {
   document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
   document.getElementById('section-' + name).classList.add('active');
 }
 
-/* ── Title typer ── */
 const titles = ["SkyeHub :3","Welcome to Skye's Wiki","Made by Skye ofc!","≧◡≦ Skye Here!","I'm Skye Larsen btw"];
 let titleIndex=0,charIndex=0,deleting=false,blinkOn=true;
 function blink(){if(!deleting&&charIndex===titles[titleIndex].length){const b=titles[titleIndex];document.title=b+(blinkOn?" |":"  ");blinkOn=!blinkOn;}}
 function type(){const c=titles[titleIndex];if(!deleting&&charIndex<c.length){charIndex++;document.title=c.slice(0,charIndex)+" |";setTimeout(type,80);}else if(!deleting&&charIndex===c.length){setTimeout(()=>{deleting=true;type();},5000);}else if(deleting&&charIndex>0){charIndex--;document.title=c.slice(0,charIndex)+" |";setTimeout(type,50);}else{deleting=false;titleIndex=(titleIndex+1)%titles.length;setTimeout(type,300);}}
 setInterval(blink,500);type();
 
-/* ── Player toggle ── */
 function togglePlayer(){
   const body=document.getElementById('wiki-player-body');
   const btn=document.getElementById('player-toggle-btn');
@@ -301,7 +297,6 @@ function togglePlayer(){
   btn.innerHTML=body.classList.contains('collapsed')?'+':'&#8722;';
 }
 
-/* ── YouTube IFrame API ── */
 const VIDEO_ID = 'Cz2YCRmDOFk';
 let ytPlayer = null;
 let progressTimer = null;
@@ -396,7 +391,6 @@ function setStatus(msg) {
   document.getElementById('player-status-bar').textContent = msg;
 }
 
-/* ── Load YT API ── */
 (function(){
   const tag = document.createElement('script');
   tag.src = 'https://www.youtube.com/iframe_api';
