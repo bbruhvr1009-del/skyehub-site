@@ -156,9 +156,48 @@ hr { height: 1px; color: #a2a9b1; background-color: #a2a9b1; border: 0; margin: 
   #column-one { display: none; }
   #wiki-player { display: none; }
 }
+
+/* Tornado / weather alert banner */
+#weather-alert-banner {
+  display: none;
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 13px;
+  padding: 0.6em 1em;
+  text-align: center;
+  color: #fff;
+  position: relative;
+  z-index: 200;
+}
+#weather-alert-banner.severity-extreme,
+#weather-alert-banner.severity-severe {
+  background: #c00;
+  animation: weather-alert-flash 1.5s infinite;
+}
+#weather-alert-banner.severity-moderate { background: #d98c00; }
+#weather-alert-banner.severity-minor { background: #5b8fcc; }
+#weather-alert-banner a { color: #fff; text-decoration: underline; }
+#weather-alert-banner .alert-close {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-weight: bold;
+  padding: 0 4px;
+}
+@keyframes weather-alert-flash {
+  0%, 50% { background-color: #c00; }
+  50.01%, 100% { background-color: #800; }
+}
 </style>
 </head>
 <body>
+
+<div id="weather-alert-banner">
+  <span id="weather-alert-text"></span>
+  <span class="alert-close" onclick="dismissWeatherAlert()">&times;</span>
+</div>
 
 <div id="globalWrapper">
   <div id="column-content">
@@ -396,6 +435,140 @@ function setStatus(msg) {
   tag.src = 'https://www.youtube.com/iframe_api';
   document.head.appendChild(tag);
 })();
+
+/* ===================== Weather / Tornado Alert System ===================== */
+/*
+  Uses the free, no-key-required National Weather Service API.
+  1. Asks the visitor's browser for their location (geolocation).
+  2. Falls back to IP-based geolocation if the user denies/has no GPS.
+  3. Queries https://api.weather.gov/alerts/active?point=lat,lon for active alerts.
+  4. Shows the most severe relevant alert (tornado-related prioritized) in a banner.
+  Re-checks every 5 minutes. Dismissing hides it until a NEW alert id appears.
+*/
+
+const WEATHER_ALERT_CHECK_INTERVAL = 5 * 60 * 1000; // 5 minutes
+let dismissedAlertIds = new Set();
+
+function dismissWeatherAlert() {
+  const banner = document.getElementById('weather-alert-banner');
+  const id = banner.dataset.alertId;
+  if (id) dismissedAlertIds.add(id);
+  banner.style.display = 'none';
+}
+
+function showWeatherAlert(alertFeature) {
+  const banner = document.getElementById('weather-alert-banner');
+  const text = document.getElementById('weather-alert-text');
+  const props = alertFeature.properties;
+  const id = props.id;
+
+  if (dismissedAlertIds.has(id)) return;
+
+  banner.className = '';
+  const sev = (props.severity || '').toLowerCase();
+  if (sev === 'extreme') banner.classList.add('severity-extreme');
+  else if (sev === 'severe') banner.classList.add('severity-severe');
+  else if (sev === 'moderate') banner.classList.add('severity-moderate');
+  else banner.classList.add('severity-minor');
+
+  banner.dataset.alertId = id;
+
+  const area = props.areaDesc ? props.areaDesc.split(';')[0].trim() : '';
+  text.innerHTML = '\u26A0\uFE0F ' + (props.event || 'Weather Alert') +
+    (area ? ' — ' + area : '') +
+    (props.headline ? ': ' + props.headline : '');
+
+  banner.style.display = 'block';
+}
+
+function hideWeatherAlert() {
+  document.getElementById('weather-alert-banner').style.display = 'none';
+}
+
+// Priority order: tornado-related alerts shown first, then by severity
+const ALERT_EVENT_PRIORITY = [
+  'Tornado Emergency',
+  'Tornado Warning',
+  'Tornado Watch',
+  'Severe Thunderstorm Warning',
+  'Severe Thunderstorm Watch',
+  'Flash Flood Warning',
+  'Flash Flood Watch'
+];
+const SEVERITY_RANK = { extreme: 4, severe: 3, moderate: 2, minor: 1, unknown: 0 };
+
+function pickBestAlert(features) {
+  if (!features || !features.length) return null;
+
+  // Prefer tornado-specific alerts first
+  for (const eventName of ALERT_EVENT_PRIORITY) {
+    const match = features.find(f => f.properties.event === eventName);
+    if (match) return match;
+  }
+
+  // Otherwise pick the most severe alert overall
+  return features.slice().sort((a, b) => {
+    const ra = SEVERITY_RANK[(a.properties.severity || '').toLowerCase()] || 0;
+    const rb = SEVERITY_RANK[(b.properties.severity || '').toLowerCase()] || 0;
+    return rb - ra;
+  })[0];
+}
+
+async function checkWeatherAlerts(lat, lon) {
+  try {
+    const res = await fetch(`https://api.weather.gov/alerts/active?point=${lat},${lon}`, {
+      headers: { 'Accept': 'application/geo+json' }
+    });
+    if (!res.ok) return;
+    const data = await res.json();
+    const best = pickBestAlert(data.features);
+    if (best) {
+      showWeatherAlert(best);
+    } else {
+      hideWeatherAlert();
+    }
+  } catch (e) {
+    console.warn('Weather alert check failed:', e);
+  }
+}
+
+function startWeatherAlertPolling(lat, lon) {
+  checkWeatherAlerts(lat, lon);
+  setInterval(() => checkWeatherAlerts(lat, lon), WEATHER_ALERT_CHECK_INTERVAL);
+}
+
+async function initWeatherAlerts() {
+  // Try browser geolocation first
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        startWeatherAlertPolling(pos.coords.latitude.toFixed(4), pos.coords.longitude.toFixed(4));
+      },
+      async () => {
+        // Permission denied or unavailable -> fall back to IP-based geolocation
+        await fallbackToIpLocation();
+      },
+      { timeout: 8000, maximumAge: 10 * 60 * 1000 }
+    );
+  } else {
+    await fallbackToIpLocation();
+  }
+}
+
+async function fallbackToIpLocation() {
+  try {
+    const res = await fetch('https://ipapi.co/json/');
+    if (!res.ok) return;
+    const data = await res.json();
+    if (data.latitude && data.longitude) {
+      startWeatherAlertPolling(data.latitude, data.longitude);
+    }
+  } catch (e) {
+    console.warn('IP-based location lookup failed:', e);
+  }
+}
+
+initWeatherAlerts();
 </script>
 
 </body>
