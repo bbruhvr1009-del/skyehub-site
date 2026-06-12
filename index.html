@@ -161,37 +161,43 @@ hr { height: 1px; color: #a2a9b1; background-color: #a2a9b1; border: 0; margin: 
 #weather-alert-banner {
   display: block;
   font-family: sans-serif;
-  font-weight: bold;
   font-size: 12px;
-  padding: 0.7em 1.8em 0.7em 1em;
-  text-align: left;
-  color: #fff;
   position: fixed;
   top: 1em;
   right: 1em;
   max-width: 320px;
-  border-radius: 4px;
-  box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
   z-index: 500;
   transform: translateX(120%);
   opacity: 0;
   transition: transform 0.4s ease, opacity 0.4s ease;
   pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
 }
 #weather-alert-banner.show {
   transform: translateX(0);
   opacity: 1;
   pointer-events: auto;
 }
-#weather-alert-banner.severity-extreme,
-#weather-alert-banner.severity-severe {
+.weather-alert-item {
+  font-weight: bold;
+  padding: 0.7em 1.8em 0.7em 1em;
+  text-align: left;
+  color: #fff;
+  border-radius: 4px;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+  position: relative;
+}
+.weather-alert-item.severity-extreme,
+.weather-alert-item.severity-severe {
   background: #c00;
   animation: weather-alert-flash 1.5s infinite;
 }
-#weather-alert-banner.severity-moderate { background: #d98c00; }
-#weather-alert-banner.severity-minor { background: #5b8fcc; }
-#weather-alert-banner a { color: #fff; text-decoration: underline; }
-#weather-alert-banner .alert-close {
+.weather-alert-item.severity-moderate { background: #d98c00; }
+.weather-alert-item.severity-minor { background: #5b8fcc; }
+.weather-alert-item a { color: #fff; text-decoration: underline; }
+.weather-alert-item .alert-close {
   position: absolute;
   right: 6px;
   top: 6px;
@@ -208,10 +214,7 @@ hr { height: 1px; color: #a2a9b1; background-color: #a2a9b1; border: 0; margin: 
 </head>
 <body>
 
-<div id="weather-alert-banner">
-  <span id="weather-alert-text"></span>
-  <span class="alert-close" onclick="dismissWeatherAlert()">&times;</span>
-</div>
+<div id="weather-alert-banner"></div>
 
 <div id="globalWrapper">
   <div id="column-content">
@@ -469,34 +472,43 @@ function toggleWeatherBanner() {
   banner.classList.toggle('show');
 }
 
-function dismissWeatherAlert() {
+function dismissWeatherAlert(id) {
+  dismissedAlertIds.add(id);
+  const item = document.querySelector('.weather-alert-item[data-alert-id="' + id + '"]');
+  if (item) item.remove();
   const banner = document.getElementById('weather-alert-banner');
-  const id = banner.dataset.alertId;
-  if (id) dismissedAlertIds.add(id);
-  banner.classList.remove('show');
+  if (!banner.children.length) banner.classList.remove('show');
 }
 
-function showWeatherAlert(alertFeature) {
+function severityClass(sev) {
+  sev = (sev || '').toLowerCase();
+  if (sev === 'extreme' || sev === 'severe') return 'severity-' + sev;
+  if (sev === 'moderate') return 'severity-moderate';
+  return 'severity-minor';
+}
+
+function showWeatherAlerts(features) {
   const banner = document.getElementById('weather-alert-banner');
-  const text = document.getElementById('weather-alert-text');
-  const props = alertFeature.properties;
-  const id = props.id;
+  banner.innerHTML = '';
 
-  if (dismissedAlertIds.has(id)) return;
+  const visible = features.filter(f => !dismissedAlertIds.has(f.properties.id));
+  if (!visible.length) {
+    banner.classList.remove('show');
+    return;
+  }
 
-  banner.className = '';
-  const sev = (props.severity || '').toLowerCase();
-  if (sev === 'extreme') banner.classList.add('severity-extreme');
-  else if (sev === 'severe') banner.classList.add('severity-severe');
-  else if (sev === 'moderate') banner.classList.add('severity-moderate');
-  else banner.classList.add('severity-minor');
-
-  banner.dataset.alertId = id;
-
-  const area = props.areaDesc ? props.areaDesc.split(';')[0].trim() : '';
-  text.innerHTML = '\u26A0\uFE0F ' + (props.event || 'Weather Alert') +
-    (area ? ' — ' + area : '') +
-    (props.headline ? ': ' + props.headline : '');
+  for (const f of visible) {
+    const props = f.properties;
+    const area = props.areaDesc ? props.areaDesc.split(';')[0].trim() : '';
+    const item = document.createElement('div');
+    item.className = 'weather-alert-item ' + severityClass(props.severity);
+    item.dataset.alertId = props.id;
+    item.innerHTML = '\u26A0\uFE0F ' + (props.event || 'Weather Alert') +
+      (area ? ' — ' + area : '') +
+      (props.headline ? ': ' + props.headline : '') +
+      '<span class="alert-close" onclick="dismissWeatherAlert(\'' + props.id + '\')">&times;</span>';
+    banner.appendChild(item);
+  }
 
   // Wait 5 seconds, then slide in
   setTimeout(() => {
@@ -505,14 +517,16 @@ function showWeatherAlert(alertFeature) {
 
   const navStatus = document.getElementById('nav-weather-status');
   if (navStatus) {
-    navStatus.textContent = '⚠️ Weather (Alert)';
+    navStatus.textContent = '⚠️ Weather (' + visible.length + (visible.length === 1 ? ' Alert' : ' Alerts') + ')';
     navStatus.style.color = '#c00';
     navStatus.style.fontWeight = 'bold';
   }
 }
 
-function hideWeatherAlert() {
-  document.getElementById('weather-alert-banner').classList.remove('show');
+function hideWeatherAlerts() {
+  const banner = document.getElementById('weather-alert-banner');
+  banner.innerHTML = '';
+  banner.classList.remove('show');
   const navStatus = document.getElementById('nav-weather-status');
   if (navStatus) {
     navStatus.textContent = 'Weather';
@@ -533,21 +547,17 @@ const ALERT_EVENT_PRIORITY = [
 ];
 const SEVERITY_RANK = { extreme: 4, severe: 3, moderate: 2, minor: 1, unknown: 0 };
 
-function pickBestAlert(features) {
-  if (!features || !features.length) return null;
-
-  // Prefer tornado-specific alerts first
-  for (const eventName of ALERT_EVENT_PRIORITY) {
-    const match = features.find(f => f.properties.event === eventName);
-    if (match) return match;
-  }
-
-  // Otherwise pick the most severe alert overall
+function sortAlerts(features) {
   return features.slice().sort((a, b) => {
+    const ai = ALERT_EVENT_PRIORITY.indexOf(a.properties.event);
+    const bi = ALERT_EVENT_PRIORITY.indexOf(b.properties.event);
+    const pa = ai === -1 ? 99 : ai;
+    const pb = bi === -1 ? 99 : bi;
+    if (pa !== pb) return pa - pb;
     const ra = SEVERITY_RANK[(a.properties.severity || '').toLowerCase()] || 0;
     const rb = SEVERITY_RANK[(b.properties.severity || '').toLowerCase()] || 0;
     return rb - ra;
-  })[0];
+  });
 }
 
 async function checkWeatherAlerts(lat, lon) {
@@ -557,11 +567,10 @@ async function checkWeatherAlerts(lat, lon) {
     });
     if (!res.ok) return;
     const data = await res.json();
-    const best = pickBestAlert(data.features);
-    if (best) {
-      showWeatherAlert(best);
+    if (data.features && data.features.length) {
+      showWeatherAlerts(sortAlerts(data.features));
     } else {
-      hideWeatherAlert();
+      hideWeatherAlerts();
     }
   } catch (e) {
     console.warn('Weather alert check failed:', e);
