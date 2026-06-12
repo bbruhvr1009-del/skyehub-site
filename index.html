@@ -162,12 +162,17 @@ hr { height: 1px; color: #a2a9b1; background-color: #a2a9b1; border: 0; margin: 
   display: none;
   font-family: sans-serif;
   font-weight: bold;
-  font-size: 13px;
-  padding: 0.6em 1em;
-  text-align: center;
+  font-size: 12px;
+  padding: 0.7em 1.8em 0.7em 1em;
+  text-align: left;
   color: #fff;
-  position: relative;
-  z-index: 200;
+  position: fixed;
+  top: 1em;
+  right: 1em;
+  max-width: 320px;
+  border-radius: 4px;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+  z-index: 500;
 }
 #weather-alert-banner.severity-extreme,
 #weather-alert-banner.severity-severe {
@@ -179,11 +184,11 @@ hr { height: 1px; color: #a2a9b1; background-color: #a2a9b1; border: 0; margin: 
 #weather-alert-banner a { color: #fff; text-decoration: underline; }
 #weather-alert-banner .alert-close {
   position: absolute;
-  right: 8px;
-  top: 50%;
-  transform: translateY(-50%);
+  right: 6px;
+  top: 6px;
   cursor: pointer;
   font-weight: bold;
+  line-height: 1;
   padding: 0 4px;
 }
 @keyframes weather-alert-flash {
