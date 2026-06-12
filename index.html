@@ -159,7 +159,7 @@ hr { height: 1px; color: #a2a9b1; background-color: #a2a9b1; border: 0; margin: 
 
 /* Tornado / weather alert banner */
 #weather-alert-banner {
-  display: none;
+  display: block;
   font-family: sans-serif;
   font-weight: bold;
   font-size: 12px;
@@ -173,6 +173,15 @@ hr { height: 1px; color: #a2a9b1; background-color: #a2a9b1; border: 0; margin: 
   border-radius: 4px;
   box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
   z-index: 500;
+  transform: translateX(120%);
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  pointer-events: none;
+}
+#weather-alert-banner.show {
+  transform: translateX(0);
+  opacity: 1;
+  pointer-events: auto;
 }
 #weather-alert-banner.severity-extreme,
 #weather-alert-banner.severity-severe {
@@ -466,7 +475,7 @@ function dismissWeatherAlert() {
   const banner = document.getElementById('weather-alert-banner');
   const id = banner.dataset.alertId;
   if (id) dismissedAlertIds.add(id);
-  banner.style.display = 'none';
+  banner.classList.remove('show');
 }
 
 function showWeatherAlert(alertFeature) {
@@ -491,7 +500,10 @@ function showWeatherAlert(alertFeature) {
     (area ? ' — ' + area : '') +
     (props.headline ? ': ' + props.headline : '');
 
-  banner.style.display = 'block';
+  // Wait 5 seconds, then slide in
+  setTimeout(() => {
+    banner.classList.add('show');
+  }, 5000);
 
   const navStatus = document.getElementById('nav-weather-status');
   if (navStatus) {
@@ -502,7 +514,7 @@ function showWeatherAlert(alertFeature) {
 }
 
 function hideWeatherAlert() {
-  document.getElementById('weather-alert-banner').style.display = 'none';
+  document.getElementById('weather-alert-banner').classList.remove('show');
   const navStatus = document.getElementById('nav-weather-status');
   if (navStatus) {
     navStatus.textContent = '✅ No active alerts';
