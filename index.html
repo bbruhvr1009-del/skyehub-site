@@ -267,14 +267,7 @@ hr { height: 1px; color: #a2a9b1; background-color: #a2a9b1; border: 0; margin: 
           <li><a href="#" onclick="showSection('home')">Main page</a></li>
           <li><a href="#" onclick="showSection('hof')">Hall of Fame</a></li>
           <li><a href="#" onclick="showSection('wos')">Wall of Shame</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="portlet">
-      <h3>Weather</h3>
-      <div class="pBody">
-        <ul>
-          <li id="nav-weather-status">Checking for alerts...</li>
+          <li><a href="#" onclick="toggleWeatherBanner()" id="nav-weather-status">Weather</a></li>
         </ul>
       </div>
     </div>
@@ -471,6 +464,11 @@ function setStatus(msg) {
 const WEATHER_ALERT_CHECK_INTERVAL = 5 * 60 * 1000; // 5 minutes
 let dismissedAlertIds = new Set();
 
+function toggleWeatherBanner() {
+  const banner = document.getElementById('weather-alert-banner');
+  banner.classList.toggle('show');
+}
+
 function dismissWeatherAlert() {
   const banner = document.getElementById('weather-alert-banner');
   const id = banner.dataset.alertId;
@@ -507,7 +505,7 @@ function showWeatherAlert(alertFeature) {
 
   const navStatus = document.getElementById('nav-weather-status');
   if (navStatus) {
-    navStatus.textContent = '⚠️ ' + (props.event || 'Alert') + (area ? ' (' + area + ')' : '');
+    navStatus.textContent = '⚠️ Weather (Alert)';
     navStatus.style.color = '#c00';
     navStatus.style.fontWeight = 'bold';
   }
@@ -517,7 +515,7 @@ function hideWeatherAlert() {
   document.getElementById('weather-alert-banner').classList.remove('show');
   const navStatus = document.getElementById('nav-weather-status');
   if (navStatus) {
-    navStatus.textContent = '✅ No active alerts';
+    navStatus.textContent = 'Weather';
     navStatus.style.color = '';
     navStatus.style.fontWeight = '';
   }
