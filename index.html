@@ -257,6 +257,14 @@ hr { height: 1px; color: #a2a9b1; background-color: #a2a9b1; border: 0; margin: 
       </div>
     </div>
     <div class="portlet">
+      <h3>Weather</h3>
+      <div class="pBody">
+        <ul>
+          <li id="nav-weather-status">Checking for alerts...</li>
+        </ul>
+      </div>
+    </div>
+    <div class="portlet">
       <h3>Links</h3>
       <div class="pBody">
         <ul>
@@ -479,10 +487,23 @@ function showWeatherAlert(alertFeature) {
     (props.headline ? ': ' + props.headline : '');
 
   banner.style.display = 'block';
+
+  const navStatus = document.getElementById('nav-weather-status');
+  if (navStatus) {
+    navStatus.textContent = '⚠️ ' + (props.event || 'Alert') + (area ? ' (' + area + ')' : '');
+    navStatus.style.color = '#c00';
+    navStatus.style.fontWeight = 'bold';
+  }
 }
 
 function hideWeatherAlert() {
   document.getElementById('weather-alert-banner').style.display = 'none';
+  const navStatus = document.getElementById('nav-weather-status');
+  if (navStatus) {
+    navStatus.textContent = '✅ No active alerts';
+    navStatus.style.color = '';
+    navStatus.style.fontWeight = '';
+  }
 }
 
 // Priority order: tornado-related alerts shown first, then by severity
