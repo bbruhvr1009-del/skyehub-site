@@ -46,6 +46,31 @@ hr { height: 1px; color: #a2a9b1; background-color: #a2a9b1; border: 0; margin: 
 .page-section { display: none; }
 .page-section.active { display: block; }
 
+.pwgen-options { list-style: none; margin: 0.3em 0 1em 0; padding: 0; }
+.pwgen-options li { margin-bottom: 0.4em; }
+.pwgen-options tt { font-size: 90%; color: #54595d; }
+.pwgen-options input[type=text] { font: 100% monospace; text-align: center; }
+
+#pwgen-output-box {
+  margin: 1em 0;
+  padding: 0.6em;
+  background: #f8f9fa;
+  border: 1px solid #a2a9b1;
+  text-align: center;
+}
+#pwgen-output-box tt {
+  font-size: 130%;
+  word-break: break-all;
+}
+#pwgen-buttons { text-align: center; margin: 0.6em 0; }
+#pwgen-buttons .player-btn { font-size: 100%; padding: 4px 14px; margin: 0 4px; }
+#copy-msg {
+  text-align: center;
+  font-size: 90%;
+  color: #14866d;
+  min-height: 1.2em;
+}
+
 #wiki-player {
   position: fixed;
   bottom: 1.2em;
@@ -256,6 +281,36 @@ hr { height: 1px; color: #a2a9b1; background-color: #a2a9b1; border: 0; margin: 
 
       </div>
 
+      <div id="section-passwordgen" class="page-section">
+        <h1 id="firstHeading">Password Generator</h1>
+        <div id="siteSub">make a strong one, you lazy gremlin</div>
+        <hr style="border-top: 2px dashed #a2a9b1; background: none; color: #a2a9b1;">
+
+        <h2>Choice of characters</h2>
+        <ul class="pwgen-options">
+          <li><label><input type="checkbox" id="lower" checked> Lower-case letters: <tt>abcdefghijklmnopqrstuvwxyz</tt></label></li>
+          <li><label><input type="checkbox" id="upper" checked> Upper-case letters: <tt>ABCDEFGHIJKLMNOPQRSTUVWXYZ</tt></label></li>
+          <li><label><input type="checkbox" id="digit" checked> Digits: <tt>0123456789</tt></label></li>
+          <li><label><input type="checkbox" id="punct"> Punctuation: <tt>!&quot;#$%&amp;'()*+,-./:;&lt;=&gt;?&#64;[\]^_`{|}~</tt></label></li>
+        </ul>
+
+        <h2>Other settings</h2>
+        <ul class="pwgen-options">
+          <li><label><input type="checkbox" id="rqlow"> Require the password to begin and end with a lower-case letter</label></li>
+          <li><label>Length: <input type="text" size="2" maxlength="2" id="lngth" value="16" style="width: 2.2em;"> characters</label></li>
+        </ul>
+
+        <div id="pwgen-output-box">
+          <tt id="password-output">&nbsp;</tt>
+        </div>
+        <div id="pwgen-buttons">
+          <button class="player-btn" id="pwgen-generate" onclick="generatePassword()">Generate password</button>
+          <button class="player-btn" onclick="copyPassword()">Copy</button>
+        </div>
+        <div id="copy-msg">&nbsp;</div>
+      </div>
+
+
     </div>
   </div>
 
@@ -271,7 +326,7 @@ hr { height: 1px; color: #a2a9b1; background-color: #a2a9b1; border: 0; margin: 
           <li><a href="#" onclick="showSection('hof')">Hall of Fame</a></li>
           <li><a href="#" onclick="showSection('wos')">Wall of Shame</a></li>
           <li><a href="#" onclick="toggleWeatherBanner()" id="nav-weather-status">Weather</a></li>
-          <li><a href="https://www.skyehub.org/passwordgen.html" target="_blank">Password Generator</a></li>
+          <li><a href="#" onclick="showSection('passwordgen')">Password Generator</a></li>
         </ul>
       </div>
     </div>
@@ -454,6 +509,82 @@ function setStatus(msg) {
   tag.src = 'https://www.youtube.com/iframe_api';
   document.head.appendChild(tag);
 })();
+
+/* ===================== Password Generator ===================== */
+function generatePassword() {
+  const useLower = document.getElementById('lower').checked;
+  const useUpper = document.getElementById('upper').checked;
+  const useDigit = document.getElementById('digit').checked;
+  const usePunct = document.getElementById('punct').checked;
+  const requireLower = document.getElementById('rqlow').checked;
+  let length = parseInt(document.getElementById('lngth').value, 10);
+
+  if (isNaN(length) || length < 1) length = 16;
+  if (length > 99) length = 99;
+
+  const lowerChars = 'abcdefghijklmnopqrstuvwxyz';
+  const upperChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const digitChars = '0123456789';
+  const punctChars = '!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~';
+
+  let pool = '';
+  if (useLower) pool += lowerChars;
+  if (useUpper) pool += upperChars;
+  if (useDigit) pool += digitChars;
+  if (usePunct) pool += punctChars;
+
+  if (!pool) {
+    document.getElementById('password-output').textContent = '(select at least one character set)';
+    document.getElementById('copy-msg').textContent = '';
+    return;
+  }
+
+  if (requireLower && !useLower) {
+    document.getElementById('password-output').textContent = '("require lower-case" needs lower-case enabled)';
+    document.getElementById('copy-msg').textContent = '';
+    return;
+  }
+
+  if (requireLower && length < 2) {
+    length = 2;
+  }
+
+  function randomChar(charset) {
+    const arr = new Uint32Array(1);
+    crypto.getRandomValues(arr);
+    return charset[arr[0] % charset.length];
+  }
+
+  let chars = [];
+  for (let i = 0; i < length; i++) {
+    chars.push(randomChar(pool));
+  }
+  if (requireLower) {
+    chars[0] = randomChar(lowerChars);
+    chars[chars.length - 1] = randomChar(lowerChars);
+  }
+  const password = chars.join('');
+
+  document.getElementById('password-output').textContent = password;
+  document.getElementById('copy-msg').textContent = '';
+}
+
+function copyPassword() {
+  const text = document.getElementById('password-output').textContent;
+  const msg = document.getElementById('copy-msg');
+  if (!text || text.trim() === '' || text.startsWith('(')) {
+    msg.textContent = 'Generate a password first.';
+    return;
+  }
+  navigator.clipboard.writeText(text).then(() => {
+    msg.textContent = 'Copied to clipboard!';
+    setTimeout(() => { msg.textContent = ''; }, 2000);
+  }).catch(() => {
+    msg.textContent = 'Copy failed — select and copy manually.';
+  });
+}
+
+generatePassword();
 
 /* ===================== Weather / Tornado Alert System ===================== */
 /*
