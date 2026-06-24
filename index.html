@@ -252,6 +252,53 @@ hr { height: 1px; color: #4a4a4a; background-color: #4a4a4a; border: 0; margin: 
 
 #yt-iframe-container { position: fixed; bottom: -9999px; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
+/* Photopea section */
+#photopea-wrap {
+  position: relative;
+  width: 100%;
+  border: 1px solid #3a3a3a;
+  background: #141414;
+  margin-top: 0.6em;
+}
+#photopea-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  background: #181818;
+  border-bottom: 1px solid #3a3a3a;
+  font-size: 11px;
+  color: #a8a8a8;
+}
+#photopea-toolbar a {
+  font-size: 10px;
+  color: #6ab0f3;
+  text-decoration: none;
+  margin-left: auto;
+}
+#photopea-toolbar a:hover { text-decoration: underline; }
+#photopea-iframe {
+  display: block;
+  width: 100%;
+  height: 70vh;
+  min-height: 480px;
+  border: none;
+  background: #1a1a1a;
+}
+#photopea-loading {
+  position: absolute;
+  inset: 36px 0 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #141414;
+  color: #a8a8a8;
+  font-size: 12px;
+  pointer-events: none;
+  transition: opacity 0.4s;
+}
+#photopea-loading.hidden { opacity: 0; }
+
 @media screen and (min-width: 551px) {
   #column-content { float: right; margin: 0 0 0.6em -12.2em; }
   .mw-body { margin: 2.8em 0 0 12.2em; border-right: 0; }
@@ -360,7 +407,6 @@ hr { height: 1px; color: #4a4a4a; background-color: #4a4a4a; border: 0; margin: 
         <p>1443005905678503937 — GamerzNate | Homophobic twink, racist, deadass even said it was true lol.</p>
         <p>beast.ovt — @beastistuff | Uses a chromebook.</p>
         <p>mâsøñ.ßât — @mason.pcv4 | Cracked his phone, in the other way.</p>
-
       </div>
 
       <div id="section-passwordgen" class="page-section">
@@ -435,6 +481,32 @@ hr { height: 1px; color: #4a4a4a; background-color: #4a4a4a; border: 0; margin: 
         </div>
       </div>
 
+      <!-- ==================== PHOTOPEA SECTION ==================== -->
+      <div id="section-photopea" class="page-section">
+        <h1 id="firstHeading">Photopea</h1>
+        <div id="siteSub">free photo editor, in your browser</div>
+        <hr style="border-top: 2px dashed #4a4a4a; background: none; color: #4a4a4a;">
+        <p>Photopea is a free online photo editor — think Photoshop but in a browser tab. Supports PSD, PNG, JPG, GIF, SVG, PDF, AI and like 40 other formats. Runs entirely on your device, nothing gets uploaded.</p>
+        <div id="photopea-wrap">
+          <div id="photopea-toolbar">
+            <span>&#9998; Photopea Editor</span>
+            <a href="https://www.photopea.com" target="_blank">open full site &#8599;</a>
+          </div>
+          <div id="photopea-loading">loading editor...</div>
+          <iframe
+            id="photopea-iframe"
+            src="https://www.photopea.com"
+            title="Photopea Online Photo Editor"
+            allow="camera; microphone; clipboard-read; clipboard-write"
+            sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-downloads allow-modals"
+            loading="lazy"
+          ></iframe>
+        </div>
+        <p style="font-size:90%; color:#a8a8a8; margin-top:0.5em;">
+          Photopea is made by <a href="https://www.photopea.com" target="_blank">Ivan Kutskir</a>. This is just an embed — all editing happens in your browser, no data leaves your device.
+        </p>
+      </div>
+      <!-- ==================== END PHOTOPEA ==================== -->
 
     </div>
   </div>
@@ -453,6 +525,7 @@ hr { height: 1px; color: #4a4a4a; background-color: #4a4a4a; border: 0; margin: 
           <li><a href="#" onclick="toggleWeatherBanner()" id="nav-weather-status">Weather</a></li>
           <li><a href="#" onclick="showSection('passwordgen')">Password Generator</a></li>
           <li><a href="#" onclick="showSection('colortext')">Discord Color Text</a></li>
+          <li><a href="#" onclick="showSection('photopea')">Photopea</a></li>
         </ul>
       </div>
     </div>
@@ -529,6 +602,19 @@ hr { height: 1px; color: #4a4a4a; background-color: #4a4a4a; border: 0; margin: 
 function showSection(name) {
   document.querySelectorAll('.page-section').forEach(el => el.classList.remove('active'));
   document.getElementById('section-' + name).classList.add('active');
+
+  // Lazy-load Photopea iframe only when the section is first opened
+  if (name === 'photopea') {
+    const iframe = document.getElementById('photopea-iframe');
+    if (!iframe.dataset.loaded) {
+      iframe.dataset.loaded = 'true';
+      iframe.onload = function() {
+        const loader = document.getElementById('photopea-loading');
+        if (loader) loader.classList.add('hidden');
+        setTimeout(() => { if (loader) loader.remove(); }, 500);
+      };
+    }
+  }
 }
 
 const titles = ["SkyeHub :3","Welcome to Skye's Wiki","Made by Skye ofc!","≧◡≦ Skye Here!","I'm Skye Larsen btw"];
@@ -850,16 +936,7 @@ generatePassword();
 })();
 
 /* ===================== Weather / Tornado Alert System ===================== */
-/*
-  Uses the free, no-key-required National Weather Service API.
-  1. Asks the visitor's browser for their location (geolocation).
-  2. Falls back to IP-based geolocation if the user denies/has no GPS.
-  3. Queries https://api.weather.gov/alerts/active?point=lat,lon for active alerts.
-  4. Shows the most severe relevant alert (tornado-related prioritized) in a banner.
-  Re-checks every 5 minutes. Dismissing hides it until a NEW alert id appears.
-*/
-
-const WEATHER_ALERT_CHECK_INTERVAL = 5 * 60 * 1000; // 5 minutes
+const WEATHER_ALERT_CHECK_INTERVAL = 5 * 60 * 1000;
 let dismissedAlertIds = new Set();
 
 function toggleWeatherBanner() {
@@ -905,7 +982,6 @@ function showWeatherAlerts(features) {
     banner.appendChild(item);
   }
 
-  // Wait 5 seconds, then slide in
   setTimeout(() => {
     banner.classList.add('show');
   }, 5000);
@@ -930,7 +1006,6 @@ function hideWeatherAlerts() {
   }
 }
 
-// Priority order: tornado-related alerts shown first, then by severity
 const ALERT_EVENT_PRIORITY = [
   'Tornado Emergency',
   'Tornado Warning',
@@ -978,14 +1053,12 @@ function startWeatherAlertPolling(lat, lon) {
 }
 
 async function initWeatherAlerts() {
-  // Try browser geolocation first
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         startWeatherAlertPolling(pos.coords.latitude.toFixed(4), pos.coords.longitude.toFixed(4));
       },
       async () => {
-        // Permission denied or unavailable -> fall back to IP-based geolocation
         await fallbackToIpLocation();
       },
       { timeout: 8000, maximumAge: 10 * 60 * 1000 }
