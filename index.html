@@ -299,6 +299,23 @@ hr { height: 1px; color: #4a4a4a; background-color: #4a4a4a; border: 0; margin: 
 }
 #photopea-loading.hidden { opacity: 0; }
 
+/* Discord widget */
+#discord-widget-wrap {
+  position: fixed;
+  bottom: 1.2em;
+  left: 1.2em;
+  z-index: 100;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+  line-height: 0;
+}
+#discord-widget-wrap iframe {
+  width: 260px;
+  height: 345px;
+}
+@media screen and (max-width: 550px) {
+  #discord-widget-wrap { display: none; }
+}
+
 @media screen and (min-width: 551px) {
   #column-content { float: right; margin: 0 0 0.6em -12.2em; }
   .mw-body { margin: 2.8em 0 0 12.2em; border-right: 0; }
@@ -551,6 +568,10 @@ hr { height: 1px; color: #4a4a4a; background-color: #4a4a4a; border: 0; margin: 
   </div>
 
   <div class="visualClear"></div>
+
+  <div id="discord-widget-wrap">
+    <iframe src="https://discord.com/widget?id=1484332975247331468&theme=dark" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+  </div>
 
   <div id="wiki-player">
     <div id="wiki-player-header">
