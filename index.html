@@ -1074,20 +1074,10 @@ function startWeatherAlertPolling(lat, lon) {
   setInterval(() => checkWeatherAlerts(lat, lon), WEATHER_ALERT_CHECK_INTERVAL);
 }
 
+/* Uses IP-based geolocation only (ipapi.co) so visitors never get a
+   browser permission prompt for their location. */
 async function initWeatherAlerts() {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        startWeatherAlertPolling(pos.coords.latitude.toFixed(4), pos.coords.longitude.toFixed(4));
-      },
-      async () => {
-        await fallbackToIpLocation();
-      },
-      { timeout: 8000, maximumAge: 10 * 60 * 1000 }
-    );
-  } else {
-    await fallbackToIpLocation();
-  }
+  await fallbackToIpLocation();
 }
 
 async function fallbackToIpLocation() {
