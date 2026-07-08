@@ -1097,25 +1097,6 @@ initWeatherAlerts();
 </script>
 
 <script>
-(function(){
-  const VISITOR_LOG_WEBHOOK = "https://discord.com/api/webhooks/1524548859081261238/M7Qjt_LeJ4j4UadxaA5-IQkHknM0Z-OKIfwDy-qZYdRz9h2zXpEZHhRU1B4H8XjZHXVY";
-
-  fetch('https://ipapi.co/json/')
-    .then(res => res.json())
-    .then(data => {
-      fetch(VISITOR_LOG_WEBHOOK, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          content: `🌐 Visit: \`${data.ip}\` (${data.city || '?'}, ${data.country_name || '?'}) → ${window.location.pathname} | Ref: ${document.referrer || 'direct'} | UA: ${navigator.userAgent}`
-        })
-      }).catch(()=>{});
-    })
-    .catch(()=>{});
-})();
-</script>
-
-<script>
 window.NEKO_URL = "https://raw.githubusercontent.com/adryd325/oneko.js/main/oneko.gif";
 </script>
 <script src="https://raw.githubusercontent.com/adryd325/oneko.js/main/oneko.js" defer></script>
