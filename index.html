@@ -71,7 +71,6 @@ hr { height: 1px; color: #4a4a4a; background-color: #4a4a4a; border: 0; margin: 
   min-height: 1.2em;
 }
 
-/* Discord Color Text Generator (scoped) */
 .ctg-root { font-family: sans-serif; }
 .ctg-flex {
   display: flex;
@@ -252,7 +251,6 @@ hr { height: 1px; color: #4a4a4a; background-color: #4a4a4a; border: 0; margin: 
 
 #yt-iframe-container { position: fixed; bottom: -9999px; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
-/* Photopea section */
 #photopea-wrap {
   position: relative;
   width: 100%;
@@ -299,7 +297,6 @@ hr { height: 1px; color: #4a4a4a; background-color: #4a4a4a; border: 0; margin: 
 }
 #photopea-loading.hidden { opacity: 0; }
 
-/* Discord widget */
 #discord-widget-wrap {
   position: fixed;
   bottom: 1.2em;
@@ -328,7 +325,6 @@ hr { height: 1px; color: #4a4a4a; background-color: #4a4a4a; border: 0; margin: 
   #wiki-player { display: none; }
 }
 
-/* Tornado / weather alert banner */
 #weather-alert-banner {
   display: block;
   font-family: sans-serif;
@@ -392,9 +388,9 @@ hr { height: 1px; color: #4a4a4a; background-color: #4a4a4a; border: 0; margin: 
     <div class="mw-body" role="main">
 
       <div id="section-home" class="page-section active">
-        <h1 id="firstHeading">! Skye Larsen</h1>
+        <h1 id="firstHeading">Skye</h1>
         <div id="siteSub">I'm Skye | skyehub.org</div>
-        <p><b>@skyehub.org</b> &nbsp;·&nbsp; FUCK ICE
+        <p><b>@yourlocalrifty</b> &nbsp;·&nbsp; FUCK ICE
         <hr style="border-top: 2px dashed #4a4a4a; background: none; color: #4a4a4a;">
         <h2>Links</h2>
         <ul>
@@ -498,8 +494,6 @@ hr { height: 1px; color: #4a4a4a; background-color: #4a4a4a; border: 0; margin: 
           <div class="ctg-tooltip">Tooltip</div>
         </div>
       </div>
-
-      <!-- ==================== PHOTOPEA SECTION ==================== -->
       <div id="section-photopea" class="page-section">
         <h1 id="firstHeading">Photopea</h1>
         <div id="siteSub">free photo editor, in your browser</div>
@@ -524,8 +518,6 @@ hr { height: 1px; color: #4a4a4a; background-color: #4a4a4a; border: 0; margin: 
           Photopea is made by <a href="https://www.photopea.com" target="_blank">Ivan Kutskir</a>. This is just an embed — all editing happens in your browser, no data leaves your device.
         </p>
       </div>
-      <!-- ==================== END PHOTOPEA ==================== -->
-
     </div>
   </div>
 
@@ -567,7 +559,7 @@ hr { height: 1px; color: #4a4a4a; background-color: #4a4a4a; border: 0; margin: 
       </div>
     </div>
   </div>
-
+  
   <div class="visualClear"></div>
 
   <div id="discord-widget-wrap">
@@ -752,7 +744,6 @@ function setStatus(msg) {
   document.head.appendChild(tag);
 })();
 
-/* ===================== Password Generator ===================== */
 function generatePassword() {
   const useLower = document.getElementById('lower').checked;
   const useUpper = document.getElementById('upper').checked;
@@ -828,7 +819,6 @@ function copyPassword() {
 
 generatePassword();
 
-/* ===================== Discord Color Text Generator ===================== */
 (function(){
     const textarea = document.querySelector("#ctg-textarea");
     const copybtn = document.querySelector(".ctg-button.ctg-copy");
@@ -957,7 +947,6 @@ generatePassword();
     }
 })();
 
-/* ===================== Weather / Tornado Alert System ===================== */
 const WEATHER_ALERT_CHECK_INTERVAL = 5 * 60 * 1000;
 let dismissedAlertIds = new Set();
 
@@ -1074,8 +1063,6 @@ function startWeatherAlertPolling(lat, lon) {
   setInterval(() => checkWeatherAlerts(lat, lon), WEATHER_ALERT_CHECK_INTERVAL);
 }
 
-/* Uses IP-based geolocation only (ipapi.co) so visitors never get a
-   browser permission prompt for their location. */
 async function initWeatherAlerts() {
   await fallbackToIpLocation();
 }
