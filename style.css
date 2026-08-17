@@ -1,11 +1,13 @@
 :root {
   --bg: #121212;
   --surface: #1E1E1E;
+  --surface-raised: #242424;
   --on-surface: #E1E1E1;
   --primary: #BB86FC;
   --muted: #9A9A9A;
   --danger: #E23F3F;
   --danger-text: #1A1550;
+  --border: #2A2A2A;
   --font: "Roboto", "Segoe UI", Arial, sans-serif;
 }
 
@@ -44,8 +46,6 @@ html, body {
   margin: 0;
   color: var(--on-surface);
 }
-
-.wordmark.small { font-size: 20px; }
 
 .tagline {
   color: var(--muted);
@@ -125,91 +125,152 @@ html, body {
   margin: -6px 0 14px;
 }
 
-#app-screen {
-  width: 100%;
-  max-width: 480px;
-  padding: 0 0 90px;
-}
-
-.app-header {
-  width: 100%;
+.app-shell {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 24px 20px 8px;
+  height: 100vh;
+  width: 100%;
 }
 
-.btn-ghost {
-  background: none;
-  border: 1px solid #333;
-  color: var(--muted);
-  padding: 8px 16px;
-  border-radius: 999px;
-  font-family: var(--font);
-  font-size: 13px;
-  cursor: pointer;
+.sidebar {
+  width: 260px;
+  min-width: 260px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 20px 12px;
 }
 
-.btn-ghost:hover {
-  border-color: var(--primary);
+.sidebar-brand {
+  font-weight: 700;
+  font-size: 20px;
+  padding: 8px 12px 24px;
   color: var(--on-surface);
 }
 
-.welcome-card {
-  width: 100%;
-  padding: 0 20px 20px;
+.sidebar-nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
-.avatar-ring {
-  width: 96px;
-  height: 96px;
-  margin-bottom: 16px;
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  color: var(--muted);
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.nav-item:hover {
+  background: var(--surface-raised);
+}
+
+.nav-item.active {
+  background: var(--surface-raised);
+  color: var(--on-surface);
+}
+
+.nav-icon {
+  font-size: 18px;
+  width: 20px;
+  text-align: center;
+}
+
+.sidebar-footer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border-top: 1px solid var(--border);
+}
+
+.mini-avatar {
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
+  background: var(--primary);
+  color: #1A1A1A;
+  font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 32px;
-  font-weight: 700;
-  color: #1A1A1A;
-  background: var(--primary);
+  flex-shrink: 0;
 }
 
-.welcome-card h2 {
-  font-weight: 700;
-  font-size: 24px;
-  margin: 0 0 4px;
+.mini-info {
+  font-size: 13px;
+  overflow: hidden;
 }
 
-.muted { color: var(--muted); font-size: 14px; margin: 0; }
+.mini-info div:first-child {
+  color: var(--on-surface);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.main-panel {
+  flex: 1;
+  overflow-y: auto;
+  padding: 40px 48px;
+  max-width: 900px;
+}
+
+.view-title {
+  font-weight: 700;
+  font-size: 26px;
+  margin: 0 0 24px;
+}
 
 .placeholder-card {
-  width: 100%;
-  margin: 0 20px;
-  width: calc(100% - 40px);
   background: var(--surface);
   border-radius: 12px;
-  padding: 20px;
+  padding: 24px;
   color: var(--muted);
   font-size: 14px;
-  line-height: 1.5;
+  line-height: 1.6;
+  max-width: 560px;
+}
+
+.search-input {
+  width: 100%;
+  max-width: 480px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--on-surface);
+  font-family: var(--font);
+  font-size: 15px;
+  outline: none;
+}
+
+.search-input:focus {
+  border-color: var(--primary);
 }
 
 .banner {
   width: 100%;
-  height: 140px;
+  max-width: 640px;
+  height: 160px;
+  border-radius: 16px 16px 0 0;
   background: var(--primary);
 }
 
-.welcome-card {
-  width: 100%;
-  padding: 0 20px;
-  margin-top: -48px;
+.profile-body {
+  max-width: 640px;
 }
 
 .avatar-ring {
   width: 96px;
   height: 96px;
-  margin-bottom: 16px;
+  margin: -48px 0 16px 24px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -218,13 +279,13 @@ html, body {
   font-weight: 700;
   color: #1A1A1A;
   background: #2a2a2a;
-  border: 2px solid var(--bg);
+  border: 3px solid var(--bg);
 }
 
 .info-card {
   background: var(--surface);
-  border-radius: 12px;
-  padding: 20px;
+  border-radius: 0 0 16px 16px;
+  padding: 24px;
 }
 
 .info-card h2 {
@@ -235,62 +296,8 @@ html, body {
 
 .muted { color: var(--muted); font-size: 14px; margin: 0; }
 
-.placeholder-card {
-  width: calc(100% - 40px);
-  margin: 16px 20px 0;
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.5;
-}
-
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  max-width: 480px;
-  margin: 0 auto;
-  background: var(--surface);
-  padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
-  display: flex;
-  justify-content: space-around;
-}
-
-.nav-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  font-size: 20px;
-  color: var(--muted);
-  cursor: pointer;
-  padding: 6px 14px;
-  border-radius: 999px;
-}
-
-.nav-item span {
-  font-size: 11px;
-  font-family: var(--font);
-}
-
-.nav-item.active {
-  background: #2a2a30;
-  color: var(--on-surface);
-}
-
-.settings-panel {
-  padding: 24px 20px;
-}
-
-.panel-title {
-  font-weight: 700;
-  font-size: 26px;
-  margin: 0 0 20px;
-}
-
 .btn-danger {
-  width: 100%;
-  padding: 16px;
+  padding: 14px 32px;
   border: none;
   border-radius: 999px;
   background: var(--danger);
