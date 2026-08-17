@@ -4,11 +4,9 @@ const Api = {
   async signup(email, password) {
     return Api._post("/auth/signup", { email, password });
   },
-
   async login(email, password) {
     return Api._post("/auth/login", { email, password });
   },
-
   async getProfile(token) {
     const res = await fetch(`${API_BASE}/profile`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -16,7 +14,6 @@ const Api = {
     if (!res.ok) throw new Error((await res.json()).error || "Couldn't load profile");
     return res.json();
   },
-
   async _post(path, body) {
     const res = await fetch(`${API_BASE}${path}`, {
       method: "POST",
@@ -28,24 +25,27 @@ const Api = {
     return data;
   },
 };
+
 const TOKEN_KEY = "everglow_token";
 
 const authScreen = document.getElementById("auth-screen");
-const appScreen = document.getElementById("app-screen");
+const appShell = document.getElementById("app-shell");
 const authForm = document.getElementById("auth-form");
 const authToggle = document.getElementById("auth-toggle");
 const authTagline = document.getElementById("auth-tagline");
 const authSubmit = document.getElementById("auth-submit");
 const authError = document.getElementById("auth-error");
 const signOutBtn = document.getElementById("sign-out");
-const navSettings = document.getElementById("nav-settings");
-const settingsPanel = document.getElementById("settings-panel");
+const navItems = document.querySelectorAll(".nav-item");
 
-navSettings.addEventListener("click", () => {
-  const opening = settingsPanel.hidden;
-  settingsPanel.hidden = !opening;
-  document.querySelectorAll(".nav-item").forEach((el) => el.classList.remove("active"));
-  if (opening) navSettings.classList.add("active");
+navItems.forEach((item) => {
+  item.addEventListener("click", () => {
+    navItems.forEach((el) => el.classList.remove("active"));
+    item.classList.add("active");
+
+    document.querySelectorAll(".view").forEach((v) => (v.hidden = true));
+    document.getElementById(`view-${item.dataset.view}`).hidden = false;
+  });
 });
 
 let mode = "login";
@@ -69,7 +69,7 @@ authForm.addEventListener("submit", async (e) => {
   const password = document.getElementById("password").value;
 
   authSubmit.disabled = true;
-  authSubmit.textContent = mode === "login" ? "logging in…" : "signing up…";
+  authSubmit.textContent = mode === "login" ? "Logging in…" : "Signing up…";
 
   try {
     const result = mode === "login"
@@ -82,7 +82,7 @@ authForm.addEventListener("submit", async (e) => {
     showError(err.message);
   } finally {
     authSubmit.disabled = false;
-    authSubmit.textContent = mode === "login" ? "log in" : "sign up";
+    authSubmit.textContent = mode === "login" ? "Log In" : "Sign Up";
   }
 });
 
@@ -96,7 +96,7 @@ function hideError() {
 
 signOutBtn.addEventListener("click", () => {
   localStorage.removeItem(TOKEN_KEY);
-  appScreen.hidden = true;
+  appShell.hidden = true;
   authScreen.hidden = false;
 });
 
@@ -107,16 +107,19 @@ async function enterApp() {
   try {
     const profile = await Api.getProfile(token);
     const name = profile.display_name || profile.username || "there";
-    document.getElementById("welcome-name").textContent = `hey, ${name}`;
-    document.getElementById("welcome-email").textContent = profile.username
-      ? `@${profile.username}`
-      : "";
-    document.getElementById("avatar-initial").textContent = name.charAt(0).toUpperCase();
+    const handle = profile.username ? `@${profile.username}` : "";
+    const initial = name.charAt(0).toUpperCase();
+
+    document.getElementById("welcome-name").textContent = name;
+    document.getElementById("welcome-email").textContent = handle;
+    document.getElementById("avatar-initial").textContent = initial;
+    document.getElementById("mini-name").textContent = name;
+    document.getElementById("mini-handle").textContent = handle;
+    document.getElementById("mini-avatar").textContent = initial;
 
     authScreen.hidden = true;
-    appScreen.hidden = false;
+    appShell.hidden = false;
   } catch (err) {
-
     localStorage.removeItem(TOKEN_KEY);
   }
 }
