@@ -28,6 +28,10 @@ html, body {
   align-items: center;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 #auth-screen {
   justify-content: center;
   padding: 24px;
