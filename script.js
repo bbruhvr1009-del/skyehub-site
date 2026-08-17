@@ -1,4 +1,3 @@
-// Talks to the same Worker backend your Android app uses.
 const API_BASE = "https://everglow-api.bbruhvr1009.workers.dev";
 
 const Api = {
@@ -31,7 +30,6 @@ const Api = {
 };
 const TOKEN_KEY = "everglow_token";
 
-// ---------- Elements ----------
 const authScreen = document.getElementById("auth-screen");
 const appScreen = document.getElementById("app-screen");
 const authForm = document.getElementById("auth-form");
@@ -40,15 +38,23 @@ const authTagline = document.getElementById("auth-tagline");
 const authSubmit = document.getElementById("auth-submit");
 const authError = document.getElementById("auth-error");
 const signOutBtn = document.getElementById("sign-out");
+const navSettings = document.getElementById("nav-settings");
+const settingsPanel = document.getElementById("settings-panel");
 
-let mode = "login"; // or "signup"
+navSettings.addEventListener("click", () => {
+  const opening = settingsPanel.hidden;
+  settingsPanel.hidden = !opening;
+  document.querySelectorAll(".nav-item").forEach((el) => el.classList.remove("active"));
+  if (opening) navSettings.classList.add("active");
+});
 
-// ---------- Auth screen behavior ----------
+let mode = "login";
+
 authToggle.addEventListener("click", () => {
   mode = mode === "login" ? "signup" : "login";
   const isLogin = mode === "login";
   authTagline.textContent = isLogin ? "welcome back" : "let's set you up";
-  authSubmit.textContent = isLogin ? "log in" : "sign up";
+  authSubmit.textContent = isLogin ? "Log In" : "Sign Up";
   authToggle.innerHTML = isLogin
     ? `new here? <span>create an account</span>`
     : `already have one? <span>log in</span>`;
@@ -88,14 +94,12 @@ function hideError() {
   authError.hidden = true;
 }
 
-// ---------- Sign out ----------
 signOutBtn.addEventListener("click", () => {
   localStorage.removeItem(TOKEN_KEY);
   appScreen.hidden = true;
   authScreen.hidden = false;
 });
 
-// ---------- Entering the app ----------
 async function enterApp() {
   const token = localStorage.getItem(TOKEN_KEY);
   if (!token) return;
@@ -112,10 +116,9 @@ async function enterApp() {
     authScreen.hidden = true;
     appScreen.hidden = false;
   } catch (err) {
-    // token invalid/expired — bounce back to login
+
     localStorage.removeItem(TOKEN_KEY);
   }
 }
 
-// ---------- Boot ----------
 enterApp();
