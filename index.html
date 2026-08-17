@@ -36,36 +36,73 @@
     </div>
   </main>
 
-  <main id="app-screen" class="screen" hidden>
-    <div class="banner"></div>
+  <div id="app-shell" class="app-shell" hidden>
 
-    <div class="welcome-card">
-      <div class="avatar-ring" id="avatar-ring">
-        <span id="avatar-initial">?</span>
+    <aside class="sidebar">
+      <div class="sidebar-brand">EverGlow</div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-item active" data-view="home">
+          <span class="nav-icon">🏠</span>
+          <span>Home</span>
+        </div>
+        <div class="nav-item" data-view="search">
+          <span class="nav-icon">🔍</span>
+          <span>Search</span>
+        </div>
+        <div class="nav-item" data-view="profile">
+          <span class="nav-icon">👤</span>
+          <span>Profile</span>
+        </div>
+        <div class="nav-item" data-view="settings">
+          <span class="nav-icon">⚙️</span>
+          <span>Settings</span>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="mini-avatar" id="mini-avatar">?</div>
+        <div class="mini-info">
+          <div id="mini-name">—</div>
+          <div id="mini-handle" class="muted">—</div>
+        </div>
+      </div>
+    </aside>
+
+    <section class="main-panel">
+
+      <div class="view" id="view-home">
+        <h1 class="view-title">Home</h1>
+        <div class="placeholder-card">
+          Your DMs will show up here. This is just the starting shell — hook your message list up whenever you're ready.
+        </div>
       </div>
 
-      <div class="info-card">
-        <h2 id="welcome-name">—</h2>
-        <p id="welcome-email" class="muted">—</p>
+      <div class="view" id="view-search" hidden>
+        <h1 class="view-title">Search</h1>
+        <input type="text" class="search-input" placeholder="Find people or servers">
       </div>
-    </div>
 
-    <div class="placeholder-card">
-      Your DMs will show up here. This is just the starting shell — hook your message list up whenever you're ready.
-    </div>
+      <div class="view" id="view-profile" hidden>
+        <div class="banner"></div>
+        <div class="profile-body">
+          <div class="avatar-ring" id="avatar-ring">
+            <span id="avatar-initial">?</span>
+          </div>
+          <div class="info-card">
+            <h2 id="welcome-name">—</h2>
+            <p id="welcome-email" class="muted">—</p>
+          </div>
+        </div>
+      </div>
 
-    <nav class="bottom-nav">
-      <div class="nav-item">🏠<span>Home</span></div>
-      <div class="nav-item">🔍<span>Search</span></div>
-      <div class="nav-item active">👤<span>Profile</span></div>
-      <div class="nav-item" id="nav-settings">⚙️<span>Settings</span></div>
-    </nav>
+      <div class="view" id="view-settings" hidden>
+        <h1 class="view-title">Settings</h1>
+        <button type="button" class="btn-danger" id="sign-out">Sign Out</button>
+      </div>
 
-    <div class="settings-panel" id="settings-panel" hidden>
-      <h2 class="panel-title">Settings</h2>
-      <button type="button" class="btn-danger" id="sign-out">Sign Out</button>
-    </div>
-  </main>
+    </section>
+  </div>
 
   <script src="script.js"></script>
 </body>
