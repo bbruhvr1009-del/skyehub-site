@@ -1,15 +1,12 @@
 :root {
-  --bg: #0f0d16;
-  --bg-card: #17141f;
-  --border: #2a2536;
-  --text: #f1ecf7;
-  --muted: #948da3;
-  --glow-1: #ff7a5c;
-  --glow-2: #ffb56b;
-  --glow-3: #b57bff;
-  --error: #ff6b6b;
-  --font-display: "Fraunces", serif;
-  --font-body: "Inter", sans-serif;
+  --bg: #121212;
+  --surface: #1E1E1E;
+  --on-surface: #E1E1E1;
+  --primary: #BB86FC;
+  --muted: #9A9A9A;
+  --danger: #E23F3F;
+  --danger-text: #1A1550;
+  --font: "Roboto", "Segoe UI", Arial, sans-serif;
 }
 
 * { box-sizing: border-box; }
@@ -18,33 +15,16 @@ html, body {
   margin: 0;
   height: 100%;
   background: var(--bg);
-  color: var(--text);
-  font-family: var(--font-body);
-  -webkit-font-smoothing: antialiased;
-}
-
-/* ambient glow background */
-.glow-field {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(560px 420px at 15% 10%, rgba(255, 122, 92, 0.16), transparent 70%),
-    radial-gradient(520px 420px at 85% 25%, rgba(181, 123, 255, 0.14), transparent 70%),
-    radial-gradient(600px 500px at 50% 100%, rgba(255, 181, 107, 0.10), transparent 70%);
+  color: var(--on-surface);
+  font-family: var(--font);
 }
 
 .screen {
-  position: relative;
-  z-index: 1;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-
-/* ---------- Auth screen ---------- */
 
 #auth-screen {
   justify-content: center;
@@ -53,28 +33,19 @@ html, body {
 
 .auth-card {
   width: 100%;
-  max-width: 380px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 40px 32px;
-  text-align: center;
-  box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.6);
+  max-width: 360px;
+  text-align: left;
 }
 
 .wordmark {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 32px;
-  letter-spacing: -0.01em;
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: 28px;
   margin: 0;
-  background: linear-gradient(100deg, var(--glow-1), var(--glow-2) 55%, var(--glow-3));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--on-surface);
 }
 
-.wordmark.small { font-size: 22px; }
+.wordmark.small { font-size: 20px; }
 
 .tagline {
   color: var(--muted);
@@ -84,53 +55,53 @@ html, body {
 
 .field {
   display: block;
-  text-align: left;
   margin-bottom: 16px;
 }
 
 .field span {
   display: block;
   font-size: 12px;
-  text-transform: lowercase;
-  letter-spacing: 0.04em;
   color: var(--muted);
   margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 .field input {
   width: 100%;
-  padding: 12px 14px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  background: #0f0d16;
-  color: var(--text);
-  font-family: var(--font-body);
+  padding: 14px;
+  border-radius: 8px;
+  border: 1px solid #333;
+  background: var(--surface);
+  color: var(--on-surface);
+  font-family: var(--font);
   font-size: 15px;
   outline: none;
   transition: border-color 0.15s ease;
 }
 
 .field input:focus {
-  border-color: var(--glow-1);
+  border-color: var(--primary);
 }
 
 .btn-primary {
   width: 100%;
-  padding: 13px;
+  padding: 14px;
   margin-top: 6px;
   border: none;
-  border-radius: 10px;
-  font-family: var(--font-body);
-  font-weight: 600;
-  font-size: 15px;
-  color: #16121c;
+  border-radius: 999px;
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: #1A1A1A;
   cursor: pointer;
-  background: linear-gradient(100deg, var(--glow-2), var(--glow-1));
-  transition: filter 0.15s ease, transform 0.1s ease;
+  background: var(--primary);
+  transition: filter 0.15s ease;
 }
 
 .btn-primary:hover { filter: brightness(1.08); }
-.btn-primary:active { transform: scale(0.99); }
 .btn-primary:disabled { opacity: 0.6; cursor: default; }
 
 .link-btn {
@@ -138,31 +109,26 @@ html, body {
   background: none;
   border: none;
   color: var(--muted);
-  font-family: var(--font-body);
+  font-family: var(--font);
   font-size: 13px;
   cursor: pointer;
+  padding: 0;
 }
 
 .link-btn span {
-  color: var(--glow-2);
-  text-decoration: underline;
-  text-underline-offset: 2px;
+  color: var(--primary);
 }
 
 .error {
-  color: var(--error);
+  color: #FF6B6B;
   font-size: 13px;
   margin: -6px 0 14px;
-  text-align: left;
 }
-
-/* ---------- App screen ---------- */
 
 #app-screen {
   width: 100%;
   max-width: 480px;
-  padding: 24px;
-  align-self: center;
+  padding: 0 0 90px;
 }
 
 .app-header {
@@ -170,54 +136,47 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 4px 32px;
+  padding: 24px 20px 8px;
 }
 
 .btn-ghost {
   background: none;
-  border: 1px solid var(--border);
+  border: 1px solid #333;
   color: var(--muted);
   padding: 8px 16px;
-  border-radius: 8px;
-  font-family: var(--font-body);
+  border-radius: 999px;
+  font-family: var(--font);
   font-size: 13px;
   cursor: pointer;
-  transition: border-color 0.15s ease, color 0.15s ease;
 }
 
 .btn-ghost:hover {
-  border-color: var(--glow-1);
-  color: var(--text);
+  border-color: var(--primary);
+  color: var(--on-surface);
 }
 
 .welcome-card {
   width: 100%;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 32px 24px;
-  text-align: center;
-  margin-bottom: 16px;
+  padding: 0 20px 20px;
 }
 
 .avatar-ring {
-  width: 64px;
-  height: 64px;
-  margin: 0 auto 16px;
+  width: 96px;
+  height: 96px;
+  margin-bottom: 16px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: var(--font-display);
-  font-size: 24px;
-  font-weight: 600;
-  color: #16121c;
-  background: linear-gradient(135deg, var(--glow-2), var(--glow-1), var(--glow-3));
+  font-size: 32px;
+  font-weight: 700;
+  color: #1A1A1A;
+  background: var(--primary);
 }
 
 .welcome-card h2 {
-  font-family: var(--font-display);
-  font-weight: 500;
+  font-weight: 700;
+  font-size: 24px;
   margin: 0 0 4px;
 }
 
@@ -225,11 +184,119 @@ html, body {
 
 .placeholder-card {
   width: 100%;
-  border: 1px dashed var(--border);
-  border-radius: 18px;
-  padding: 28px 24px;
+  margin: 0 20px;
+  width: calc(100% - 40px);
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 20px;
   color: var(--muted);
   font-size: 14px;
   line-height: 1.5;
-  text-align: center;
+}
+
+.banner {
+  width: 100%;
+  height: 140px;
+  background: var(--primary);
+}
+
+.welcome-card {
+  width: 100%;
+  padding: 0 20px;
+  margin-top: -48px;
+}
+
+.avatar-ring {
+  width: 96px;
+  height: 96px;
+  margin-bottom: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: 700;
+  color: #1A1A1A;
+  background: #2a2a2a;
+  border: 2px solid var(--bg);
+}
+
+.info-card {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.info-card h2 {
+  font-weight: 700;
+  font-size: 22px;
+  margin: 0 0 4px;
+}
+
+.muted { color: var(--muted); font-size: 14px; margin: 0; }
+
+.placeholder-card {
+  width: calc(100% - 40px);
+  margin: 16px 20px 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-width: 480px;
+  margin: 0 auto;
+  background: var(--surface);
+  padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
+  display: flex;
+  justify-content: space-around;
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 20px;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 6px 14px;
+  border-radius: 999px;
+}
+
+.nav-item span {
+  font-size: 11px;
+  font-family: var(--font);
+}
+
+.nav-item.active {
+  background: #2a2a30;
+  color: var(--on-surface);
+}
+
+.settings-panel {
+  padding: 24px 20px;
+}
+
+.panel-title {
+  font-weight: 700;
+  font-size: 26px;
+  margin: 0 0 20px;
+}
+
+.btn-danger {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 999px;
+  background: var(--danger);
+  color: var(--danger-text);
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
 }
